@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShieldFaceCamera : MonoBehaviour
 {
 
-    public GameObject camera;
+    public new GameObject camera;
     public GameObject shield;
     // Start is called before the first frame update
     void Start()
