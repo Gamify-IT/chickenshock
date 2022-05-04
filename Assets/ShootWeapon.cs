@@ -30,7 +30,7 @@ public class ShootWeapon : MonoBehaviour
         if(Physics.Raycast(ray, out hit, range))
         {
             Debug.Log(hit.transform.name);
-            if (hit.transform.name == "Toon Chicken")
+            if (hit.transform.tag == "Chicken")
             {
                 Destroy(hit.transform.gameObject);
             }
