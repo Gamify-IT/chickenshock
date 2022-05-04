@@ -7187,6 +7187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f455a78e52311942bb170a03fc3e7c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upRecoil: {x: 0, y: 0, z: 3}
 --- !u!1001 &993675343
 PrefabInstance:
   m_ObjectHideFlags: 0
