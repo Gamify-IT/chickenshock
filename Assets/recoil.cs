@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class recoil : MonoBehaviour
+public class Recoil : MonoBehaviour
 {
     public Vector3 upRecoil;
     Vector3 originalRotation;
@@ -25,11 +25,17 @@ public class recoil : MonoBehaviour
         }
     }
 
+    /*
+     * add the desired amount of weapon movement to the rotation
+     */
     private void AddRecoil()
     {
         transform.localEulerAngles += upRecoil;
     }
 
+    /*
+     * reset the rotation to the original state of the weapon
+     */
     private void StopRecoil()
     {
         transform.localEulerAngles = originalRotation;

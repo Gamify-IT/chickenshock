@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class shooting : MonoBehaviour
+public class ShootWeapon : MonoBehaviour
 {
     public float damage = 10f;
     public float range = 100f;
@@ -21,8 +21,10 @@ public class shooting : MonoBehaviour
 
     void Shoot()
     {
+        //play the muzzleflash to give shooting feeling
         muzzleFlash.Play();
 
+        //cast a ray from the mouse position to wherever you aim, if you hit a chicken while shooting it will get killed
         RaycastHit hit;
         if(Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, range))
         {
