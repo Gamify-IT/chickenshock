@@ -7,6 +7,7 @@ TagManager:
   - Chicken Waypoints
   - Chicken
   - Answer
+  - Point Overlay
   layers:
   - Default
   - TransparentFX
