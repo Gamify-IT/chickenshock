@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckKilledChicken : MonoBehaviour
+public class Global : MonoBehaviour
 {
 
     public GameObject[] answers;
@@ -15,14 +15,14 @@ public class CheckKilledChicken : MonoBehaviour
 
         if (answers.Length < 5)
         {
-            bool rightAnswer = false;
+            bool rightAnswerAvailable = false;
             foreach(GameObject answer in answers){
                 if (answer.GetComponent<TMPro.TextMeshProUGUI>().text.Equals("Answer"))
                 {
-                    rightAnswer = true;
+                    rightAnswerAvailable = true;
                 }
             }
-            if (rightAnswer)
+            if (rightAnswerAvailable)
             {
                 Debug.Log("YOU KILLTED THE WRONG CHICKEN, FKKKKKKKK");
             }
