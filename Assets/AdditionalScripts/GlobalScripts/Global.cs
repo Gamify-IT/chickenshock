@@ -6,30 +6,25 @@ public class Global : MonoBehaviour
 {
 
     public GameObject[] answers;
+    public GameObject[] correctAnswer;
 
     // Update is called once per frame
     void Update()
     {
-        this.answers = GameObject.FindGameObjectsWithTag("Answer");
-        Debug.Log("There are " + this.answers.Length + " Chickens on the field");
+        GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = "123";
 
-        if (answers.Length < 5)
+        this.answers = GameObject.FindGameObjectsWithTag("Answer");
+        this.correctAnswer = GameObject.FindGameObjectsWithTag("CorrectAnswer");
+
+
+        if (answers.Length <= 3 && correctAnswer.Length == 1) //killed wrong chicken
         {
-            bool rightAnswerAvailable = false;
-            foreach(GameObject answer in answers){
-                if (answer.GetComponent<TMPro.TextMeshProUGUI>().text.Equals("Answer"))
-                {
-                    rightAnswerAvailable = true;
-                }
-            }
-            if (rightAnswerAvailable)
-            {
-                Debug.Log("YOU KILLTED THE WRONG CHICKEN, FKKKKKKKK");
-            }
-            else
-            {
-                Debug.Log("YOU KILLTED THE RIGHT CHICKEN, YIPPPPPPI");
-            }
+            Debug.Log("YOU KILLTED THE WRONG CHICKEN, FKKKKKKKK");
         }
+        if (answers.Length == 4 && correctAnswer.Length < 1) //killed correct chicken
+        {
+            Debug.Log("YOU KILLTED THE RIGHT CHICKEN, YIPPPPPPI");
+        }
+        
     }
 }

@@ -7,6 +7,8 @@ TagManager:
   - Chicken Waypoints
   - Chicken
   - Answer
+  - Question
+  - CorrectAnswer
   layers:
   - Default
   - TransparentFX
