@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Global : MonoBehaviour
 {
@@ -35,6 +36,8 @@ public class Global : MonoBehaviour
             GameObject.FindGameObjectsWithTag("Answer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = "WRONG!";
             GameObject.FindGameObjectsWithTag("Answer")[1].GetComponent<TMPro.TextMeshProUGUI>().text = "WRONG!";
             GameObject.FindGameObjectsWithTag("Answer")[2].GetComponent<TMPro.TextMeshProUGUI>().text = "WRONG!";
+
+            StartCoroutine(waitResetAndPlayAgain());
         }
         if (answers.Length == initialNumberOfWrongChickens && correctAnswer.Length < initialNumberOfCorrectChickens) //killed correct chicken
         {
@@ -45,6 +48,8 @@ public class Global : MonoBehaviour
             GameObject.FindGameObjectsWithTag("Answer")[1].GetComponent<TMPro.TextMeshProUGUI>().text = "CORRECT!";
             GameObject.FindGameObjectsWithTag("Answer")[2].GetComponent<TMPro.TextMeshProUGUI>().text = "CORRECT!";
             GameObject.FindGameObjectsWithTag("Answer")[3].GetComponent<TMPro.TextMeshProUGUI>().text = "CORRECT!";
+
+            StartCoroutine(waitResetAndPlayAgain());
         }
         
     }
@@ -89,5 +94,11 @@ public class Global : MonoBehaviour
             GameObject.FindGameObjectsWithTag("Answer")[2].GetComponent<TMPro.TextMeshProUGUI>().text = "W5.3";
             GameObject.FindGameObjectsWithTag("Answer")[3].GetComponent<TMPro.TextMeshProUGUI>().text = "W5.4";
         }
+    }
+
+    IEnumerator waitResetAndPlayAgain()
+    {   
+        yield return new WaitForSeconds (3.0f);
+        SceneManager.LoadScene("Game");
     }
 }
