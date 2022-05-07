@@ -9,12 +9,21 @@ public class ShootWeapon : MonoBehaviour
     public RaycastHit hit;
     public Camera mainCamera;
     public ParticleSystem muzzleFlash;
+    public Global globalScript;
+    Animator recoilAnimator;
+
+    private void Start()
+    {
+        globalScript = GameObject.FindObjectOfType<Global>();
+        recoilAnimator = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Animator>();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && !globalScript.killedAChicken)
         {
+            Debug.Log("Shooting the Weapon!");
             Shoot();
         }
     }
@@ -23,9 +32,9 @@ public class ShootWeapon : MonoBehaviour
     {
         //play the muzzleflash to give shooting feeling
         muzzleFlash.Play();
+        recoilAnimator.SetTrigger("shoot");
 
         Ray ray = new Ray(this.transform.position, this.transform.forward);
-        //Ray rayToCast = mainCamera.ScreenPointToRay(new Vector2(Screen.height / 2, Screen.width / 2));
         //cast a ray from the mouse position to wherever you aim, if you hit a chicken while shooting it will get killed
         if(Physics.Raycast(ray, out hit, range))
         {

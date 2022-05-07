@@ -12,6 +12,9 @@ public class Global : MonoBehaviour
     public int initialNumberOfWrongChickens;
     public int initialNumberOfCorrectChickens;
 
+    public static int points;
+    public bool killedAChicken = false;
+
     void Start()
     {
         this.initialNumberOfWrongChickens = 4;
@@ -23,14 +26,27 @@ public class Global : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!killedAChicken)
+        {
+            this.checkKilledChickens();
+            this.updatePoints();
+        }
+    }
+    void updatePoints()
+    {
+        GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
+    }
+
+    void checkKilledChickens()
+    {
         this.answers = GameObject.FindGameObjectsWithTag("Answer");
         this.correctAnswer = GameObject.FindGameObjectsWithTag("CorrectAnswer");
-
 
         if (answers.Length < initialNumberOfWrongChickens && correctAnswer.Length == initialNumberOfCorrectChickens) //killed wrong chicken
         {
             Debug.Log("YOU KILLED THE WRONG CHICKEN, FKKKKKKKK");
-
+            points--;
+            killedAChicken = true;
             GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = "WRONG!";
             GameObject.FindGameObjectsWithTag("CorrectAnswer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = "WRONG!";
             GameObject.FindGameObjectsWithTag("Answer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = "WRONG!";
@@ -42,7 +58,8 @@ public class Global : MonoBehaviour
         if (answers.Length == initialNumberOfWrongChickens && correctAnswer.Length < initialNumberOfCorrectChickens) //killed correct chicken
         {
             Debug.Log("YOU KILLED THE RIGHT CHICKEN, YIPPPPPPI");
-
+            points++;
+            killedAChicken = true;
             GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = "CORRECT!";
             GameObject.FindGameObjectsWithTag("Answer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = "CORRECT!";
             GameObject.FindGameObjectsWithTag("Answer")[1].GetComponent<TMPro.TextMeshProUGUI>().text = "CORRECT!";
@@ -51,7 +68,6 @@ public class Global : MonoBehaviour
 
             StartCoroutine(waitResetAndPlayAgain());
         }
-        
     }
 
     void pickRandomQuestion()
