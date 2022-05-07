@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     public GameObject[] Waypoints;
     public int currentWaypointGoal;
     public Animator m_Animator;
+    public float timeForOneMove;
 
     // Start is called before the first frame update
     void Start()
@@ -24,13 +25,22 @@ public class Movement : MonoBehaviour
     {
         if(agent.hasPath == false)
         {
+            timeForOneMove = 0;
             currentWaypointGoal = Random.Range(0, Waypoints.Length + 1);
             agent.SetDestination(Waypoints[currentWaypointGoal].transform.position);
-            Debug.Log("Moving to Waypoint = " + currentWaypointGoal.ToString());
+            // Debug.Log("Moving to Waypoint = " + currentWaypointGoal.ToString());
+            
         }
         else
         {
             m_Animator.SetBool("Run", true);
+            timeForOneMove += Time.deltaTime;
+            if(timeForOneMove > 5)
+            {
+                currentWaypointGoal = Random.Range(0, Waypoints.Length + 1);
+                agent.SetDestination(Waypoints[currentWaypointGoal].transform.position);
+                // Debug.Log("Stuck, Moving to new Waypoint = " + currentWaypointGoal.ToString());
+            }
         }
 
     }
