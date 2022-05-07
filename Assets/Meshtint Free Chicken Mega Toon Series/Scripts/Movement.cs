@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour
         Waypoints = GameObject.FindGameObjectsWithTag("Chicken Waypoints");
         Debug.Log("Waypoints = " + Waypoints.Length.ToString());
     }
-
+    
     // Update is called once per frame
     void Update()
     {

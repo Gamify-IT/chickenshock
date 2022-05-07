@@ -7,9 +7,9 @@ TagManager:
   - Chicken Waypoints
   - Chicken
   - Answer
+  - Point Overlay
   - Question
-  - CorrectAnswer
-  layers:
+  - CorrectAnswer  layers:
   - Default
   - TransparentFX
   - Ignore Raycast
