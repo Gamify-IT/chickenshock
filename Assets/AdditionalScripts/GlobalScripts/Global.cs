@@ -15,6 +15,8 @@ public class Global : MonoBehaviour
     public static int points;
     public bool killedAChicken = false;
 
+    public static float time = 30; //in seconds
+
     void Start()
     {
         this.initialNumberOfWrongChickens = 4;
@@ -26,12 +28,20 @@ public class Global : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(time <= 0)
+        {
+            SceneManager.LoadScene("MainScreen");
+        }
+
         if (!killedAChicken)
         {
             this.checkKilledChickens();
             this.updatePoints();
         }
+
+        updateTimer();
     }
+
     void updatePoints()
     {
         GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
@@ -109,7 +119,28 @@ public class Global : MonoBehaviour
 
     IEnumerator waitResetAndPlayAgain()
     {   
-        yield return new WaitForSeconds (3.0f);
-        SceneManager.LoadScene("Game");
+        if(time > 0)
+        {
+            yield return new WaitForSeconds(3.0f);
+            SceneManager.LoadScene("Game");
+        }
+    }
+
+    void updateTimer()
+    {
+        time = time - Time.deltaTime;
+
+        string timeString;
+
+        if (time < 10)
+        {
+            timeString = "00:0" + ((int)time).ToString();
+        }
+        else
+        {
+            timeString = "00:" + ((int)time).ToString();
+        }
+
+        GameObject.FindGameObjectWithTag("Timer").GetComponent<TMPro.TextMeshProUGUI>().text = timeString;
     }
 }
