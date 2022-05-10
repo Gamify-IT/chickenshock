@@ -7,6 +7,18 @@ TagManager:
   - Chicken Waypoints
   - Chicken
   - Answer
+  - Point Overlay
+  - Question
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Water
+  - UI
+  - Ground
+  - Background
+  - CorrectAnswer
+  - Weapon
+  - Timer
   layers:
   - Default
   - TransparentFX
@@ -14,7 +26,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Ground
+  - 
   - 
   - 
   - 

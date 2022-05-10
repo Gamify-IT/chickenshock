@@ -19,16 +19,16 @@ public class Movement : MonoBehaviour
         Waypoints = GameObject.FindGameObjectsWithTag("Chicken Waypoints");
         Debug.Log("Waypoints = " + Waypoints.Length.ToString());
     }
-
+    
     // Update is called once per frame
     void Update()
     {
         if(agent.hasPath == false)
         {
             timeForOneMove = 0;
-            currentWaypointGoal = Random.Range(0, Waypoints.Length + 1);
+            currentWaypointGoal = Random.Range(0, Waypoints.Length);
             agent.SetDestination(Waypoints[currentWaypointGoal].transform.position);
-            // Debug.Log("Moving to Waypoint = " + currentWaypointGoal.ToString());
+            //Debug.Log("Moving to Waypoint = " + currentWaypointGoal.ToString());
             
         }
         else
@@ -37,9 +37,9 @@ public class Movement : MonoBehaviour
             timeForOneMove += Time.deltaTime;
             if(timeForOneMove > 5)
             {
-                currentWaypointGoal = Random.Range(0, Waypoints.Length + 1);
+                currentWaypointGoal = Random.Range(0, Waypoints.Length);
                 agent.SetDestination(Waypoints[currentWaypointGoal].transform.position);
-                // Debug.Log("Stuck, Moving to new Waypoint = " + currentWaypointGoal.ToString());
+                //Debug.Log("Stuck, Moving to new Waypoint = " + currentWaypointGoal.ToString());
             }
         }
 
