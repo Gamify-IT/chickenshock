@@ -30,6 +30,7 @@ public class Global : MonoBehaviour
     {
         if(time <= 0)
         {
+            PointScript.points = points;
             SceneManager.LoadScene("EndScreen");
         }
 

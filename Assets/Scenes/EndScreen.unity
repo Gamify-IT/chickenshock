@@ -270,37 +270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f6f84d70b3a754b8221e3707272b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &252546004
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 252546005}
-  m_Layer: 0
-  m_Name: Pointscore
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &252546005
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 252546004}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.0045574, y: -68.555145, z: 4269.936}
-  m_LocalScale: {x: 2.1333334, y: 2.1333334, z: 2.1333334}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1745837502}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &550149031
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,9 +859,10 @@ GameObject:
   - component: {fileID: 1578927069}
   - component: {fileID: 1578927071}
   - component: {fileID: 1578927070}
+  - component: {fileID: 1578927072}
   m_Layer: 5
   m_Name: Points
-  m_TagString: Untagged
+  m_TagString: Point Overlay
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -947,7 +917,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.2784314, g: 0.7058824, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1014,6 +984,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1578927068}
   m_CullTransparentMesh: 1
+--- !u!114 &1578927072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578927068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e08524bb3078dde47a1f3cdb2bd6cea0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1651846528
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,7 +1061,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1745837502}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1745837501
 GameObject:
@@ -1116,7 +1098,6 @@ RectTransform:
   - {fileID: 876144572}
   - {fileID: 129024422}
   - {fileID: 1795675698}
-  - {fileID: 252546005}
   - {fileID: 1651846531}
   m_Father: {fileID: 823610328}
   m_RootOrder: 0
