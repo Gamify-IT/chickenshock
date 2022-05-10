@@ -30,7 +30,7 @@ public class Global : MonoBehaviour
     {
         if(time <= 0)
         {
-            SceneManager.LoadScene("MainScreen");
+            SceneManager.LoadScene("EndScreen");
         }
 
         if (!killedAChicken)
