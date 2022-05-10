@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class PlayAgainButtonScript : MonoBehaviour
 {
-    public void LoadScene(string sceneName)
+    public void loadGame(string sceneName)
     {
+        Global.points = 0;
+        Global.time = 30;
         SceneManager.LoadScene(sceneName);
     }
 
