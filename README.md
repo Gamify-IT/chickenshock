@@ -2,13 +2,13 @@
 
 Unity Version: 2021.3.1f1 (LTS)
 
-## Moorhuhn Minigame Soll-Funktionen:
-- Fragen werden am oberen Bildschirmrand angezeigt
-- Hühner laufen mit Schildern rum
-- Schilder beinhalten mögliche Antworten
-- Hühner können abgeschossen werden
-- Bei Abschuss der Huhns mit der richtigen Antwort werden Punkte gutgeschrieben
-- Bei Abschuss eines Huhns mit falscher Antwort werden Punkte abgezogen
-- Punkzahl in einer Ecke des Bildschirms
-- Nach fester Zeit oder fester Anzahl beantworteter Fragen endet das Spiel
+## Moorhuhn Minigame target functions
 
+- Questions are displayed at the top of the screen
+- Chickens run around with signs
+- Signs contain possible answers
+- Chickens can be shot
+- Points are credited for shooting the chicken with the correct answer
+- Points are deducted when shooting a chicken with the wrong answer
+- Score in one corner of the screen
+- After fixed time or fixed number of answered questions the game ends
