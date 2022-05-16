@@ -12,9 +12,6 @@ jobs:
         targetPlatform:
           - WebGL
     steps:
-      - uses: game-ci/unity-builder@v2
-        with:
-          customImage: 'unityci/editor:2021.3.1f1'
       - uses: actions/cache@v2
         with:
           path: Library
