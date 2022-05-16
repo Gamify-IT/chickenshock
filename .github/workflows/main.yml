@@ -44,4 +44,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: Builds
-          path: builds
+          path: ../tree/feature/add-unity-builder-to-github-actions/builds
