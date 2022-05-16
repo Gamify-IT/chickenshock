@@ -35,5 +35,5 @@ jobs:
       # Output
       - uses: actions/upload-artifact@v2
         with:
-          name: Builds
-          path: builds
+          name: Build-WebGL
+          path: builds/
