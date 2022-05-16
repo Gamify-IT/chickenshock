@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: Build my project ✨
+    name: Build Unity project
     runs-on: ubuntu-latest
     steps:
       # Checkout
@@ -36,4 +36,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: Builds
-          path: ../tree/feature/add-unity-builder-to-github-actions/builds
+          path: builds
