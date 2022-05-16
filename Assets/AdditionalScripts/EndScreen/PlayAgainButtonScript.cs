@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayAgainButtonScript : MonoBehaviour
 {
-    public void loadGame(string sceneName)
+    public void LoadGame(string sceneName)
     {
         Global.points = 0;
         Global.time = 30;
