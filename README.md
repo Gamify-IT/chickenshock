@@ -72,4 +72,4 @@ docker rm moorhuhn
 
 ### Screenshot
 
-![screenshot]()
+![screenshot](https://user-images.githubusercontent.com/44726248/171508596-16837ea1-f6ce-4b69-b12b-30b0452f917c.png)
