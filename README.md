@@ -59,7 +59,7 @@ To remove the container you can use the following command:
 ```sh
 docker rm moorhuhn
 ```
-### features
+### Features
 
 - Questions are displayed at the top of the screen
 - Chickens run around with signs
