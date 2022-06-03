@@ -1,6 +1,6 @@
 # Moorhuhn
 
-In this game you have to shot the chicken with the right answer.  
+In this game, you have to shoot the chicken displaying the correct answer.  
 
 ## Development
 
