@@ -31,6 +31,7 @@ public class Global : MonoBehaviour
         if (time <= 0)
         {
             PointScript.points = points;
+            Cursor.visible = true;
             SceneManager.LoadScene("EndScreen");
         }
 
@@ -143,6 +144,9 @@ public class Global : MonoBehaviour
         {
             yield return new WaitForSeconds(3.0f);
             SceneManager.LoadScene("Game");
+            Debug.Log("loaded game scene");
+            SceneManager.LoadScene("PlayerHUD", LoadSceneMode.Additive);
+            Debug.Log("loaded player HUD scene");
         }
     }
 
