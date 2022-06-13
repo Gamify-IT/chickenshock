@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class StartButtonScript : MonoBehaviour
 {
-    public void LoadScene()
+    public void LoadGame()
     {
         SceneManager.LoadScene("Game");
         Debug.Log("loaded game scene");
