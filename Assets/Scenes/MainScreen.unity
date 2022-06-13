@@ -462,7 +462,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 740390638}
         m_TargetAssemblyTypeName: StartButtonScript, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: LoadGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
