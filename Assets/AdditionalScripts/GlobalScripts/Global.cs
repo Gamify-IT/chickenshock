@@ -150,7 +150,7 @@ public class Global : MonoBehaviour
 
     public void FetchAllQuestions()
     {
-        StartCoroutine(GetRequest("http://localhost:8080/getAllQuestions"));
+        StartCoroutine(GetRequest("http://localhost:8080/get-all-questions"));
     }
 
     private IEnumerator GetRequest(String uri)
