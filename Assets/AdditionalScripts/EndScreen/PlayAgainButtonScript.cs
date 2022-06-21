@@ -13,6 +13,6 @@ public class PlayAgainButtonScript : MonoBehaviour
         Debug.Log("loaded game scene");
         SceneManager.LoadScene("PlayerHUD", LoadSceneMode.Additive);
         Debug.Log("loaded player HUD scene");
+        Global.allUnusedQuestions = null;
     }
-
 }
