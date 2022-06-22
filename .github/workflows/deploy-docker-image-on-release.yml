@@ -41,6 +41,7 @@ jobs:
         with:
           targetPlatform: WebGL
           allowDirtyBuild: true
+          buildsPath: builds
 
       - name: Log in to the Container registry
         if: github.event_name != 'pull_request'
