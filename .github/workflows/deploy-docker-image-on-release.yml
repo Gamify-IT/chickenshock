@@ -35,6 +35,7 @@ jobs:
         with:
           targetPlatform: WebGL
           buildsPath: builds
+          customImage: 'unityci/editor:2022.1.6f1-webgl-1'
 
       - name: Log in to the Container registry
         if: github.event_name != 'pull_request'
