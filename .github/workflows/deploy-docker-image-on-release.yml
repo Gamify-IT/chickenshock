@@ -3,6 +3,7 @@ name: Create and publish a Docker image on Release
 on:
   push:
     branches:
+      - "**"
       - "main"
     tags:
       - "v*"
@@ -35,6 +36,7 @@ jobs:
           targetPlatform: WebGL
           allowDirtyBuild: true
           buildsPath: builds
+          customImage: 'unityci/editor:2021.3.3f1-base-1'
 
       - name: Log in to the Container registry
         if: github.event_name != 'pull_request'
