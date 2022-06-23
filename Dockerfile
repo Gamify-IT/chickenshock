@@ -1,9 +1,10 @@
 FROM nginx:alpine
 
 WORKDIR /etc/nginx/conf.d
-COPY docker/webgl.conf default.conf
+COPY docker/nginx/webgl.conf default.conf
 
 WORKDIR /webgl
+COPY docker/nginx/index.html ./index.html
 COPY builds/ .
 COPY docker/style.css ./TemplateData/style.css
 
