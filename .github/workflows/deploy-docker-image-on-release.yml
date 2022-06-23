@@ -34,9 +34,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: WebGL
-          allowDirtyBuild: true
           buildsPath: builds
-          customImage: 'unityci/editor:2021.3.3f1-base-1'
 
       - name: Log in to the Container registry
         if: github.event_name != 'pull_request'
