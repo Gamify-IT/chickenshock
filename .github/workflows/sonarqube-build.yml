@@ -21,3 +21,10 @@ jobs:
       #   timeout-minutes: 5
       #   env:
       #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      
+      # Temporary cleanup solution to prevent failing of next job.
+      - name: Clean up GitHub workspace
+        if: always()
+        uses: docker://ubuntu:latest # 👈 Clean-up done in a Docker container 🐳
+        with:
+          args: find /github/workspace/. -name . -o -prune -exec rm -rf -- {} +
