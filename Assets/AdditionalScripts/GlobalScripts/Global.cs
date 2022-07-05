@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.Networking;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 public class Global : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class Global : MonoBehaviour
     public bool killedAChicken = false;
 
     public static float time = 30; //in seconds
+
+    [DllImport("__Internal")]
+    private static extern string GetConfiguration();
 
     void Start()
     {
@@ -150,7 +154,8 @@ public class Global : MonoBehaviour
 
     public void FetchAllQuestions()
     {
-        StartCoroutine(GetRequest("http://localhost:8080/get-all-questions"));
+        String configuration = GetConfiguration();
+        StartCoroutine(GetRequest("http://localhost:8080/api/moorhuhn/get-all-questions/{"+ configuration + "}"));
     }
 
     private IEnumerator GetRequest(String uri)
