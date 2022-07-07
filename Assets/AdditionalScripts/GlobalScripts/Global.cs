@@ -155,7 +155,7 @@ public class Global : MonoBehaviour
     public void FetchAllQuestions()
     {
         String configuration = GetConfiguration();
-        StartCoroutine(GetRequest("http://localhost:8080/api/moorhuhn/get-all-questions/{"+ configuration + "}"));
+        StartCoroutine(GetRequest("http://localhost/api/moorhuhn/get-all-questions/{"+ configuration + "}"));
     }
 
     private IEnumerator GetRequest(String uri)
