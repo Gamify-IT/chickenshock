@@ -17,7 +17,7 @@ public class Movement : MonoBehaviour
         m_Animator = gameObject.GetComponent<Animator>();
         agent = this.GetComponent<NavMeshAgent>();
         Waypoints = GameObject.FindGameObjectsWithTag("Chicken Waypoints");
-        Debug.Log("Waypoints = " + Waypoints.Length.ToString());
+        //Debug.Log("Waypoints = " + Waypoints.Length.ToString());
     }
     
     // Update is called once per frame
