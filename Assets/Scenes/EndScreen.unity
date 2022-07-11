@@ -653,7 +653,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 876144576}
         m_TargetAssemblyTypeName: ExitButtonScript, Assembly-CSharp
-        m_MethodName: ExitGame
+        m_MethodName: callCloseMinigame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

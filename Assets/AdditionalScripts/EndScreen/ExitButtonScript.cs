@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class ExitButtonScript : MonoBehaviour
 {
-    public void ExitGame()
+    [DllImport("__Internal")]
+    private static extern void CloseMinigame();
+
+    public void callCloseMinigame()
     {
-        Application.Quit();
+        CloseMinigame();
     }
 }
