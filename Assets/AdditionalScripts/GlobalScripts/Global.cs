@@ -25,9 +25,6 @@ public class Global : MonoBehaviour
     [DllImport("__Internal")]
     private static extern string GetConfiguration();
 
-    [DllImport("__Internal")]
-    private static extern string GetOriginUrl();
-
     void Start()
     {
         this.initialNumberOfWrongChickens = 4;
@@ -159,7 +156,7 @@ public class Global : MonoBehaviour
     {
         String configuration = GetConfiguration();
         Debug.Log(configuration);
-        StartCoroutine(GetRequest(GetOriginUrl() + "/api/moorhuhn/get-all-questions/" + configuration));
+        StartCoroutine(GetRequest("http://localhost/api/moorhuhn/get-all-questions/" + configuration));
     }
 
     private IEnumerator GetRequest(String uri)
