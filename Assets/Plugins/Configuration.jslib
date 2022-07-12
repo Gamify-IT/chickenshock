@@ -6,4 +6,11 @@ mergeInto(LibraryManager.library, {
         stringToUTF8(returnStr, buffer, bufferSize);
         return buffer;
     },
+    GetOriginUrl: function() {
+        var returnStr = location.origin;
+        var bufferSize = lengthBytesUTF8(returnStr) + 1;
+        var buffer = _malloc(bufferSize);
+        stringToUTF8(returnStr, buffer, bufferSize);
+        return buffer;
+    },
 });
