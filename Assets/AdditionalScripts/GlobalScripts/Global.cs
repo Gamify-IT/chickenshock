@@ -160,7 +160,7 @@ public class Global : MonoBehaviour
         String configuration = GetConfiguration();
         Debug.Log(configuration);
         String url = GetOriginUrl();
-        StartCoroutine(GetRequest(url + "/api/moorhuhn/get-all-questions/" + configuration));
+        StartCoroutine(GetRequest(url + "/api/minigames/moorhuhn/get-all-questions/" + configuration));
     }
 
     private IEnumerator GetRequest(String uri)
