@@ -106,7 +106,7 @@ public class Global : MonoBehaviour
         int randomNumber = UnityEngine.Random.Range(0, allUnusedQuestions.Count);
         Debug.Log("picked question number: " + randomNumber);
         Debug.Log("question count was: " + allUnusedQuestions.Count);
-        UpdateSignAndChickens(allUnusedQuestions[randomNumber].getQuestion(), allUnusedQuestions[randomNumber].getRightAnswer(), allUnusedQuestions[randomNumber].getWrongAnswerOne(), allUnusedQuestions[randomNumber].getWrongAnswerTwo(), allUnusedQuestions[randomNumber].getWrongAnswerThree(), allUnusedQuestions[randomNumber].getWrongAnswerFour());
+        UpdateSignAndChickens(allUnusedQuestions[randomNumber].getQuestionText(), allUnusedQuestions[randomNumber].getRightAnswer(), allUnusedQuestions[randomNumber].getWrongAnswerOne(), allUnusedQuestions[randomNumber].getWrongAnswerTwo(), allUnusedQuestions[randomNumber].getWrongAnswerThree(), allUnusedQuestions[randomNumber].getWrongAnswerFour());
        
         if(allUnusedQuestions.Count > 1)
         {
@@ -115,9 +115,9 @@ public class Global : MonoBehaviour
 
     }
 
-    void UpdateSignAndChickens(string question, string rightAnswer, string wrongAnswerOne, string wrongAnswerTwo, string wrongAnswerThree, string wrongAnswerFour)
+    void UpdateSignAndChickens(string questionText, string rightAnswer, string wrongAnswerOne, string wrongAnswerTwo, string wrongAnswerThree, string wrongAnswerFour)
     {
-        GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = question;
+        GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = questionText;
         GameObject.FindGameObjectsWithTag("CorrectAnswer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = rightAnswer;
         GameObject.FindGameObjectsWithTag("Answer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = wrongAnswerOne;
         GameObject.FindGameObjectsWithTag("Answer")[1].GetComponent<TMPro.TextMeshProUGUI>().text = wrongAnswerTwo;

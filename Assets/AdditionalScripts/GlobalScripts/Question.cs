@@ -8,7 +8,7 @@ public class Question
 {
     public long id;
     public String level;
-    public String question;
+    public String questionText;
     public String rightAnswer;
     public String wrongAnswerOne;
     public String wrongAnswerTwo;
@@ -20,10 +20,10 @@ public class Question
 
     }
 
-    public Question(String level, String question, String rightAnswer, String wrongAnswerOne, String wrongAnswerTwo, String wrongAnswerThree, String wrongAnswerFour)
+    public Question(String level, String questionText, String rightAnswer, String wrongAnswerOne, String wrongAnswerTwo, String wrongAnswerThree, String wrongAnswerFour)
     {
         this.level = level;
-        this.question = question;
+        this.questionText = questionText;
         this.rightAnswer = rightAnswer;
         this.wrongAnswerOne = wrongAnswerOne;
         this.wrongAnswerTwo = wrongAnswerTwo;
@@ -51,14 +51,14 @@ public class Question
         this.level = level;
     }
 
-    public String getQuestion()
+    public String getQuestionText()
     {
-        return question;
+        return questionText;
     }
 
-    public void setQuestion(String question)
+    public void setQuestion(String questionText)
     {
-        this.question = question;
+        this.questionText = questionText;
     }
 
     public String getRightAnswer()
