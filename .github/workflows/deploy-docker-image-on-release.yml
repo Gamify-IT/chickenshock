@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - "main"
+      - "feature/add-correct-communication-and-verification"
     tags:
       - "v*"
   pull_request:
@@ -33,8 +34,8 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: WebGL
-          allowDirtyBuild: true
           buildsPath: builds
+          customImage: 'unityci/editor:2022.1.6f1-webgl-1'
 
       - name: Log in to the Container registry
         if: github.event_name != 'pull_request'
@@ -57,9 +58,4 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          
-      # Temporary cleanup solution to prevent failing of next job.
-      - name: Clean up GitHub workspace
-        uses: docker://ubuntu:latest # 👈 Clean-up done in a Docker container 🐳
-        with:
-          args: find /github/workspace/. -name . -o -prune -exec rm -rf -- {} +
+        
