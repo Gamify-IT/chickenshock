@@ -210,8 +210,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 129024426}
         m_TargetAssemblyTypeName: PlayAgainButtonScript, Assembly-CSharp
-        m_MethodName: LoadGame
-        m_Mode: 1
+        m_MethodName: loadGame
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -653,7 +653,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 876144576}
         m_TargetAssemblyTypeName: ExitButtonScript, Assembly-CSharp
-        m_MethodName: callCloseMinigame
+        m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

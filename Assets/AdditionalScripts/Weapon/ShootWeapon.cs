@@ -36,7 +36,7 @@ public class ShootWeapon : MonoBehaviour
 
         Ray ray = new Ray(this.transform.position, this.transform.forward);
         //cast a ray from the mouse position to wherever you aim, if you hit a chicken while shooting it will get killed
-        if (Physics.Raycast(ray, out hit, range))
+        if(Physics.Raycast(ray, out hit, range))
         {
             Debug.Log(hit.transform.name);
             if (hit.transform.tag == "Chicken")

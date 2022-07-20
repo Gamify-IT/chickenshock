@@ -1,10 +1,6 @@
 # Moorhuhn
 
-
 In this game, you have to shoot the chicken displaying the correct answer.  
-
-Unity Version: 2021.3.2f1 (LTS)
-
 
 ## Development
 

@@ -462,8 +462,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 740390638}
         m_TargetAssemblyTypeName: StartButtonScript, Assembly-CSharp
-        m_MethodName: LoadGame
-        m_Mode: 1
+        m_MethodName: LoadScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1019,7 +1019,7 @@ GameObject:
   - component: {fileID: 2071533430}
   - component: {fileID: 2071533429}
   - component: {fileID: 2071533428}
-  - component: {fileID: 2071533431}
+  - component: {fileID: 2071533427}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -1048,6 +1048,18 @@ RectTransform:
   m_AnchoredPosition: {x: 317.99597, y: -186.927}
   m_SizeDelta: {x: 164.007, y: 76.274}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2071533427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071533425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7929282102413c469d8b1c90159fbd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2071533428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1092,9 +1104,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2071533431}
+      - m_Target: {fileID: 2071533427}
         m_TargetAssemblyTypeName: ExitButtonScript, Assembly-CSharp
-        m_MethodName: callCloseMinigame
+        m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1142,15 +1154,3 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2071533425}
   m_CullTransparentMesh: 1
---- !u!114 &2071533431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2071533425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7929282102413c469d8b1c90159fbd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
