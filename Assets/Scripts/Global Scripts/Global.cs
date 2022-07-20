@@ -61,6 +61,8 @@ public class Global : MonoBehaviour
         }
 
         UpdateTimer();
+
+        UnlockCursor();
     }
 
     void UpdatePoints()
@@ -197,4 +199,17 @@ public class Global : MonoBehaviour
         value = "{\"questions\":" + value + "}";
         return value;
     }
+
+    private void UnlockCursor()
+    {
+        if(Input.GetKey(KeyCode.LeftAlt))
+        {
+            Cursor.visible = true;
+        }
+        else 
+        {
+            Cursor.visible = false;
+        }
+}
+
 }
