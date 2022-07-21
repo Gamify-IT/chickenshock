@@ -1,10 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartButtonScript : MonoBehaviour
+public class StartButton : MonoBehaviour
 {
+
+    /// <summary>
+    /// This method loads the Game scene and loads the HUD over it. 
+    /// </summary>
     public void LoadGame()
     {
         SceneManager.LoadScene("Game");

@@ -18,7 +18,7 @@ public class Global : MonoBehaviour
 
     public static List<Question> allUnusedQuestions;
     public static int points;
-    public bool killedAChicken = false;
+    public bool pointsUpdated = false;
 
     public static float time = 30; //in seconds
 
@@ -30,93 +30,144 @@ public class Global : MonoBehaviour
 
     void Start()
     {
+        InitVariables();
+    }
+    void Update()
+    {
+        CheckGameTimeOver();
+        UpdateRound();
+        UpdateTimer();
+        UnlockCursor();
+    }
+
+    /// <summary>
+    /// This method initializes the variables needed. If the question catalogue is empty it skips to the end screen.
+    /// </summary>
+    private void InitVariables()
+    {
         this.initialNumberOfWrongChickens = 4;
         this.initialNumberOfCorrectChickens = 1;
-
-        if(allUnusedQuestions == null)
+        GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
+        if (allUnusedQuestions == null)
         {
             Debug.Log("try to fetch all questions!");
             this.FetchAllQuestions();
         }
-        else
+        else if (allUnusedQuestions.Count > 0)
         {
             this.PickRandomQuestion();
         }
+        else
+        {
+            LoadEndScreen();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+
+    /// <summary>
+    /// This method checks if the timer reached zero and sends you to the End Screen if it did.
+    /// </summary>
+    private void CheckGameTimeOver()
     {
         if (time <= 0)
         {
-            PointScript.points = points;
-            Cursor.visible = true;
-            SceneManager.LoadScene("EndScreen");
+            LoadEndScreen();
         }
-
-        if (!killedAChicken)
-        {
-            this.CheckKilledChickens();
-            this.UpdatePoints();
-        }
-
-        UpdateTimer();
-
-        UnlockCursor();
     }
 
-    void UpdatePoints()
+    /// <summary>
+    /// This method loads the end screen and updates the end screen's points
+    /// </summary>
+    private void LoadEndScreen()
+    {
+        EndScreen.points = points;
+        SceneManager.LoadScene("EndScreen");
+    }
+
+    /// <summary>
+    /// This method checks if a chicken was killed, if yes the points get update and a new round starts.
+    /// </summary>
+    private void UpdateRound()
+    {
+        if (!this.pointsUpdated && this.CheckKilledChickens())
+        { 
+            this.UpdatePoints();
+            StartCoroutine(WaitResetAndPlayAgain());
+        }
+    }
+
+    /// <summary>
+    /// This method Updates the points text in the top right corner.
+    /// </summary>
+    private void UpdatePoints()
     {
         GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
+        this.pointsUpdated = true;
     }
 
-    void CheckKilledChickens()
+    /// <summary>
+    /// This method checks wether the right or the wrond chicken was killed and returns true if any chicken was killed.
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckKilledChickens()
     {
         this.answers = GameObject.FindGameObjectsWithTag("Answer");
         this.correctAnswer = GameObject.FindGameObjectsWithTag("CorrectAnswer");
 
         if (answers.Length < initialNumberOfWrongChickens && correctAnswer.Length == initialNumberOfCorrectChickens) //killed wrong chicken
         {
-            Debug.Log("YOU KILLED THE WRONG CHICKEN, FKKKKKKKK");
             points--;
-            killedAChicken = true;
-            GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = "WRONG!";
             GameObject.FindGameObjectsWithTag("CorrectAnswer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = "WRONG!";
-            GameObject.FindGameObjectsWithTag("Answer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = "WRONG!";
-            GameObject.FindGameObjectsWithTag("Answer")[1].GetComponent<TMPro.TextMeshProUGUI>().text = "WRONG!";
-            GameObject.FindGameObjectsWithTag("Answer")[2].GetComponent<TMPro.TextMeshProUGUI>().text = "WRONG!";
-
-            StartCoroutine(WaitResetAndPlayAgain());
+            GivePlayerFeedback("WRONG!");
+            return true;
         }
-        if (answers.Length == initialNumberOfWrongChickens && correctAnswer.Length < initialNumberOfCorrectChickens) //killed correct chicken
+        else if (answers.Length == initialNumberOfWrongChickens && correctAnswer.Length < initialNumberOfCorrectChickens) //killed correct chicken
         {
-            Debug.Log("YOU KILLED THE RIGHT CHICKEN, YIPPPPPPI");
             points++;
-            killedAChicken = true;
-            GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = "CORRECT!";
-            GameObject.FindGameObjectsWithTag("Answer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = "CORRECT!";
-            GameObject.FindGameObjectsWithTag("Answer")[1].GetComponent<TMPro.TextMeshProUGUI>().text = "CORRECT!";
-            GameObject.FindGameObjectsWithTag("Answer")[2].GetComponent<TMPro.TextMeshProUGUI>().text = "CORRECT!";
-            GameObject.FindGameObjectsWithTag("Answer")[3].GetComponent<TMPro.TextMeshProUGUI>().text = "CORRECT!";
-
-            StartCoroutine(WaitResetAndPlayAgain());
+            GivePlayerFeedback("CORRECT!");
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
+    /// <summary>
+    /// This method updates the shields with the corresponding player feedback.
+    /// </summary>
+    /// <param name="feeback">The feeback the player gets for killing the right/wrong chicken</param>
+    private void GivePlayerFeedback(string feeback)
+    {
+        GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = feeback;
+        foreach (GameObject chicken in GameObject.FindGameObjectsWithTag("Answer"))
+        {
+            chicken.GetComponent<TMPro.TextMeshProUGUI>().text = feeback;
+        }
+    }
+
+    /// <summary>
+    /// This method picks a random question. If a question is answered it gets removed from the catalogue.
+    /// </summary>
     void PickRandomQuestion()
     {
         int randomNumber = UnityEngine.Random.Range(0, allUnusedQuestions.Count);
         Debug.Log("picked question number: " + randomNumber);
         Debug.Log("question count was: " + allUnusedQuestions.Count);
         UpdateSignAndChickens(allUnusedQuestions[randomNumber].getQuestionText(), allUnusedQuestions[randomNumber].getRightAnswer(), allUnusedQuestions[randomNumber].getWrongAnswerOne(), allUnusedQuestions[randomNumber].getWrongAnswerTwo(), allUnusedQuestions[randomNumber].getWrongAnswerThree(), allUnusedQuestions[randomNumber].getWrongAnswerFour());
-       
-        if(allUnusedQuestions.Count > 1)
-        {
-            allUnusedQuestions.RemoveAt(randomNumber);
-        }
-
+        allUnusedQuestions.RemoveAt(randomNumber);
+        Debug.Log("question count after removing the question was: " + allUnusedQuestions.Count);
     }
 
+    /// <summary>
+    /// This method updates the question and answer signs with the corresponding values.
+    /// </summary>
+    /// <param name="questionText"></param>
+    /// <param name="rightAnswer"></param>
+    /// <param name="wrongAnswerOne"></param>
+    /// <param name="wrongAnswerTwo"></param>
+    /// <param name="wrongAnswerThree"></param>
+    /// <param name="wrongAnswerFour"></param>
     void UpdateSignAndChickens(string questionText, string rightAnswer, string wrongAnswerOne, string wrongAnswerTwo, string wrongAnswerThree, string wrongAnswerFour)
     {
         GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = questionText;
@@ -127,6 +178,10 @@ public class Global : MonoBehaviour
         GameObject.FindGameObjectsWithTag("Answer")[3].GetComponent<TMPro.TextMeshProUGUI>().text = wrongAnswerFour;
     }
 
+    /// <summary>
+    /// This method resets the scene after 3 seconds if the timer is not zero.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator WaitResetAndPlayAgain()
     {
         if (time > 0)
@@ -139,6 +194,9 @@ public class Global : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method updates the timer.
+    /// </summary>
     void UpdateTimer()
     {
         time = time - Time.deltaTime;
@@ -157,14 +215,22 @@ public class Global : MonoBehaviour
         GameObject.FindGameObjectWithTag("Timer").GetComponent<TMPro.TextMeshProUGUI>().text = timeString;
     }
 
+    /// <summary>
+    /// This method starts a coroutine that sends a Get request for all the questions to the moorhuhn api.
+    /// </summary>
     public void FetchAllQuestions()
     {
-        String configuration = GetConfiguration();
-        Debug.Log(configuration);
+        String configurationAsUUID = GetConfiguration();
+        Debug.Log(configurationAsUUID);
         String url = GetOriginUrl();
-        StartCoroutine(GetRequest(url + "/api/minigames/moorhuhn/get-all-questions/" + configuration));
+        StartCoroutine(GetRequest(url + "/api/minigames/moorhuhn/api/v1/minigames/moorhuhn/configurations/" + configurationAsUUID));
     }
 
+    /// <summary>
+    /// This method sends a Get request and handles the response accordingly.
+    /// </summary>
+    /// <param name="uri"></param>
+    /// <returns></returns>
     private IEnumerator GetRequest(String uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
@@ -194,12 +260,20 @@ public class Global : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This methods fixes the Json formatting.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     private string fixJson(string value)
     {
         value = "{\"questions\":" + value + "}";
         return value;
     }
 
+    /// <summary>
+    /// This method unlocks your mouse cursor as long as you hold the left "Alt" key.
+    /// </summary>
     private void UnlockCursor()
     {
         if(Input.GetKey(KeyCode.LeftAlt))
@@ -210,6 +284,6 @@ public class Global : MonoBehaviour
         {
             Cursor.visible = false;
         }
-}
+    }
 
 }
