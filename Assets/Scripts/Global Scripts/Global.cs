@@ -22,6 +22,9 @@ public class Global : MonoBehaviour
 
     public static float time = 30; //in seconds
 
+    private string correctFeedback = "CORRECT!";
+    private string wrongFeedback = "WRONG!";
+
     [DllImport("__Internal")]
     private static extern string GetConfiguration();
 
@@ -32,6 +35,7 @@ public class Global : MonoBehaviour
     {
         InitVariables();
     }
+
     void Update()
     {
         CheckGameTimeOver();
@@ -85,7 +89,7 @@ public class Global : MonoBehaviour
     }
 
     /// <summary>
-    /// This method checks if a chicken was killed, if yes the points get update and a new round starts.
+    /// This method checks if a chicken was killed, if yes the points get updated and a new round starts.
     /// </summary>
     private void UpdateRound()
     {
@@ -108,7 +112,6 @@ public class Global : MonoBehaviour
     /// <summary>
     /// This method checks wether the right or the wrond chicken was killed and returns true if any chicken was killed.
     /// </summary>
-    /// <returns></returns>
     private bool CheckKilledChickens()
     {
         this.answers = GameObject.FindGameObjectsWithTag("Answer");
@@ -117,14 +120,14 @@ public class Global : MonoBehaviour
         if (answers.Length < initialNumberOfWrongChickens && correctAnswer.Length == initialNumberOfCorrectChickens) //killed wrong chicken
         {
             points--;
-            GameObject.FindGameObjectsWithTag("CorrectAnswer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = "WRONG!";
-            GivePlayerFeedback("WRONG!");
+            GameObject.FindGameObjectsWithTag("CorrectAnswer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = wrongFeedback;
+            GivePlayerFeedback(wrongFeedback);
             return true;
         }
         else if (answers.Length == initialNumberOfWrongChickens && correctAnswer.Length < initialNumberOfCorrectChickens) //killed correct chicken
         {
             points++;
-            GivePlayerFeedback("CORRECT!");
+            GivePlayerFeedback(correctFeedback);
             return true;
         }
         else
@@ -136,13 +139,13 @@ public class Global : MonoBehaviour
     /// <summary>
     /// This method updates the shields with the corresponding player feedback.
     /// </summary>
-    /// <param name="feeback">The feeback the player gets for killing the right/wrong chicken</param>
-    private void GivePlayerFeedback(string feeback)
+    /// <param name="feedback">The feedback the player gets for killing the right/wrong chicken</param>
+    private void GivePlayerFeedback(string feedback)
     {
-        GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = feeback;
+        GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = feedback;
         foreach (GameObject chicken in GameObject.FindGameObjectsWithTag("Answer"))
         {
-            chicken.GetComponent<TMPro.TextMeshProUGUI>().text = feeback;
+            chicken.GetComponent<TMPro.TextMeshProUGUI>().text = feedback;
         }
     }
 
@@ -181,7 +184,6 @@ public class Global : MonoBehaviour
     /// <summary>
     /// This method resets the scene after 3 seconds if the timer is not zero.
     /// </summary>
-    /// <returns></returns>
     IEnumerator WaitResetAndPlayAgain()
     {
         if (time > 0)
@@ -230,7 +232,6 @@ public class Global : MonoBehaviour
     /// This method sends a Get request and handles the response accordingly.
     /// </summary>
     /// <param name="uri"></param>
-    /// <returns></returns>
     private IEnumerator GetRequest(String uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
@@ -264,7 +265,6 @@ public class Global : MonoBehaviour
     /// This methods fixes the Json formatting.
     /// </summary>
     /// <param name="value"></param>
-    /// <returns></returns>
     private string fixJson(string value)
     {
         value = "{\"questions\":" + value + "}";
