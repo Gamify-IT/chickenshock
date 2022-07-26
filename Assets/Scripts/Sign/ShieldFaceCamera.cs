@@ -1,19 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShieldFaceCamera : MonoBehaviour
 {
-
     public new GameObject camera;
     public GameObject shield;
-    // Start is called before the first frame update
-    void Start()
+
+    void Update()
     {
+        AlignShield();
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// This method aligns the shield so that it always is perfectly visible for the player.
+    /// </summary>
+    private void AlignShield()
     {
         shield.transform.LookAt(camera.transform);
     }

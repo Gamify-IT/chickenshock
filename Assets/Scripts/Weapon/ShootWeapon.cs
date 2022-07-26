@@ -1,54 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShootWeapon : MonoBehaviour
 {
-    public float damage = 10f;
     public float range = 100f;
     public RaycastHit hit;
     public Camera mainCamera;
     public ParticleSystem muzzleFlash;
     public Global globalScript;
-    Animator recoilAnimator;
+    private Animator recoilAnimator;
 
     private void Start()
     {
-        globalScript = GameObject.FindObjectOfType<Global>();
-        recoilAnimator = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Animator>();
+        InitVariables();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && !globalScript.killedAChicken)
-        {
-            Debug.Log("Shooting the Weapon!");
-            Shoot();
-        }
+        Shoot();
     }
 
-    void Shoot()
+    /// <summary>
+    /// This method shoots the weapon if no chicken is killed yet by triggering the recoil animation and muzzle flash.
+    /// After that it casts a ray from the mouse position to wherever you aim, if you hit a chicken while shooting it will get killed.
+    /// </summary>
+    private void Shoot()
     {
-        //play the muzzleflash to give shooting feeling
-        muzzleFlash.Play();
-        recoilAnimator.SetTrigger("shoot");
-
-        Ray ray = new Ray(this.transform.position, this.transform.forward);
-        //cast a ray from the mouse position to wherever you aim, if you hit a chicken while shooting it will get killed
-        if (Physics.Raycast(ray, out hit, range))
+        if (Input.GetButtonDown("Fire1") && !globalScript.pointsUpdated)
         {
-            Debug.Log(hit.transform.name);
-            if (hit.transform.tag == "Chicken")
+            muzzleFlash.Play();
+            recoilAnimator.SetTrigger("shoot");
+            Ray ray = new Ray(this.transform.position, this.transform.forward);
+            if (Physics.Raycast(ray, out hit, range))
             {
-                Destroy(hit.transform.gameObject);
+                Debug.Log(hit.transform.name);
+                if (hit.transform.tag == "Chicken")
+                {
+                    Destroy(hit.transform.gameObject);
+                }
             }
         }
     }
 
-    void OnDrawGizmos()
+    /// <summary>
+    /// This method initializes the global script and recoil animator.
+    /// </summary>
+    private void InitVariables()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(hit.point, 1f);
+        globalScript = FindObjectOfType<Global>();
+        recoilAnimator = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Animator>();
     }
+
 }

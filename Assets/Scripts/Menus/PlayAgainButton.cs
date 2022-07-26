@@ -1,10 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayAgainButtonScript : MonoBehaviour
+public class PlayAgainButton : MonoBehaviour
 {
+    /// <summary>
+    /// This Method is called when pressing the Play Again button in the end screen.
+    /// It initializes the game again and resets the time, points and questions.
+    /// </summary>
     public void LoadGame()
     {
         Global.points = 0;

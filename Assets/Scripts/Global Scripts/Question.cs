@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 [System.Serializable]
 public class Question
@@ -14,11 +11,6 @@ public class Question
     public String wrongAnswerTwo;
     public String wrongAnswerThree;
     public String wrongAnswerFour;
-
-    public Question()
-    {
-
-    }
 
     public Question(String level, String questionText, String rightAnswer, String wrongAnswerOne, String wrongAnswerTwo, String wrongAnswerThree, String wrongAnswerFour)
     {
