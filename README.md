@@ -17,7 +17,7 @@ Clone the repository
 git clone https://github.com/Gamify-IT/moorhuhn.git
 ```
 
-Game specific properties that are likely to be changed are stored in a .propertie File located at : "Assets\Scripts\Properties\Moorhuhn.properties"
+Game specific properties that are likely to be changed are stored in a `.properties` file located at `Assets/Scripts/Properties/Moorhuhn.properties`
 
 
 ### Build
