@@ -6,6 +6,7 @@ using System;
 using UnityEngine.Networking;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 
 public class Global : MonoBehaviour
 {
@@ -16,7 +17,20 @@ public class Global : MonoBehaviour
     public int initialNumberOfWrongChickens;
 
     public static List<Question> allUnusedQuestions;
-    public static int points;
+    //persistant data
+    public static int questionCount;//done
+    public static float timeLimit;//done
+    public static float finishedInSeconds;//done
+    public static int correctKillsCount;//done
+    public static int wrongKillsCount;//done
+    public static int killsCount;
+    public static int shotCount;//done
+    public static int points;//done
+    public static List<string> correctAnsweredQuestions;//done
+    public static List<string> wrongAnsweredQuestions;//done
+    public static string configurationAsUUID;//done
+
+    private String currentActiveQuestion = "";
     public bool pointsUpdated = false;
 
     public static float time; //in seconds
@@ -48,7 +62,10 @@ public class Global : MonoBehaviour
     /// </summary>
     private void InitVariables()
     {
+        wrongAnsweredQuestions = new List<string>();
+        correctAnsweredQuestions = new List<string>();
         time = float.Parse(Properties.get("ingame.playtime"));
+        timeLimit = time;
         this.initialNumberOfWrongChickens = 4;
         GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
         if (allUnusedQuestions == null)
@@ -62,6 +79,10 @@ public class Global : MonoBehaviour
         }
         else
         {
+            if(time > 0)
+            {
+                finishedInSeconds = timeLimit - time;
+            }
             LoadEndScreen();
         }
     }
@@ -85,6 +106,7 @@ public class Global : MonoBehaviour
     {
         EndScreen.points = points;
         SceneManager.LoadScene("EndScreen");
+        saveRound();
     }
 
     /// <summary>
@@ -120,6 +142,8 @@ public class Global : MonoBehaviour
         if (wrongAnswers.Length < initialNumberOfWrongChickens) //killed wrong chicken
         {
             points--;
+            wrongKillsCount++;
+            wrongAnsweredQuestions.Add(currentActiveQuestion);
             GameObject.FindGameObjectsWithTag("CorrectAnswer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = wrongFeedback;
             GivePlayerFeedback(wrongFeedback);
             return true;
@@ -127,6 +151,8 @@ public class Global : MonoBehaviour
         else if (correctAnswer.Length == 0) //killed correct chicken
         {
             points++;
+            correctKillsCount++;
+            correctAnsweredQuestions.Add(currentActiveQuestion);
             GivePlayerFeedback(correctFeedback);
             return true;
         }
@@ -158,6 +184,7 @@ public class Global : MonoBehaviour
         Debug.Log("picked question number: " + randomNumber);
         Debug.Log("question count was: " + allUnusedQuestions.Count);
         UpdateSignAndChickens(allUnusedQuestions[randomNumber].getQuestionText(), allUnusedQuestions[randomNumber].getRightAnswer(), allUnusedQuestions[randomNumber].getWrongAnswerOne(), allUnusedQuestions[randomNumber].getWrongAnswerTwo(), allUnusedQuestions[randomNumber].getWrongAnswerThree(), allUnusedQuestions[randomNumber].getWrongAnswerFour());
+        currentActiveQuestion = allUnusedQuestions[randomNumber].getQuestionText();
         allUnusedQuestions.RemoveAt(randomNumber);
         Debug.Log("question count after removing the question was: " + allUnusedQuestions.Count);
     }
@@ -222,12 +249,12 @@ public class Global : MonoBehaviour
     /// </summary>
     public void FetchAllQuestions()
     {
-        String configurationAsUUID = GetConfiguration();
+        configurationAsUUID = GetConfiguration();
         Debug.Log(configurationAsUUID);
         String url = GetOriginUrl();
-        String path = Properties.get("REST.getQuestions");
+        String path = Properties.get("REST.getQuestions").Replace("{id}", configurationAsUUID);
         Debug.Log(path);
-        StartCoroutine(GetRequest(url + path + configurationAsUUID));
+        StartCoroutine(GetRequest(url + path));
     }
 
     /// <summary>
@@ -257,11 +284,51 @@ public class Global : MonoBehaviour
                     QuestionWrapper questionWrapper = JsonUtility.FromJson<QuestionWrapper>(fixedText);
                     Question[] questions = questionWrapper.questions;
                     allUnusedQuestions = questions.ToList();
+                    questionCount = allUnusedQuestions.Count;
                     PickRandomQuestion();
                     break;
             }
         }
     }
+
+    private void saveRound()
+    {
+        String url = GetOriginUrl();
+        String path = Properties.get("REST.saveRound");
+        Debug.Log(path);
+        StartCoroutine(PostRequest(url + path));
+    }
+
+    private IEnumerator PostRequest(String uri)
+    {
+        GameResult round = new GameResult(questionCount,timeLimit,finishedInSeconds,correctKillsCount,wrongKillsCount,killsCount,shotCount,points,correctAnsweredQuestions,wrongAnsweredQuestions, configurationAsUUID);
+        string jsonRound = JsonUtility.ToJson(round);
+        byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonRound);
+
+        using (UnityWebRequest postRequest = new UnityWebRequest(uri, "POST"))
+        {
+            postRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            postRequest.downloadHandler = new DownloadHandlerBuffer();
+            postRequest.SetRequestHeader("Content-Type", "application/json");
+
+            yield return postRequest.SendWebRequest();
+
+            switch (postRequest.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(uri + ": Error: " + postRequest.error);
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    Debug.LogError(uri + ": HTTP Error: " + postRequest.error);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    Debug.Log(uri + ":\nReceived: " + postRequest.downloadHandler.text);
+                    break;
+            }
+        }
+    }
+
 
     /// <summary>
     /// This methods fixes the Json formatting.
