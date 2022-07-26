@@ -10,11 +10,10 @@ using System.Runtime.InteropServices;
 public class Global : MonoBehaviour
 {
 
-    public GameObject[] answers;
+    public GameObject[] wrongAnswers;
     public GameObject[] correctAnswer;
 
     public int initialNumberOfWrongChickens;
-    public int initialNumberOfCorrectChickens;
 
     public static List<Question> allUnusedQuestions;
     public static int points;
@@ -51,7 +50,6 @@ public class Global : MonoBehaviour
     {
         time = float.Parse(Properties.get("ingame.playtime"));
         this.initialNumberOfWrongChickens = 4;
-        this.initialNumberOfCorrectChickens = 1;
         GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
         if (allUnusedQuestions == null)
         {
@@ -116,17 +114,17 @@ public class Global : MonoBehaviour
     /// <returns>bool - chicken was killed -> true; no chicken was killed -> false</returns>
     private bool CheckKilledChickens()
     {
-        this.answers = GameObject.FindGameObjectsWithTag("Answer");
+        this.wrongAnswers = GameObject.FindGameObjectsWithTag("Answer");
         this.correctAnswer = GameObject.FindGameObjectsWithTag("CorrectAnswer");
 
-        if (answers.Length < initialNumberOfWrongChickens && correctAnswer.Length == initialNumberOfCorrectChickens) //killed wrong chicken
+        if (wrongAnswers.Length < initialNumberOfWrongChickens) //killed wrong chicken
         {
             points--;
             GameObject.FindGameObjectsWithTag("CorrectAnswer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = wrongFeedback;
             GivePlayerFeedback(wrongFeedback);
             return true;
         }
-        else if (answers.Length == initialNumberOfWrongChickens && correctAnswer.Length < initialNumberOfCorrectChickens) //killed correct chicken
+        else if (correctAnswer.Length == 0) //killed correct chicken
         {
             points++;
             GivePlayerFeedback(correctFeedback);
