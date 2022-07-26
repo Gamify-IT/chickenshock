@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Class that mimics the behavior of [Java properties](https://docs.oracle.com/en/java/javase/17/docs/api//java.base/java/util/Properties.html).
+/// </summary>
 public class Properties
 {
 
