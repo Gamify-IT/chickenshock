@@ -20,7 +20,7 @@ public class Global : MonoBehaviour
     public static int points;
     public bool pointsUpdated = false;
 
-    public static float time = 30; //in seconds
+    public static float time; //in seconds
 
     private string correctFeedback = "CORRECT!";
     private string wrongFeedback = "WRONG!";
@@ -49,6 +49,7 @@ public class Global : MonoBehaviour
     /// </summary>
     private void InitVariables()
     {
+        time = float.Parse(Properties.get("ingame.playtime"));
         this.initialNumberOfWrongChickens = 4;
         this.initialNumberOfCorrectChickens = 1;
         GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
@@ -112,6 +113,7 @@ public class Global : MonoBehaviour
     /// <summary>
     /// This method checks wether the right or the wrond chicken was killed and returns true if any chicken was killed.
     /// </summary>
+    /// <returns>bool - chicken was killed -> true; no chicken was killed -> false</returns>
     private bool CheckKilledChickens()
     {
         this.answers = GameObject.FindGameObjectsWithTag("Answer");
@@ -225,7 +227,9 @@ public class Global : MonoBehaviour
         String configurationAsUUID = GetConfiguration();
         Debug.Log(configurationAsUUID);
         String url = GetOriginUrl();
-        StartCoroutine(GetRequest(url + "/api/minigames/moorhuhn/api/v1/minigames/moorhuhn/configurations/" + configurationAsUUID));
+        String path = Properties.get("REST.getQuestions");
+        Debug.Log(path);
+        StartCoroutine(GetRequest(url + path + configurationAsUUID));
     }
 
     /// <summary>
