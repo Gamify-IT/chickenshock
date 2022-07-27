@@ -23,7 +23,6 @@ public class Global : MonoBehaviour
     public static float finishedInSeconds;//done
     public static int correctKillsCount;//done
     public static int wrongKillsCount;//done
-    public static int killsCount;
     public static int shotCount;//done
     public static int points;//done
     public static List<string> correctAnsweredQuestions;//done
@@ -312,7 +311,7 @@ public class Global : MonoBehaviour
 
     private IEnumerator PostRequest(String uri)
     {
-        GameResult round = new GameResult(questionCount,timeLimit,finishedInSeconds,correctKillsCount,wrongKillsCount,killsCount,shotCount,points,correctAnsweredQuestions,wrongAnsweredQuestions, configurationAsUUID);
+        GameResult round = new GameResult(questionCount,timeLimit,finishedInSeconds,correctKillsCount,wrongKillsCount,correctKillsCount + wrongKillsCount, shotCount,points,correctAnsweredQuestions,wrongAnsweredQuestions, configurationAsUUID);
         string jsonRound = JsonUtility.ToJson(round);
         Debug.Log(jsonRound);
         byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonRound);
