@@ -67,6 +67,7 @@ public class Global : MonoBehaviour
         correctAnsweredQuestions = new List<string>();
         Debug.Log("load propertie playtime");
         time = float.Parse(Properties.get("ingame.playtime"));
+        Debug.Log("loaded propertie playtime: " + time);
         timeLimit = time;
         this.initialNumberOfWrongChickens = 4;
         GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
@@ -300,7 +301,7 @@ public class Global : MonoBehaviour
     {
         String url = GetOriginUrl();
         String path = Properties.get("REST.saveRound");
-        Debug.Log(path);
+        Debug.Log("save round infos with path:" + path);
         StartCoroutine(PostRequest(url + path));
     }
 
