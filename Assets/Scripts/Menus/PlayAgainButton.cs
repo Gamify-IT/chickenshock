@@ -10,7 +10,7 @@ public class PlayAgainButton : MonoBehaviour
     public void LoadGame()
     {
         Global.points = 0;
-        Global.time = float.Parse(Properties.get("ingame.playtime"));
+        Global.time = MoorhuhnProperties.ingamePlaytime;
         Global.isInitialized = false;
         Global.allUnusedQuestions = null;
         SceneManager.LoadScene("Game");
