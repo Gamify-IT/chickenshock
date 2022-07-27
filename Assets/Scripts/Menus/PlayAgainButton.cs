@@ -10,11 +10,12 @@ public class PlayAgainButton : MonoBehaviour
     public void LoadGame()
     {
         Global.points = 0;
-        Global.time = MoorhuhnProperties.ingamePlaytime;
+        Global.time = float.Parse(Properties.get("ingame.playtime"));
+        Global.isInitialized = false;
+        Global.allUnusedQuestions = null;
         SceneManager.LoadScene("Game");
         Debug.Log("loaded game scene");
         SceneManager.LoadScene("PlayerHUD", LoadSceneMode.Additive);
         Debug.Log("loaded player HUD scene");
-        Global.allUnusedQuestions = null;
     }
 }

@@ -9,6 +9,7 @@ public class StartButton : MonoBehaviour
     /// </summary>
     public void LoadGame()
     {
+        Global.isInitialized = false;
         SceneManager.LoadScene("Game");
         Debug.Log("loaded game scene");
         SceneManager.LoadScene("PlayerHUD",LoadSceneMode.Additive);

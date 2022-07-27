@@ -10,7 +10,7 @@ using System.Text;
 
 public class Global : MonoBehaviour
 {
-
+    public static bool isInitialized;
     public GameObject[] wrongAnswers;
     public GameObject[] correctAnswer;
 
@@ -63,12 +63,16 @@ public class Global : MonoBehaviour
     /// </summary>
     private void InitVariables()
     {
-        wrongAnsweredQuestions = new List<string>();
-        correctAnsweredQuestions = new List<string>();
-        Debug.Log("load propertie playtime");
-        time = MoorhuhnProperties.ingamePlaytime;
-        Debug.Log("loaded propertie playtime: " + time);
-        timeLimit = time;
+        if (!isInitialized)
+        {
+            wrongAnsweredQuestions = new List<string>();
+            correctAnsweredQuestions = new List<string>();
+            Debug.Log("load propertie playtime");
+            time = MoorhuhnProperties.ingamePlaytime;
+            Debug.Log("loaded propertie playtime: " + time);
+            timeLimit = time;
+            isInitialized = true;
+        }
         this.initialNumberOfWrongChickens = 4;
         GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
         if (allUnusedQuestions == null)
@@ -258,7 +262,7 @@ public class Global : MonoBehaviour
         configurationAsUUID = GetConfiguration();
         Debug.Log("configuration as uuid:"+configurationAsUUID);
         String url = GetOriginUrl();
-        String path = MoorhuhnProperties.getQuestions;
+        String path = MoorhuhnProperties.getQuestions.Replace("{id}",configurationAsUUID);
         Debug.Log("get questions with uuid path:" + path);
         StartCoroutine(GetRequest(url + path));
     }

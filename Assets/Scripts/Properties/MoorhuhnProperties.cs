@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class MoorhuhnProperties
 {
-    public static float ingamePlaytime = 50;
+    public static float ingamePlaytime = 10;
 
     //REST PATHS
     public static String getQuestions = "minigames/moorhuhn/api/v1/configurations/{id}/questions";
