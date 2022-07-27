@@ -4,38 +4,27 @@ using System.Collections.Generic;
 [System.Serializable]
 public class Question
 {
-    public long id;
-    public String level;
+    public string id;
     public String text;
     public String rightAnswer;
     public List<String> wrongAnswers;
 
     public Question(String level, String text, String rightAnswer, List<String> wrongAnswers)
     {
-        this.level = level;
+        this.id = level;
         this.text = text;
         this.rightAnswer = rightAnswer;
         this.wrongAnswers = wrongAnswers;
     }
 
-    public long getId()
+    public string getId()
     {
         return id;
     }
 
-    public void setId(long id)
+    public void setId(string id)
     {
         this.id = id;
-    }
-
-    public String getLevel()
-    {
-        return level;
-    }
-
-    public void setLevel(String level)
-    {
-        this.level = level;
     }
 
     public String getQuestionText()
