@@ -314,6 +314,7 @@ public class Global : MonoBehaviour
     {
         GameResult round = new GameResult(questionCount,timeLimit,finishedInSeconds,correctKillsCount,wrongKillsCount,killsCount,shotCount,points,correctAnsweredQuestions,wrongAnsweredQuestions, configurationAsUUID);
         string jsonRound = JsonUtility.ToJson(round);
+        Debug.Log(jsonRound);
         byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonRound);
 
         using (UnityWebRequest postRequest = new UnityWebRequest(uri, "POST"))
