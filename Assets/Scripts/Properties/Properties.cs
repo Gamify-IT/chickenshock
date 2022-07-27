@@ -16,6 +16,7 @@ public class Properties
     [RuntimeInitializeOnLoadMethod]
     private static void Init()
     {
+        Debug.Log("load properties");
         new Properties(".\\Assets\\Scripts\\Properties\\Moorhuhn.properties");
     }
 

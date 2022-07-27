@@ -10,7 +10,7 @@ public class PlayAgainButton : MonoBehaviour
     public void LoadGame()
     {
         Global.points = 0;
-        Global.time = 30;
+        Global.time = float.Parse(Properties.get("ingame.playtime"));
         SceneManager.LoadScene("Game");
         Debug.Log("loaded game scene");
         SceneManager.LoadScene("PlayerHUD", LoadSceneMode.Additive);
