@@ -25,6 +25,5 @@ public class PlayAgainButton : MonoBehaviour
         Global.correctKillsCount = 0;
         Global.wrongKillsCount = 0;
         Global.shotCount = 0;
-        Global.killsCount = 0;
     }
 }
