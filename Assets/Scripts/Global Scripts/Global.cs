@@ -46,7 +46,7 @@ public class Global : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("started global script")
+        Debug.Log("started global script");
         InitVariables();
     }
 
