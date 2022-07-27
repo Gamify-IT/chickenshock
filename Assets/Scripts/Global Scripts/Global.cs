@@ -255,10 +255,10 @@ public class Global : MonoBehaviour
     public void FetchAllQuestions()
     {
         configurationAsUUID = GetConfiguration();
-        Debug.Log(configurationAsUUID);
+        Debug.Log("configuration as uuid:"+configurationAsUUID);
         String url = GetOriginUrl();
         String path = Properties.get("REST.getQuestions").Replace("{id}", configurationAsUUID);
-        Debug.Log(path);
+        Debug.Log("get questions with uuid path:" + path);
         StartCoroutine(GetRequest(url + path));
     }
 
