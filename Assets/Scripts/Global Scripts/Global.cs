@@ -66,7 +66,7 @@ public class Global : MonoBehaviour
         wrongAnsweredQuestions = new List<string>();
         correctAnsweredQuestions = new List<string>();
         Debug.Log("load propertie playtime");
-        time = float.Parse(Properties.get("ingame.playtime"));
+        time = MoorhuhnProperties.ingamePlaytime;
         Debug.Log("loaded propertie playtime: " + time);
         timeLimit = time;
         this.initialNumberOfWrongChickens = 4;
@@ -258,7 +258,7 @@ public class Global : MonoBehaviour
         configurationAsUUID = GetConfiguration();
         Debug.Log("configuration as uuid:"+configurationAsUUID);
         String url = GetOriginUrl();
-        String path = Properties.get("REST.getQuestions").Replace("{id}", configurationAsUUID);
+        String path = MoorhuhnProperties.getQuestions;
         Debug.Log("get questions with uuid path:" + path);
         StartCoroutine(GetRequest(url + path));
     }
@@ -300,7 +300,7 @@ public class Global : MonoBehaviour
     private void saveRound()
     {
         String url = GetOriginUrl();
-        String path = Properties.get("REST.saveRound");
+        String path = MoorhuhnProperties.saveRound;
         Debug.Log("save round infos with path:" + path);
         StartCoroutine(PostRequest(url + path));
     }
