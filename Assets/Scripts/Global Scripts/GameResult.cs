@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class GameResult
 {
-    private int questionCount;
-    private float timeLimit;
-    private float finishedInSeconds;
-    private int correctKillsCount;
-    private int wrongKillsCount;
-    private int killsCount;
-    private int shotCount;
-    private int points;
-    private List<string> correctAnsweredQuestions;
-    private List<string> wrongAnsweredQuestions;
-    private string configurationAsUUID;
+    public int questionCount;
+    public float timeLimit;
+    public float finishedInSeconds;
+    public int correctKillsCount;
+    public int wrongKillsCount;
+    public int killsCount;
+    public int shotCount;
+    public int points;
+    public List<string> correctAnsweredQuestions;
+    public List<string> wrongAnsweredQuestions;
+    public string configurationAsUUID;
 
     public GameResult(int questionCount, float timeLimit, float finishedInSeconds, int correctKillsCount, int wrongKillsCount, int killsCount, int shotCount, int points, List<string> correctAnsweredQuestions, List<string> wrongAnsweredQuestions, string configurationAsUUID)
     {
