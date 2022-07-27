@@ -193,7 +193,7 @@ public class Global : MonoBehaviour
         int randomNumber = UnityEngine.Random.Range(0, allUnusedQuestions.Count);
         Debug.Log("picked question number: " + randomNumber);
         Debug.Log("question count was: " + allUnusedQuestions.Count);
-        UpdateSignAndChickens(allUnusedQuestions[randomNumber].getQuestionText(), allUnusedQuestions[randomNumber].getRightAnswer(), allUnusedQuestions[randomNumber].getWrongAnswerOne(), allUnusedQuestions[randomNumber].getWrongAnswerTwo(), allUnusedQuestions[randomNumber].getWrongAnswerThree(), allUnusedQuestions[randomNumber].getWrongAnswerFour());
+        UpdateSignAndChickens(allUnusedQuestions[randomNumber].getQuestionText(), allUnusedQuestions[randomNumber].getRightAnswer(), allUnusedQuestions[randomNumber].getWrongAnswers()[0], allUnusedQuestions[randomNumber].getWrongAnswers()[1], allUnusedQuestions[randomNumber].getWrongAnswers()[2], allUnusedQuestions[randomNumber].getWrongAnswers()[3]);
         currentActiveQuestion = allUnusedQuestions[randomNumber].getQuestionText();
         allUnusedQuestions.RemoveAt(randomNumber);
         Debug.Log("question count after removing the question was: " + allUnusedQuestions.Count);

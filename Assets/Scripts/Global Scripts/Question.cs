@@ -1,26 +1,21 @@
 using System;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class Question
 {
     public long id;
     public String level;
-    public String questionText;
+    public String text;
     public String rightAnswer;
-    public String wrongAnswerOne;
-    public String wrongAnswerTwo;
-    public String wrongAnswerThree;
-    public String wrongAnswerFour;
+    public List<String> wrongAnswers;
 
-    public Question(String level, String questionText, String rightAnswer, String wrongAnswerOne, String wrongAnswerTwo, String wrongAnswerThree, String wrongAnswerFour)
+    public Question(String level, String text, String rightAnswer, List<String> wrongAnswers)
     {
         this.level = level;
-        this.questionText = questionText;
+        this.text = text;
         this.rightAnswer = rightAnswer;
-        this.wrongAnswerOne = wrongAnswerOne;
-        this.wrongAnswerTwo = wrongAnswerTwo;
-        this.wrongAnswerThree = wrongAnswerThree;
-        this.wrongAnswerFour = wrongAnswerFour;
+        this.wrongAnswers = wrongAnswers;
     }
 
     public long getId()
@@ -45,12 +40,12 @@ public class Question
 
     public String getQuestionText()
     {
-        return questionText;
+        return text;
     }
 
     public void setQuestion(String questionText)
     {
-        this.questionText = questionText;
+        this.text = questionText;
     }
 
     public String getRightAnswer()
@@ -63,45 +58,13 @@ public class Question
         this.rightAnswer = rightAnswer;
     }
 
-    public String getWrongAnswerOne()
+    public void setWrongAnswers(List<String> wrongAnswers)
     {
-        return wrongAnswerOne;
+        this.wrongAnswers = wrongAnswers;
     }
 
-    public void setWrongAnswerOne(String wrongAnswerOne)
+    public List<String> getWrongAnswers()
     {
-        this.wrongAnswerOne = wrongAnswerOne;
+        return this.wrongAnswers;
     }
-
-    public String getWrongAnswerTwo()
-    {
-        return wrongAnswerTwo;
-    }
-
-    public void setWrongAnswerTwo(String wrongAnswerTwo)
-    {
-        this.wrongAnswerTwo = wrongAnswerTwo;
-    }
-
-    public String getWrongAnswerThree()
-    {
-        return wrongAnswerThree;
-    }
-
-    public void setWrongAnswerThree(String wrongAnswerThree)
-    {
-        this.wrongAnswerThree = wrongAnswerThree;
-    }
-
-    public String getWrongAnswerFour()
-    {
-        return wrongAnswerFour;
-    }
-
-    public void setWrongAnswerFour(String wrongAnswerFour)
-    {
-        this.wrongAnswerFour = wrongAnswerFour;
-    }
-
-
 }
