@@ -27,6 +27,7 @@ public class ShootWeapon : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1") && !globalScript.pointsUpdated)
         {
+            Global.shotCount++;
             muzzleFlash.Play();
             recoilAnimator.SetTrigger("shoot");
             Ray ray = new Ray(this.transform.position, this.transform.forward);

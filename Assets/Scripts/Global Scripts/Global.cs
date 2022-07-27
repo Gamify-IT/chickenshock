@@ -6,17 +6,30 @@ using System;
 using UnityEngine.Networking;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 
 public class Global : MonoBehaviour
 {
-
+    public static bool isInitialized;
     public GameObject[] wrongAnswers;
     public GameObject[] correctAnswer;
 
     public int initialNumberOfWrongChickens;
 
     public static List<Question> allUnusedQuestions;
-    public static int points;
+    //persistant data
+    public static int questionCount;//done
+    public static float timeLimit;//done
+    public static float finishedInSeconds;//done
+    public static int correctKillsCount;//done
+    public static int wrongKillsCount;//done
+    public static int shotCount;//done
+    public static int points;//done
+    public static List<string> correctAnsweredQuestions;//done
+    public static List<string> wrongAnsweredQuestions;//done
+    public static string configurationAsUUID;//done
+
+    private string currentActiveQuestion = "";
     public bool pointsUpdated = false;
 
     public static float time; //in seconds
@@ -32,6 +45,7 @@ public class Global : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("started global script");
         InitVariables();
     }
 
@@ -48,7 +62,16 @@ public class Global : MonoBehaviour
     /// </summary>
     private void InitVariables()
     {
-        time = float.Parse(Properties.get("ingame.playtime"));
+        if (!isInitialized)
+        {
+            wrongAnsweredQuestions = new List<string>();
+            correctAnsweredQuestions = new List<string>();
+            Debug.Log("load propertie playtime");
+            time = MoorhuhnProperties.ingamePlaytime;
+            Debug.Log("loaded propertie playtime: " + time);
+            timeLimit = time;
+            isInitialized = true;
+        }
         this.initialNumberOfWrongChickens = 4;
         GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
         if (allUnusedQuestions == null)
@@ -58,10 +81,17 @@ public class Global : MonoBehaviour
         }
         else if (allUnusedQuestions.Count > 0)
         {
+            Debug.Log("try to pick new question!");
             this.PickRandomQuestion();
         }
         else
         {
+            if(time > 0)
+            {
+                Debug.Log("time over and no more questions");
+                finishedInSeconds = timeLimit - time;
+            }
+            Debug.Log("load end screen before time was over");
             LoadEndScreen();
         }
     }
@@ -85,6 +115,7 @@ public class Global : MonoBehaviour
     {
         EndScreen.points = points;
         SceneManager.LoadScene("EndScreen");
+        saveRound();
     }
 
     /// <summary>
@@ -120,6 +151,8 @@ public class Global : MonoBehaviour
         if (wrongAnswers.Length < initialNumberOfWrongChickens) //killed wrong chicken
         {
             points--;
+            wrongKillsCount++;
+            wrongAnsweredQuestions.Add(currentActiveQuestion);
             GameObject.FindGameObjectsWithTag("CorrectAnswer")[0].GetComponent<TMPro.TextMeshProUGUI>().text = wrongFeedback;
             GivePlayerFeedback(wrongFeedback);
             return true;
@@ -127,6 +160,8 @@ public class Global : MonoBehaviour
         else if (correctAnswer.Length == 0) //killed correct chicken
         {
             points++;
+            correctKillsCount++;
+            correctAnsweredQuestions.Add(currentActiveQuestion);
             GivePlayerFeedback(correctFeedback);
             return true;
         }
@@ -157,7 +192,9 @@ public class Global : MonoBehaviour
         int randomNumber = UnityEngine.Random.Range(0, allUnusedQuestions.Count);
         Debug.Log("picked question number: " + randomNumber);
         Debug.Log("question count was: " + allUnusedQuestions.Count);
-        UpdateSignAndChickens(allUnusedQuestions[randomNumber].getQuestionText(), allUnusedQuestions[randomNumber].getRightAnswer(), allUnusedQuestions[randomNumber].getWrongAnswerOne(), allUnusedQuestions[randomNumber].getWrongAnswerTwo(), allUnusedQuestions[randomNumber].getWrongAnswerThree(), allUnusedQuestions[randomNumber].getWrongAnswerFour());
+        UpdateSignAndChickens(allUnusedQuestions[randomNumber].getQuestionText(), allUnusedQuestions[randomNumber].getRightAnswer(), allUnusedQuestions[randomNumber].getWrongAnswers()[0], allUnusedQuestions[randomNumber].getWrongAnswers()[1], allUnusedQuestions[randomNumber].getWrongAnswers()[2], allUnusedQuestions[randomNumber].getWrongAnswers()[3]);
+        currentActiveQuestion = allUnusedQuestions[randomNumber].getId();
+        Debug.Log("question UUID is: " + currentActiveQuestion);
         allUnusedQuestions.RemoveAt(randomNumber);
         Debug.Log("question count after removing the question was: " + allUnusedQuestions.Count);
     }
@@ -222,12 +259,12 @@ public class Global : MonoBehaviour
     /// </summary>
     public void FetchAllQuestions()
     {
-        String configurationAsUUID = GetConfiguration();
-        Debug.Log(configurationAsUUID);
+        configurationAsUUID = GetConfiguration();
+        Debug.Log("configuration as uuid:"+configurationAsUUID);
         String url = GetOriginUrl();
-        String path = Properties.get("REST.getQuestions");
-        Debug.Log(path);
-        StartCoroutine(GetRequest(url + path + configurationAsUUID));
+        String path = MoorhuhnProperties.getQuestions.Replace("{id}",configurationAsUUID);
+        Debug.Log("get questions with uuid path:" + path);
+        StartCoroutine(GetRequest(url + path));
     }
 
     /// <summary>
@@ -257,11 +294,52 @@ public class Global : MonoBehaviour
                     QuestionWrapper questionWrapper = JsonUtility.FromJson<QuestionWrapper>(fixedText);
                     Question[] questions = questionWrapper.questions;
                     allUnusedQuestions = questions.ToList();
+                    questionCount = allUnusedQuestions.Count;
                     PickRandomQuestion();
                     break;
             }
         }
     }
+
+    private void saveRound()
+    {
+        String url = GetOriginUrl();
+        String path = MoorhuhnProperties.saveRound;
+        Debug.Log("save round infos with path:" + path);
+        StartCoroutine(PostRequest(url + path));
+    }
+
+    private IEnumerator PostRequest(String uri)
+    {
+        GameResult round = new GameResult(questionCount,timeLimit,finishedInSeconds,correctKillsCount,wrongKillsCount,correctKillsCount + wrongKillsCount, shotCount,points,correctAnsweredQuestions,wrongAnsweredQuestions, configurationAsUUID);
+        string jsonRound = JsonUtility.ToJson(round);
+        Debug.Log(jsonRound);
+        byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonRound);
+
+        using (UnityWebRequest postRequest = new UnityWebRequest(uri, "POST"))
+        {
+            postRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            postRequest.downloadHandler = new DownloadHandlerBuffer();
+            postRequest.SetRequestHeader("Content-Type", "application/json");
+
+            yield return postRequest.SendWebRequest();
+
+            switch (postRequest.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(uri + ": Error: " + postRequest.error);
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    Debug.LogError(uri + ": HTTP Error: " + postRequest.error);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    Debug.Log(uri + ":\nReceived: " + postRequest.downloadHandler.text);
+                    break;
+            }
+        }
+    }
+
 
     /// <summary>
     /// This methods fixes the Json formatting.
