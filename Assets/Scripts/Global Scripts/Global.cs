@@ -65,6 +65,7 @@ public class Global : MonoBehaviour
     {
         wrongAnsweredQuestions = new List<string>();
         correctAnsweredQuestions = new List<string>();
+        Debug.Log("load propertie playtime");
         time = float.Parse(Properties.get("ingame.playtime"));
         timeLimit = time;
         this.initialNumberOfWrongChickens = 4;
@@ -76,14 +77,17 @@ public class Global : MonoBehaviour
         }
         else if (allUnusedQuestions.Count > 0)
         {
+            Debug.Log("try to pick new question!");
             this.PickRandomQuestion();
         }
         else
         {
             if(time > 0)
             {
+                Debug.Log("time over and no more questions");
                 finishedInSeconds = timeLimit - time;
             }
+            Debug.Log("load end screen before time was over");
             LoadEndScreen();
         }
     }
