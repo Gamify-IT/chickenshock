@@ -19,6 +19,9 @@ git clone https://github.com/Gamify-IT/moorhuhn.git
 
 Game specific properties that are likely to be changed are stored in a `.properties` file located at `Assets/Scripts/Properties/Moorhuhn.properties`
 
+### Run the project
+
+Check the [manual for docker-compose](https://github.com/Gamify-IT/docs/blob/main/dev-manuals/docker-compose/docker-compose.md).
 
 ### Build
 
