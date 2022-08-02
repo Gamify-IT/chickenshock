@@ -5,6 +5,11 @@ public class ShieldFaceCamera : MonoBehaviour
     public new GameObject camera;
     public GameObject shield;
 
+    private void Start()
+    {
+        this.camera = GameObject.Find("Main Camera");
+    }
+
     void Update()
     {
         AlignShield();
