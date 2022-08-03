@@ -1,4 +1,4 @@
-# Moorhuhn
+# Chickenshock
 
 
 In this game, you have to shoot the chicken displaying the correct answer.  
@@ -14,10 +14,10 @@ Install the [Unity Version 2021.3.1f1 (LTS)](https://gamifyit-docs.readthedocs.i
 
 Clone the repository  
 ```sh
-git clone https://github.com/Gamify-IT/moorhuhn.git
+git clone https://github.com/Gamify-IT/chickenshock.git
 ```
 
-Game specific properties that are likely to be changed are stored in a `.properties` file located at `Assets/Scripts/Properties/Moorhuhn.properties`
+Game specific properties that are likely to be changed are stored in a `.properties` file located at `Assets/Scripts/Properties/Chickenshock.properties`
 
 ### Run the project
 
@@ -29,44 +29,44 @@ Build the project like discribed in [this manual](https://gamifyit-docs.readthed
 
 Build the Docker-Container
 ```sh
-docker build -t moorhuhn-dev
+docker build -t chickenshock-dev
 ```
 And run it at port 8000 with
 ```sh
-docker run -d -p 8000:80 --name moorhuhn-dev moorhuhn-dev
+docker run -d -p 8000:80 --name chickenshock-dev chickenshock-dev
 ```
 
 To monitor, stop and remove the container you can use the following commands:
 ```sh
-docker ps -a -f name=moorhuhn-dev
+docker ps -a -f name=chickenshock-dev
 ```
 ```sh
-docker stop moorhuhn-dev
+docker stop chickenshock-dev
 ```
 ```sh
-docker rm moorhuhn-dev
+docker rm chickenshock-dev
 ```
 
 ## User manual
 
 Run the docker container with the following command at port 8000:
 ```sh
-docker run -d -p 8000:80 --name moorhuhn ghcr.io/gamify-it/moorhuhn:latest
+docker run -d -p 8000:80 --name chickenshock ghcr.io/gamify-it/chickenshock:latest
 ```
 Now you can access it at [http://localhost:8000](http://localhost:8000).  
 To access it externally replace localhost with your IP.  
 
 To monitor the container you can use the following command:
 ```sh
-docker ps -a -f name=moorhuhn
+docker ps -a -f name=chickenshock
 ```
 To stop the container you can use the following command:
 ```sh
-docker stop moorhuhn
+docker stop chickenshock
 ```
 To remove the container you can use the following command:
 ```sh
-docker rm moorhuhn
+docker rm chickenshock
 ```
 ### Features
 

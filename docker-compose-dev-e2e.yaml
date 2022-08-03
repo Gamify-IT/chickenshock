@@ -23,8 +23,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
-  moorhuhn-db:
-    container_name: moorhuhn-db
+  chickenshock-db:
+    container_name: chickenshock-db
     image: postgres:14-alpine
     restart: always
     ports:
@@ -94,7 +94,7 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       - ./.nginx/compose/nginx-dev-e2e.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./build:/var/www/html/minigames/moorhuhn
-      - ./.nginx/style.css:/var/www/html/minigames/moorhuhn/TemplateData/style.css
+      - ./build:/var/www/html/minigames/chickenshock
+      - ./.nginx/style.css:/var/www/html/minigames/chickenshock/TemplateData/style.css
     ports:
       - "80:80"
