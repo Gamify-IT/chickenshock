@@ -67,7 +67,7 @@ public class Global : MonoBehaviour
             wrongAnsweredQuestions = new List<string>();
             correctAnsweredQuestions = new List<string>();
             Debug.Log("load propertie playtime");
-            time = MoorhuhnProperties.ingamePlaytime;
+            time = ChickenshockProperties.ingamePlaytime;
             Debug.Log("loaded propertie playtime: " + time);
             timeLimit = time;
             isInitialized = true;
@@ -255,14 +255,14 @@ public class Global : MonoBehaviour
     }
 
     /// <summary>
-    /// This method starts a coroutine that sends a Get request for all the questions to the moorhuhn api.
+    /// This method starts a coroutine that sends a Get request for all the questions to the chickenshock api.
     /// </summary>
     public void FetchAllQuestions()
     {
         configurationAsUUID = GetConfiguration();
         Debug.Log("configuration as uuid:"+configurationAsUUID);
         String url = GetOriginUrl();
-        String path = MoorhuhnProperties.getQuestions.Replace("{id}",configurationAsUUID);
+        String path = ChickenshockProperties.getQuestions.Replace("{id}",configurationAsUUID);
         Debug.Log("get questions with uuid path:" + path);
         StartCoroutine(GetRequest(url + path));
     }
@@ -304,7 +304,7 @@ public class Global : MonoBehaviour
     private void saveRound()
     {
         String url = GetOriginUrl();
-        String path = MoorhuhnProperties.saveRound;
+        String path = ChickenshockProperties.saveRound;
         Debug.Log("save round infos with path:" + path);
         StartCoroutine(PostRequest(url + path));
     }

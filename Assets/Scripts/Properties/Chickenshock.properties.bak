@@ -1,0 +1,9 @@
+#Ingame Properties
+
+#time in seconds
+ingame.playtime=50
+
+#Rest-Paths
+
+REST.getQuestions=api/v1/minigames/chickenshock/questions
+REST.saveRound=api/v1/minigames/chickenshock/results

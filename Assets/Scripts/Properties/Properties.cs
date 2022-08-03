@@ -17,7 +17,7 @@ public class Properties
     private static void Init()
     {
         Debug.Log("load properties");
-        new Properties(".\\Assets\\Scripts\\Properties\\Moorhuhn.properties");
+        new Properties(".\\Assets\\Scripts\\Properties\\Chickenshock.properties");
     }
 
     public Properties(String file)

@@ -19,7 +19,7 @@ public class PlayAgainButton : MonoBehaviour
     private void resetStats()
     {
         Global.points = 0;
-        Global.time = MoorhuhnProperties.ingamePlaytime;
+        Global.time = ChickenshockProperties.ingamePlaytime;
         Global.isInitialized = false;
         Global.allUnusedQuestions = null;
         Global.correctKillsCount = 0;
