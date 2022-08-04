@@ -25,7 +25,7 @@ public class ShootWeapon : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
-        if (Input.GetButtonDown("Fire1") && !globalScript.pointsUpdated)
+        if (Input.GetButtonDown("Fire1") && !globalScript.roundComplete)
         {
             Global.shotCount++;
             muzzleFlash.Play();
@@ -36,6 +36,7 @@ public class ShootWeapon : MonoBehaviour
                 Debug.Log(hit.transform.name);
                 if (hit.transform.name == "Chicken(Clone)")
                 {
+
                     Destroy(hit.transform.gameObject);
                 }
             }
