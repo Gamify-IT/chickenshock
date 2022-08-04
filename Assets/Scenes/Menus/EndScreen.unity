@@ -767,7 +767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 82862994}
   m_Layer: 0
-  m_Name: ChickenHorde (2)
+  m_Name: ChickenHorde
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1646,7 +1646,7 @@ GameObject:
   m_Component:
   - component: {fileID: 237570104}
   m_Layer: 0
-  m_Name: Environment (2)
+  m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2671,7 +2671,7 @@ GameObject:
   m_Component:
   - component: {fileID: 379019074}
   m_Layer: 0
-  m_Name: Chicken Waypoints (2)
+  m_Name: Chicken Waypoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11113,7 +11113,7 @@ GameObject:
   - component: {fileID: 1271992480}
   - component: {fileID: 1271992479}
   m_Layer: 0
-  m_Name: Directional Light (2)
+  m_Name: Directional Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11351,7 +11351,7 @@ GameObject:
   - component: {fileID: 1291601638}
   - component: {fileID: 1291601637}
   m_Layer: 0
-  m_Name: CameraRotator (1)
+  m_Name: CameraRotator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
