@@ -1,9 +1,0 @@
-#Ingame Properties
-
-#time in seconds
-ingame.playtime=50
-
-#Rest-Paths
-
-REST.getQuestions=api/v1/minigames/moorhuhn/questions
-REST.saveRound=api/v1/minigames/moorhuhn/results
