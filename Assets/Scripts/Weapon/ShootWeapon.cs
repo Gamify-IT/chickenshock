@@ -3,10 +3,8 @@ using UnityEngine;
 public class ShootWeapon : MonoBehaviour
 {
     public float range = 100f;
-    public RaycastHit hit;
     public Camera mainCamera;
     public ParticleSystem muzzleFlash;
-    public Global globalScript;
     private Animator recoilAnimator;
 
     private void Start()
@@ -25,21 +23,40 @@ public class ShootWeapon : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
-        if (Input.GetButtonDown("Fire1") && !globalScript.roundComplete)
+        if (Input.GetButtonDown("Fire1") && !Global.instance.getRoundStatus())
         {
-            Global.shotCount++;
+            Global.instance.addShot();
             muzzleFlash.Play();
             recoilAnimator.SetTrigger("shoot");
             Ray ray = new Ray(this.transform.position, this.transform.forward);
+            RaycastHit hit;
             if (Physics.Raycast(ray, out hit, range))
             {
                 Debug.Log(hit.transform.name);
                 if (hit.transform.name == "Chicken(Clone)")
                 {
-
+                    handleKill(hit);
                     Destroy(hit.transform.gameObject);
                 }
             }
+        }
+    }
+
+    private void handleKill(RaycastHit hit)
+    {
+        if (hit.transform.tag == "CorrectAnswer")
+        {
+            Global.instance.updatePoints(1);
+            Global.instance.addCorrectKill();
+            Global.instance.addCorrectAnswerToResult();
+            Global.instance.FinishRound(MoorhuhnProperties.correctFeedbackText);
+        }
+        else if (hit.transform.tag == "WrongAnswer")
+        {
+            Global.instance.updatePoints(-1);
+            Global.instance.addWrongKill();
+            Global.instance.addWrongAnswerToResult();
+            Global.instance.FinishRound(MoorhuhnProperties.wrongFeedbackText);
         }
     }
 
@@ -48,7 +65,6 @@ public class ShootWeapon : MonoBehaviour
     /// </summary>
     private void InitVariables()
     {
-        globalScript = FindObjectOfType<Global>();
         recoilAnimator = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Animator>();
     }
 
