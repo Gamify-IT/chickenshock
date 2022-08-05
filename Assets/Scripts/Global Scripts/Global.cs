@@ -12,12 +12,12 @@ public class Global : MonoBehaviour
 {
     #region initialInformations
     private int initialNumberOfWrongChickens;
-    public static float time; //in seconds
+    private float time; //in seconds
     #endregion
 
     #region Chickens
     public GameObject chickenPrefab;
-    public List<GameObject> wrongAnswerChickens;
+    private List<GameObject> wrongAnswerChickens;
     private GameObject correctAnswerChicken;
     #endregion 
 
@@ -31,27 +31,43 @@ public class Global : MonoBehaviour
 
     #region persistant data
     private string configurationAsUUID;
-    public static int questionCount;
-    public static float timeLimit;
-    public static float finishedInSeconds;
-    public static int correctKillsCount;
-    public static int wrongKillsCount;
-    public static int shotCount;
-    public static int points;
-    public static List<string> correctAnsweredQuestions;
-    public static List<string> wrongAnsweredQuestions;
+    private int questionCount;
+    private float timeLimit;
+    private float finishedInSeconds;
+    private int correctKillsCount;
+    private int wrongKillsCount;
+    private int shotCount;
+    private int points;
+    private List<string> correctAnsweredQuestions;
+    private List<string> wrongAnsweredQuestions;
     #endregion
 
     #region global variables
+    public static Global instance;
     private List<Question> allUnusedQuestions;
     private string currentActiveQuestion = "";
-    public bool roundComplete = false;
+    private bool roundComplete = false;
     private bool questionLoaded = false;
     #endregion
 
     #region gameobjects
     private GameObject pointOverlay;
     #endregion
+
+    /// <summary>
+    /// This method 
+    /// </summary>
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -80,10 +96,19 @@ public class Global : MonoBehaviour
         if (questionLoaded)
         {
             CheckGameTimeOver();
-            UpdateRound();
             UpdateTimer();
             UnlockCursor();
         }
+    }
+
+    public void addCorrectAnswerToResult()
+    {
+        this.correctAnsweredQuestions.Add(currentActiveQuestion);
+    }
+
+    public void addWrongAnswerToResult()
+    {
+        this.wrongAnsweredQuestions.Add(currentActiveQuestion);
     }
 
     /// <summary>
@@ -118,32 +143,7 @@ public class Global : MonoBehaviour
         SaveRound();
     }
 
-    /// <summary>
-    /// This method checks if a chicken was killed, if yes the points get updated and a new round starts.
-    /// </summary>
-    private void UpdateRound()
-    {
-        this.wrongAnswerChickens = this.wrongAnswerChickens.Where(item => item != null).ToList();
-        if (!roundComplete)
-        {
-            if (this.correctAnswerChicken == null)
-            {
-                points++;
-                correctKillsCount++;
-                correctAnsweredQuestions.Add(currentActiveQuestion);
-                FinishRound(MoorhuhnProperties.correctFeedbackText);
-            }
-            else if (CheckIfWrongChickenIsDead())
-            {
-                points--;
-                wrongKillsCount++;
-                wrongAnsweredQuestions.Add(currentActiveQuestion);
-                FinishRound(MoorhuhnProperties.wrongFeedbackText);
-            }
-        }
-    }
-
-    private void FinishRound(String feedback)
+    public void FinishRound(String feedback)
     {
         GivePlayerFeedback(feedback);
         pointOverlay.GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
@@ -283,7 +283,7 @@ public class Global : MonoBehaviour
             restRequest = MoorhuhnProperties.getQuestions.Replace("{id}", configurationAsUUID);
         } catch(EntryPointNotFoundException e) {
             Debug.Log("EntryPointNotFoundException, probably becouse you started the game with the editor: " + e);
-            originURL = "http://localhost/minigames/chickenshock/api/v1/configurations/82af41ba-ca2a-4201-b873-3c27d10ce350/questions";
+            originURL = MoorhuhnProperties.localOrigin;
             restRequest = "";
         }
         string completeRequestString = originURL + restRequest;
@@ -401,6 +401,30 @@ public class Global : MonoBehaviour
         {
             Cursor.visible = false;
         }
+    }
+
+    public void addWrongKill()
+    {
+        this.wrongKillsCount++;
+    }
+    public void addCorrectKill()
+    {
+        this.correctKillsCount++;
+    }
+
+    public void addShot()
+    {
+        this.shotCount++;
+    }
+
+    public void updatePoints(int amountToUpdate)
+    {
+        this.points += amountToUpdate;
+    }
+
+    public bool getRoundStatus()
+    {
+        return roundComplete;
     }
 
 }
