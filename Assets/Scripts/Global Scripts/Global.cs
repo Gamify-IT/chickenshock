@@ -17,8 +17,6 @@ public class Global : MonoBehaviour
 
     #region Chickens
     public GameObject chickenPrefab;
-    private List<GameObject> wrongAnswerChickens;
-    private GameObject correctAnswerChicken;
     #endregion 
 
     #region JavaScript Methods
@@ -55,7 +53,7 @@ public class Global : MonoBehaviour
     #endregion
 
     /// <summary>
-    /// This method 
+    /// This method creates a new instance, if an instance exists already then the new GameObject will be deleted.
     /// </summary>
     private void Awake()
     {
@@ -71,7 +69,8 @@ public class Global : MonoBehaviour
 
     void Start()
     {
-        InitVariables();
+        this.InitVariables();
+        this.FetchAllQuestions();
     }
 
     /// <summary>
@@ -80,32 +79,39 @@ public class Global : MonoBehaviour
     private void InitVariables()
     {
         Debug.Log("init game variables");
-        points = 0;
-        wrongAnswerChickens = new List<GameObject>();
-        wrongAnsweredQuestions = new List<string>();
-        correctAnsweredQuestions = new List<string>();
-        time = MoorhuhnProperties.ingamePlaytime;
-        timeLimit = time;
-        pointOverlay = GameObject.FindGameObjectWithTag("Point Overlay");
-        pointOverlay.GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
-        this.FetchAllQuestions();
+        this.points = 0;
+        this.wrongAnsweredQuestions = new List<string>();
+        this.correctAnsweredQuestions = new List<string>();
+        this.time = MoorhuhnProperties.ingamePlaytime;
+        this.timeLimit = this.time;
+        this.pointOverlay = GameObject.FindGameObjectWithTag("Point Overlay");
+        this.pointOverlay.GetComponent<TMPro.TextMeshProUGUI>().text = this.points.ToString();
     }
 
+    /// <summary>
+    /// This method (Todo: add comment) job that checks the game status
+    /// </summary>
     void Update()
     {
-        if (questionLoaded)
+        if (this.questionLoaded)
         {
-            CheckGameTimeOver();
-            UpdateTimer();
-            UnlockCursor();
+            this.CheckGameTimeOver();
+            this.UpdateTimer();
+            this.UnlockCursor();
         }
     }
 
+    /// <summary>
+    /// This method adds the answered question to the correctly answered questions
+    /// </summary>
     public void addCorrectAnswerToResult()
     {
         this.correctAnsweredQuestions.Add(currentActiveQuestion);
     }
 
+    /// <summary>
+    /// This method adds the answered question to the incorrectly answered questions
+    /// </summary>
     public void addWrongAnswerToResult()
     {
         this.wrongAnsweredQuestions.Add(currentActiveQuestion);
@@ -129,6 +135,7 @@ public class Global : MonoBehaviour
     {
         finishedInSeconds = timeLimit - time;
         EndScreen.points = points;
+        Debug.Log("------------------------");
         Debug.Log("Load endscreen with round infos: configurationAsUUID: " + configurationAsUUID );
         Debug.Log("questionCount: " + questionCount);
         Debug.Log("timeLimit: " + timeLimit);
@@ -139,10 +146,14 @@ public class Global : MonoBehaviour
         Debug.Log("points: " + points);
         Debug.Log("correctAnsweredQuestions: " + correctAnsweredQuestions);
         Debug.Log("wrongAnsweredQuestions: " + wrongAnsweredQuestions);
+        Debug.Log("------------------------");
         SceneManager.LoadScene("EndScreen");
         SaveRound();
     }
 
+    /// <summary>
+    /// This method updates the visuals and removes the remaining chickens
+    /// </summary>
     public void FinishRound(String feedback)
     {
         GivePlayerFeedback(feedback);
@@ -151,11 +162,9 @@ public class Global : MonoBehaviour
         this.roundComplete = true;
     }
 
-    private bool CheckIfWrongChickenIsDead()
-    {
-        return this.wrongAnswerChickens.Count < initialNumberOfWrongChickens;
-    }
-
+    /// <summary>
+    /// This method removes all existing chickens and calls PickRandomQuestion()
+    /// </summary>
     private void KillRestChickens()
     {
         Destroy(GameObject.FindGameObjectWithTag("CorrectAnswer"));
@@ -206,14 +215,11 @@ public class Global : MonoBehaviour
     }
 
     /// <summary>
-    /// This method updates the question and answer signs with the corresponding values.
+    /// This method creates new chickens depending on the amount of answers
     /// </summary>
-    /// <param name="questionText"></param>
-    /// <param name="rightAnswer"></param>
-    /// <param name="wrongAnswerOne"></param>
-    /// <param name="wrongAnswerTwo"></param>
-    /// <param name="wrongAnswerThree"></param>
-    /// <param name="wrongAnswerFour"></param>
+    /// <param name="questionText">Text of the question</param>
+    /// <param name="rightAnswer">Text of the unique right answer</param>
+    /// <param name="wrongAnswers">Text of the wrong answers</param>
     void LoadNewChickens(string questionText, string rightAnswer, List<string> wrongAnswers)
     {
         GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = questionText;
@@ -225,6 +231,11 @@ public class Global : MonoBehaviour
         this.roundComplete = false;
     }
 
+    /// <summary>
+    /// This method creates the chickens carrying the wrong answers
+    /// </summary>
+    /// <param name="wrongAnswers"></param>
+    /// <param name="chickenHorde"></param>
     private void CreateWrongChickens(List<string> wrongAnswers, GameObject chickenHorde)
     {
         foreach (string wrongAnswer in wrongAnswers)
@@ -233,17 +244,21 @@ public class Global : MonoBehaviour
             wrongChicken.tag = "WrongAnswer";
             wrongChicken.transform.parent = chickenHorde.transform;
             wrongChicken.transform.Find("Shield").transform.Find("Cube").transform.Find("Canvas").transform.Find("Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = wrongAnswer;
-            this.wrongAnswerChickens.Add(wrongChicken);
         }
     }
 
+    /// <summary>
+    /// This method creates the chicken carrying the right answer
+    /// </summary>
+    /// <param name="rightAnswer"></param>
+    /// <param name="chickenHorde"></param>
     private void CreateCorrectChicken(string rightAnswer, GameObject chickenHorde)
     {
-        this.correctAnswerChicken = Instantiate(chickenPrefab, chickenHorde.transform);
+        GameObject correctAnswerChicken = Instantiate(chickenPrefab, chickenHorde.transform);
         Debug.Log("init correct Chicken");
-        this.correctAnswerChicken.tag = "CorrectAnswer";
-        this.correctAnswerChicken.transform.parent = chickenHorde.transform;
-        this.correctAnswerChicken.transform.Find("Shield").transform.Find("Cube").transform.Find("Canvas").transform.Find("Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = rightAnswer;
+        correctAnswerChicken.tag = "CorrectAnswer";
+        correctAnswerChicken.transform.parent = chickenHorde.transform;
+        correctAnswerChicken.transform.Find("Shield").transform.Find("Cube").transform.Find("Canvas").transform.Find("Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = rightAnswer;
     }
 
     /// <summary>
@@ -281,8 +296,8 @@ public class Global : MonoBehaviour
         {
             originURL = GetOriginUrl();
             restRequest = MoorhuhnProperties.getQuestions.Replace("{id}", configurationAsUUID);
-        } catch(EntryPointNotFoundException e) {
-            Debug.Log("EntryPointNotFoundException, probably becouse you started the game with the editor: " + e);
+        } catch(EntryPointNotFoundException entryPointNotFoundException) {
+            Debug.Log("EntryPointNotFoundException, probably becouse you started the game with the editor: " + entryPointNotFoundException);
             originURL = MoorhuhnProperties.localOrigin;
             restRequest = "";
         }
@@ -326,6 +341,9 @@ public class Global : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method starts a POST request coroutine that saves the result of the current round to the backend
+    /// </summary>
     private void SaveRound()
     {
         String originURL;
@@ -335,9 +353,9 @@ public class Global : MonoBehaviour
             originURL = GetOriginUrl();
             restRequest = MoorhuhnProperties.saveRound;
         }
-        catch (EntryPointNotFoundException e)
+        catch (EntryPointNotFoundException entryPointNotFoundException)
         {
-            Debug.Log("EntryPointNotFoundException, probably becouse you started the game with the editor");
+            Debug.Log("EntryPointNotFoundException, probably becouse you started the game with the editor: " + entryPointNotFoundException);
             originURL = "http://localhost/minigames/chickenshock/api/v1/results";
             restRequest = "";
         }
