@@ -19,6 +19,7 @@ TagManager:
   - CorrectAnswer
   - Weapon
   - Timer
+  - WrongAnswer
   layers:
   - Default
   - TransparentFX

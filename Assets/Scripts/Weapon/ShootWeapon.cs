@@ -3,10 +3,8 @@ using UnityEngine;
 public class ShootWeapon : MonoBehaviour
 {
     public float range = 100f;
-    public RaycastHit hit;
     public Camera mainCamera;
     public ParticleSystem muzzleFlash;
-    public Global globalScript;
     private Animator recoilAnimator;
 
     private void Start()
@@ -25,21 +23,46 @@ public class ShootWeapon : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
-        if (Input.GetButtonDown("Fire1") && !globalScript.pointsUpdated)
+        if (Input.GetButtonDown("Fire1") && !Global.instance.GetRoundStatus())
         {
-            Global.shotCount++;
+            Global.instance.AddShot();
             muzzleFlash.Play();
             recoilAnimator.SetTrigger("shoot");
             Ray ray = new Ray(this.transform.position, this.transform.forward);
+            RaycastHit hit;
             if (Physics.Raycast(ray, out hit, range))
             {
                 Debug.Log(hit.transform.name);
-                if (hit.transform.tag == "Chicken")
+                if (hit.transform.name == "Chicken(Clone)")
                 {
+                    handleKill(hit);
                     Destroy(hit.transform.gameObject);
                 }
             }
         }
+    }
+
+    private void handleKill(RaycastHit hit)
+    {
+        if (hit.transform.tag == "CorrectAnswer")
+        {
+            Global.instance.UpdatePoints(1);
+            Global.instance.AddCorrectKill();
+            Global.instance.addCorrectAnswerToResult(this.getChickenText(hit));
+            Global.instance.FinishRound(ChickenshockProperties.correctFeedbackText);
+        }
+        else if (hit.transform.tag == "WrongAnswer")
+        {
+            Global.instance.UpdatePoints(-1);
+            Global.instance.AddWrongKill();
+            Global.instance.addWrongAnswerToResult(this.getChickenText(hit));
+            Global.instance.FinishRound(ChickenshockProperties.wrongFeedbackText);
+        }
+    }
+
+    private string getChickenText(RaycastHit chicken)
+    {
+        return chicken.transform.Find("Shield").transform.Find("Cube").transform.Find("Canvas").transform.Find("Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text;
     }
 
     /// <summary>
@@ -47,7 +70,6 @@ public class ShootWeapon : MonoBehaviour
     /// </summary>
     private void InitVariables()
     {
-        globalScript = FindObjectOfType<Global>();
         recoilAnimator = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Animator>();
     }
 
