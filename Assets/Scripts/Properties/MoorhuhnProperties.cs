@@ -5,13 +5,15 @@ using UnityEngine;
 
 public static class MoorhuhnProperties
 {
-    public static float ingamePlaytime = 10;
+    public static float ingamePlaytime = 50;
 
     //REST PATHS
     public static String getQuestions = "/minigames/chickenshock/api/v1/configurations/{id}/questions";
     public static String saveRound = "/minigames/chickenshock/api/v1/results";
 
-    public static String localOrigin = "http://localhost/minigames/chickenshock/api/v1/configurations/4683e231-ff5c-4b42-be34-2b4bcf8a3f39/questions";
+    //EDITO VALUES
+    public static String editorGetQuestions = "http://localhost/minigames/chickenshock/api/v1/configurations/{id}/questions";
+    public static String editorConfiguration = "70fcd00c-b67c-46f2-be73-961dc0bc8de1";
 
     //PLAYER FEEDBACK
     public static String correctFeedbackText = "CORRECT!";
