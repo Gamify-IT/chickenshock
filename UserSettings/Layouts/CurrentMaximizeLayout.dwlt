@@ -55,7 +55,7 @@ MonoBehaviour:
   m_SerializedViewNames:
   - UnityEditor.DeviceSimulation.SimulatorWindow
   m_SerializedViewValues:
-  - F:\Unity\Unity Projects\Moorhuhn\Library\PlayModeViewStates\21e0fd9c17c44f54ea92d28c584bfec8
+  - F:\Unity\Unity Projects\Chickenshock\Library\PlayModeViewStates\21e0fd9c17c44f54ea92d28c584bfec8
   m_PlayModeViewName: GameView
   m_ShowGizmos: 0
   m_TargetDisplay: 0
@@ -684,7 +684,7 @@ MonoBehaviour:
   m_LastFolders:
   - Assets/Scripts/Menus
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: D:\Unity\Unity Workspace\Moorhuhn
+  m_LastProjectPath: D:\Unity\Unity Workspace\Chickenshock
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
