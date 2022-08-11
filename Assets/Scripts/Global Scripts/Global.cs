@@ -293,7 +293,7 @@ public class Global : MonoBehaviour
     }
 
     /// <summary>
-    /// This method starts a coroutine that sends a Get request for all the questions to the moorhuhn api.
+    /// This method starts a coroutine that sends a Get request for all the questions to the chickenshock api.
     /// </summary>
     public void FetchAllQuestions()
     {
