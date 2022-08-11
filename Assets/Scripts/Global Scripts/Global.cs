@@ -82,7 +82,7 @@ public class Global : MonoBehaviour
         this.points = 0;
         this.wrongAnsweredQuestions = new List<RoundResult>();
         this.correctAnsweredQuestions = new List<RoundResult>();
-        this.time = MoorhuhnProperties.ingamePlaytime;
+        this.time = ChickenshockProperties.ingamePlaytime;
         this.timeLimit = this.time;
         this.pointOverlay = GameObject.FindGameObjectWithTag("Point Overlay");
         this.pointOverlay.GetComponent<TMPro.TextMeshProUGUI>().text = this.points.ToString();
@@ -190,7 +190,7 @@ public class Global : MonoBehaviour
         Debug.Log("Show player feedback: " + feedback);
         if(GameObject.FindGameObjectWithTag("CorrectAnswer") != null)
         {
-            GameObject.FindGameObjectWithTag("CorrectAnswer").transform.Find("Shield").transform.Find("Cube").transform.Find("Canvas").transform.Find("Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = MoorhuhnProperties.wrongFeedbackText;
+            GameObject.FindGameObjectWithTag("CorrectAnswer").transform.Find("Shield").transform.Find("Cube").transform.Find("Canvas").transform.Find("Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = ChickenshockProperties.wrongFeedbackText;
         }
 
         GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = feedback;
@@ -305,12 +305,12 @@ public class Global : MonoBehaviour
         {   
             configurationAsUUID = GetConfiguration();
             originURL = GetOriginUrl();
-            restRequest = MoorhuhnProperties.getQuestions.Replace("{id}", configurationAsUUID);
+            restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID);
         } catch(EntryPointNotFoundException entryPointNotFoundException) {
             Debug.Log("EntryPointNotFoundException, probably becouse you started the game with the editor: " + entryPointNotFoundException);
-            configurationAsUUID = MoorhuhnProperties.editorConfiguration;
+            configurationAsUUID = ChickenshockProperties.editorConfiguration;
             originURL = "";
-            restRequest = MoorhuhnProperties.editorGetQuestions.Replace("{id}", configurationAsUUID);
+            restRequest = ChickenshockProperties.editorGetQuestions.Replace("{id}", configurationAsUUID);
         }
         string completeRequestString = originURL + restRequest;
         StartCoroutine(GetRequest(completeRequestString));
@@ -363,7 +363,7 @@ public class Global : MonoBehaviour
         try
         {
             originURL = GetOriginUrl();
-            restRequest = MoorhuhnProperties.saveRound;
+            restRequest = ChickenshockProperties.saveRound;
         }
         catch (EntryPointNotFoundException entryPointNotFoundException)
         {
