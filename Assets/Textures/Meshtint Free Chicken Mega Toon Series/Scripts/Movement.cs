@@ -39,6 +39,7 @@ public class Movement : MonoBehaviour
             {
                 currentWaypointGoal = Random.Range(0, Waypoints.Length);
                 agent.SetDestination(Waypoints[currentWaypointGoal].transform.position);
+                timeForOneMove = 0;
                 //Debug.Log("Stuck, Moving to new Waypoint = " + currentWaypointGoal.ToString());
             }
         }
