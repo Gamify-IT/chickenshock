@@ -49,14 +49,14 @@ public class ShootWeapon : MonoBehaviour
             Global.instance.UpdatePoints(1);
             Global.instance.AddCorrectKill();
             Global.instance.addCorrectAnswerToResult(this.getChickenText(hit));
-            Global.instance.FinishRound(MoorhuhnProperties.correctFeedbackText);
+            Global.instance.FinishRound(ChickenshockProperties.correctFeedbackText);
         }
         else if (hit.transform.tag == "WrongAnswer")
         {
             Global.instance.UpdatePoints(-1);
             Global.instance.AddWrongKill();
             Global.instance.addWrongAnswerToResult(this.getChickenText(hit));
-            Global.instance.FinishRound(MoorhuhnProperties.wrongFeedbackText);
+            Global.instance.FinishRound(ChickenshockProperties.wrongFeedbackText);
         }
     }
 
