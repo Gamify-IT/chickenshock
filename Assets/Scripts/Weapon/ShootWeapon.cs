@@ -23,9 +23,9 @@ public class ShootWeapon : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
-        if (Input.GetButtonDown("Fire1") && !Global.instance.getRoundStatus())
+        if (Input.GetButtonDown("Fire1") && !Global.instance.GetRoundStatus())
         {
-            Global.instance.addShot();
+            Global.instance.AddShot();
             muzzleFlash.Play();
             recoilAnimator.SetTrigger("shoot");
             Ray ray = new Ray(this.transform.position, this.transform.forward);
@@ -46,18 +46,23 @@ public class ShootWeapon : MonoBehaviour
     {
         if (hit.transform.tag == "CorrectAnswer")
         {
-            Global.instance.updatePoints(1);
-            Global.instance.addCorrectKill();
-            Global.instance.addCorrectAnswerToResult();
+            Global.instance.UpdatePoints(1);
+            Global.instance.AddCorrectKill();
+            Global.instance.addCorrectAnswerToResult(this.getChickenText(hit));
             Global.instance.FinishRound(MoorhuhnProperties.correctFeedbackText);
         }
         else if (hit.transform.tag == "WrongAnswer")
         {
-            Global.instance.updatePoints(-1);
-            Global.instance.addWrongKill();
-            Global.instance.addWrongAnswerToResult();
+            Global.instance.UpdatePoints(-1);
+            Global.instance.AddWrongKill();
+            Global.instance.addWrongAnswerToResult(this.getChickenText(hit));
             Global.instance.FinishRound(MoorhuhnProperties.wrongFeedbackText);
         }
+    }
+
+    private string getChickenText(RaycastHit chicken)
+    {
+        return chicken.transform.Find("Shield").transform.Find("Cube").transform.Find("Canvas").transform.Find("Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text;
     }
 
     /// <summary>

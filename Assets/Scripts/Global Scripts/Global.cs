@@ -36,8 +36,8 @@ public class Global : MonoBehaviour
     private int wrongKillsCount;
     private int shotCount;
     private int points;
-    private List<string> correctAnsweredQuestions;
-    private List<string> wrongAnsweredQuestions;
+    private List<RoundResult> correctAnsweredQuestions;
+    private List<RoundResult> wrongAnsweredQuestions;
     #endregion
 
     #region global variables
@@ -80,8 +80,8 @@ public class Global : MonoBehaviour
     {
         Debug.Log("init game variables");
         this.points = 0;
-        this.wrongAnsweredQuestions = new List<string>();
-        this.correctAnsweredQuestions = new List<string>();
+        this.wrongAnsweredQuestions = new List<RoundResult>();
+        this.correctAnsweredQuestions = new List<RoundResult>();
         this.time = MoorhuhnProperties.ingamePlaytime;
         this.timeLimit = this.time;
         this.pointOverlay = GameObject.FindGameObjectWithTag("Point Overlay");
@@ -104,17 +104,21 @@ public class Global : MonoBehaviour
     /// <summary>
     /// This method adds the answered question to the correctly answered questions
     /// </summary>
-    public void addCorrectAnswerToResult()
+    public void addCorrectAnswerToResult(String answer)
     {
-        this.correctAnsweredQuestions.Add(currentActiveQuestion);
+        Debug.Log("Add correct answer to game result: " + answer);
+        RoundResult correctResult = new RoundResult(currentActiveQuestion, answer);
+        this.correctAnsweredQuestions.Add(correctResult);
     }
 
     /// <summary>
     /// This method adds the answered question to the incorrectly answered questions
     /// </summary>
-    public void addWrongAnswerToResult()
+    public void addWrongAnswerToResult(String answer)
     {
-        this.wrongAnsweredQuestions.Add(currentActiveQuestion);
+        Debug.Log("Add wrong answer to game result: " + answer);
+        RoundResult wrongResult = new RoundResult(currentActiveQuestion, answer);
+        this.wrongAnsweredQuestions.Add(wrongResult);
     }
 
     /// <summary>
@@ -124,6 +128,7 @@ public class Global : MonoBehaviour
     {
         if (time <= 0)
         {
+            Debug.Log("Time is over load ens screen!");
             LoadEndScreen();
         }
     }
@@ -167,6 +172,7 @@ public class Global : MonoBehaviour
     /// </summary>
     private void KillRestChickens()
     {
+        Debug.Log("Find and remove left over chickens");
         Destroy(GameObject.FindGameObjectWithTag("CorrectAnswer"));
         foreach(GameObject wrongChicken in GameObject.FindGameObjectsWithTag("WrongAnswer"))
         {
@@ -181,6 +187,7 @@ public class Global : MonoBehaviour
     /// <param name="feedback">The feedback the player gets for killing the right/wrong chicken</param>
     private void GivePlayerFeedback(string feedback)
     {
+        Debug.Log("Show player feedback: " + feedback);
         if(GameObject.FindGameObjectWithTag("CorrectAnswer") != null)
         {
             GameObject.FindGameObjectWithTag("CorrectAnswer").transform.Find("Shield").transform.Find("Cube").transform.Find("Canvas").transform.Find("Text (TMP)").GetComponent<TMPro.TextMeshProUGUI>().text = MoorhuhnProperties.wrongFeedbackText;
@@ -222,6 +229,7 @@ public class Global : MonoBehaviour
     /// <param name="wrongAnswers">Text of the wrong answers</param>
     void LoadNewChickens(string questionText, string rightAnswer, List<string> wrongAnswers)
     {
+        Debug.Log("Create chickens");
         GameObject.FindGameObjectsWithTag("Question")[0].GetComponent<TMPro.TextMeshProUGUI>().text = questionText;
         GameObject chickenHorde = GameObject.Find("ChickenHorde");
 
@@ -238,6 +246,7 @@ public class Global : MonoBehaviour
     /// <param name="chickenHorde"></param>
     private void CreateWrongChickens(List<string> wrongAnswers, GameObject chickenHorde)
     {
+        Debug.Log("Create wrong chickens");
         foreach (string wrongAnswer in wrongAnswers)
         {
             GameObject wrongChicken = Instantiate(chickenPrefab, chickenHorde.transform);
@@ -254,6 +263,7 @@ public class Global : MonoBehaviour
     /// <param name="chickenHorde"></param>
     private void CreateCorrectChicken(string rightAnswer, GameObject chickenHorde)
     {
+        Debug.Log("Create correct chicken");
         GameObject correctAnswerChicken = Instantiate(chickenPrefab, chickenHorde.transform);
         Debug.Log("init correct Chicken");
         correctAnswerChicken.tag = "CorrectAnswer";
@@ -287,19 +297,20 @@ public class Global : MonoBehaviour
     /// </summary>
     public void FetchAllQuestions()
     {
-        //configurationAsUUID = GetConfiguration();
         Debug.Log("Try to fetch questions");
         Debug.Log("configuration as uuid:"+configurationAsUUID);
         String originURL;
         String restRequest;
         try
-        {
+        {   
+            configurationAsUUID = GetConfiguration();
             originURL = GetOriginUrl();
             restRequest = MoorhuhnProperties.getQuestions.Replace("{id}", configurationAsUUID);
         } catch(EntryPointNotFoundException entryPointNotFoundException) {
             Debug.Log("EntryPointNotFoundException, probably becouse you started the game with the editor: " + entryPointNotFoundException);
-            originURL = MoorhuhnProperties.localOrigin;
-            restRequest = "";
+            configurationAsUUID = MoorhuhnProperties.editorConfiguration;
+            originURL = "";
+            restRequest = MoorhuhnProperties.editorGetQuestions.Replace("{id}", configurationAsUUID);
         }
         string completeRequestString = originURL + restRequest;
         StartCoroutine(GetRequest(completeRequestString));
@@ -346,6 +357,7 @@ public class Global : MonoBehaviour
     /// </summary>
     private void SaveRound()
     {
+        Debug.Log("Save round details");
         String originURL;
         String restRequest;
         try
@@ -421,26 +433,26 @@ public class Global : MonoBehaviour
         }
     }
 
-    public void addWrongKill()
+    public void AddWrongKill()
     {
         this.wrongKillsCount++;
     }
-    public void addCorrectKill()
+    public void AddCorrectKill()
     {
         this.correctKillsCount++;
     }
 
-    public void addShot()
+    public void AddShot()
     {
         this.shotCount++;
     }
 
-    public void updatePoints(int amountToUpdate)
+    public void UpdatePoints(int amountToUpdate)
     {
         this.points += amountToUpdate;
     }
 
-    public bool getRoundStatus()
+    public bool GetRoundStatus()
     {
         return roundComplete;
     }
