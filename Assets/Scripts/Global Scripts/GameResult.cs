@@ -13,11 +13,11 @@ public class GameResult
     public int killsCount;
     public int shotCount;
     public int points;
-    public List<string> correctAnsweredQuestions;
-    public List<string> wrongAnsweredQuestions;
+    public List<RoundResult> correctAnsweredQuestions;
+    public List<RoundResult> wrongAnsweredQuestions;
     public string configurationAsUUID;
 
-    public GameResult(int questionCount, float timeLimit, float finishedInSeconds, int correctKillsCount, int wrongKillsCount, int killsCount, int shotCount, int points, List<string> correctAnsweredQuestions, List<string> wrongAnsweredQuestions, string configurationAsUUID)
+    public GameResult(int questionCount, float timeLimit, float finishedInSeconds, int correctKillsCount, int wrongKillsCount, int killsCount, int shotCount, int points, List<RoundResult> correctAnsweredQuestions, List<RoundResult> wrongAnsweredQuestions, string configurationAsUUID)
     {
         this.questionCount = questionCount;
         this.timeLimit = timeLimit;
