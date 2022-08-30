@@ -21,7 +21,7 @@ Game specific properties that are likely to be changed are stored in a `.propert
 
 ### Run the project
 
-Check the [manual for docker-compose](https://github.com/Gamify-IT/docs/blob/main/dev-manuals/docker-compose/docker-compose.md).
+Check the [manual for docker-compose](https://github.com/Gamify-IT/docs/blob/main/dev-manuals/languages/docker/docker-compose.md).
 
 ### Build
 
