@@ -5,6 +5,10 @@ In this game, you have to shoot the chicken displaying the correct answer.
 
 Unity Version: 2021.3.2f1 (LTS)
 
+## Disclaimer
+
+This project is developed as part of a student project at Universität Stuttgart.
+It may contain bugs, and is not licensed for external use.
 
 ## Development
 
