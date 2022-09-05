@@ -1,6 +1,7 @@
 
 [System.Serializable]
-public class QuestionWrapper
+public class GameConfiguration
 {
+    public int time;
     public Question[] questions;
 }
