@@ -82,7 +82,6 @@ public class Global : MonoBehaviour
         this.points = 0;
         this.wrongAnsweredQuestions = new List<RoundResult>();
         this.correctAnsweredQuestions = new List<RoundResult>();
-        this.time = ChickenshockProperties.ingamePlaytime;
         this.timeLimit = this.time;
         this.pointOverlay = GameObject.FindGameObjectWithTag("Point Overlay");
         this.pointOverlay.GetComponent<TMPro.TextMeshProUGUI>().text = this.points.ToString();
@@ -339,11 +338,10 @@ public class Global : MonoBehaviour
                     break;
                 case UnityWebRequest.Result.Success:
                     Debug.Log(uri + ":\nReceived: " + webRequest.downloadHandler.text);
-                    string fixedText = FixJson(webRequest.downloadHandler.text);
-                    Debug.Log("fixedText: " + fixedText);
-                    QuestionWrapper questionWrapper = JsonUtility.FromJson<QuestionWrapper>(fixedText);
-                    Question[] questions = questionWrapper.questions;
+                    GameConfiguration gameConfiguration = JsonUtility.FromJson<GameConfiguration>(webRequest.downloadHandler.text);
+                    Question[] questions = gameConfiguration.questions;
                     allUnusedQuestions = questions.ToList();
+                    this.time = gameConfiguration.time;
                     questionCount = allUnusedQuestions.Count;
                     PickRandomQuestion();
                     this.questionLoaded = true;
@@ -406,16 +404,6 @@ public class Global : MonoBehaviour
             }
             postRequest.Dispose();
         }
-    }
-
-    /// <summary>
-    /// This methods fixes the Json formatting.
-    /// </summary>
-    /// <param name="value"></param>
-    private string FixJson(string value)
-    {
-        value = "{\"questions\":" + value + "}";
-        return value;
     }
 
     /// <summary>
