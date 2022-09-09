@@ -137,6 +137,7 @@ public class Global : MonoBehaviour
     /// </summary>
     private void LoadEndScreen()
     {
+        Cursor.lockState = CursorLockMode.None;
         finishedInSeconds = timeLimit - time;
         EndScreen.points = points;
         Debug.Log("------------------------");
@@ -411,13 +412,13 @@ public class Global : MonoBehaviour
     /// </summary>
     private void UnlockCursor()
     {
-        if(Input.GetKey(KeyCode.LeftAlt))
+        if(Input.GetKeyDown(KeyCode.P))
         {
-            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
-        else 
+        if(Input.GetKeyUp(KeyCode.P))
         {
-            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 

@@ -11,7 +11,8 @@ public class StartButton : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
         Debug.Log("loaded game scene");
-        SceneManager.LoadScene("PlayerHUD",LoadSceneMode.Additive);
+        Cursor.lockState = CursorLockMode.Locked;
+        SceneManager.LoadScene("PlayerHUD", LoadSceneMode.Additive);
         Debug.Log("loaded player HUD scene");
     }
 
