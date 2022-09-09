@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4389609, g: 0.47892553, b: 0.5228057, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657767, g: 0.4964127, b: 0.57481843, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8565,7 +8565,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -8583,14 +8583,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804141365}
-  m_LocalRotation: {x: 0.98505425, y: 0.114333116, z: 0.07239713, w: 0.10655908}
-  m_LocalPosition: {x: -6.71, y: 1.7, z: -5.71}
+  m_LocalRotation: {x: 0.9063079, y: 0, z: 0, w: 0.42261827}
+  m_LocalPosition: {x: 0.41, y: 22.19, z: -14.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 168.85, y: -9.8, z: 705.8}
+  m_LocalEulerAnglesHint: {x: 130, y: 0, z: 0}
 --- !u!4 &815835016 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1490849379766892529, guid: b8217b9c1183a5144b666d1dd63980c4, type: 3}
@@ -14982,10 +14982,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be4fd5a7994eda843bac8b60e4c878f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wrongAnswers: []
-  correctAnswer: []
-  initialNumberOfWrongChickens: 0
-  pointsUpdated: 0
   chickenPrefab: {fileID: 8694710244237078374, guid: b5dc68ff3bbd9184c9c30e81618d9b5c, type: 3}
 --- !u!4 &1963256223
 Transform:
@@ -15644,7 +15640,6 @@ MonoBehaviour:
   range: 100
   mainCamera: {fileID: 2100726961}
   muzzleFlash: {fileID: 393531847}
-  globalScript: {fileID: 1963256222}
 --- !u!1001 &2101130743
 PrefabInstance:
   m_ObjectHideFlags: 0
