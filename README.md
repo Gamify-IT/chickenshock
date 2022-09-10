@@ -14,7 +14,7 @@ It may contain bugs, and is not licensed for external use.
 
 ### Getting started
 
-Install the [Unity Version 2021.3.1f1 (LTS)](https://gamifyit-docs.readthedocs.io/en/latest/dev-manuals/languages/unity/version.html)
+Install the [Unity Version 2021.3.2f1 (LTS)](https://gamifyit-docs.readthedocs.io/en/latest/dev-manuals/languages/unity/version.html)
 
 Clone the repository  
 ```sh
@@ -78,6 +78,7 @@ docker rm chickenshock
 - Chickens run around with signs
 - Signs contain possible answers
 - Chickens can be shot
+- Mouse can be unlocked by pressing `p`
 - Points are credited for shooting the chicken with the correct answer
 - Points are deducted when shooting a chicken with the wrong answer
 - Score in one corner of the screen
