@@ -47,6 +47,7 @@ public class Global : MonoBehaviour
     private string currentActiveQuestion = "";
     private bool roundComplete = false;
     private bool questionLoaded = false;
+    private bool gameFinished = false;
     #endregion
 
     #region gameobjects
@@ -94,7 +95,7 @@ public class Global : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (this.questionLoaded)
+        if (this.questionLoaded && !this.gameFinished)
         {
             this.CheckGameTimeOver();
             this.UpdateTimer();
@@ -139,6 +140,7 @@ public class Global : MonoBehaviour
     /// </summary>
     private void LoadEndScreen()
     {
+        this.gameFinished = true;
         Cursor.lockState = CursorLockMode.None;
         finishedInSeconds = timeLimit - time;
         EndScreen.points = points;
@@ -401,7 +403,7 @@ public class Global : MonoBehaviour
                     break;
                 case UnityWebRequest.Result.ProtocolError:
                     Debug.LogError(uri + ": HTTP Error: " + postRequest.error);
-                    EndScreen.errorText = postRequest.error;
+                    EndScreen.errorText = "Result Not Saved!: " + postRequest.error;
                     break;
                 case UnityWebRequest.Result.Success:
                     Debug.Log(uri + ":\nReceived: " + postRequest.downloadHandler.text);
