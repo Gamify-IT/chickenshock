@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using UnityEngine.UI;
 
 public class Global : MonoBehaviour
 {
@@ -46,6 +47,7 @@ public class Global : MonoBehaviour
     private string currentActiveQuestion = "";
     private bool roundComplete = false;
     private bool questionLoaded = false;
+    private bool gameFinished = false;
     #endregion
 
     #region gameobjects
@@ -85,6 +87,7 @@ public class Global : MonoBehaviour
         this.timeLimit = this.time;
         this.pointOverlay = GameObject.FindGameObjectWithTag("Point Overlay");
         this.pointOverlay.GetComponent<TMPro.TextMeshProUGUI>().text = this.points.ToString();
+        EndScreen.errorText = null;
     }
 
     /// <summary>
@@ -92,7 +95,7 @@ public class Global : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (this.questionLoaded)
+        if (this.questionLoaded && !this.gameFinished)
         {
             this.CheckGameTimeOver();
             this.UpdateTimer();
@@ -137,6 +140,7 @@ public class Global : MonoBehaviour
     /// </summary>
     private void LoadEndScreen()
     {
+        this.gameFinished = true;
         Cursor.lockState = CursorLockMode.None;
         finishedInSeconds = timeLimit - time;
         EndScreen.points = points;
@@ -152,7 +156,6 @@ public class Global : MonoBehaviour
         Debug.Log("correctAnsweredQuestions: " + correctAnsweredQuestions);
         Debug.Log("wrongAnsweredQuestions: " + wrongAnsweredQuestions);
         Debug.Log("------------------------");
-        SceneManager.LoadScene("EndScreen");
         SaveRound();
     }
 
@@ -372,6 +375,8 @@ public class Global : MonoBehaviour
         }
         string completeRequestString = originURL + restRequest;
         StartCoroutine(PostRequest(completeRequestString));
+        GameObject.Find("LoadingCircle").GetComponent<Image>().enabled = true;
+        GameObject.Find("SpinningCircle").GetComponent<Image>().enabled = true;
     }
 
     private IEnumerator PostRequest(String uri)
@@ -398,12 +403,14 @@ public class Global : MonoBehaviour
                     break;
                 case UnityWebRequest.Result.ProtocolError:
                     Debug.LogError(uri + ": HTTP Error: " + postRequest.error);
+                    EndScreen.errorText = "Result Not Saved!: " + postRequest.error;
                     break;
                 case UnityWebRequest.Result.Success:
                     Debug.Log(uri + ":\nReceived: " + postRequest.downloadHandler.text);
                     break;
             }
             postRequest.Dispose();
+            SceneManager.LoadScene("EndScreen");
         }
     }
 
