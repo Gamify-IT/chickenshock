@@ -85,6 +85,7 @@ public class Global : MonoBehaviour
         this.timeLimit = this.time;
         this.pointOverlay = GameObject.FindGameObjectWithTag("Point Overlay");
         this.pointOverlay.GetComponent<TMPro.TextMeshProUGUI>().text = this.points.ToString();
+        EndScreen.errorText = null;
     }
 
     /// <summary>
@@ -398,6 +399,7 @@ public class Global : MonoBehaviour
                     break;
                 case UnityWebRequest.Result.ProtocolError:
                     Debug.LogError(uri + ": HTTP Error: " + postRequest.error);
+                    EndScreen.errorText = postRequest.error;
                     break;
                 case UnityWebRequest.Result.Success:
                     Debug.Log(uri + ":\nReceived: " + postRequest.downloadHandler.text);

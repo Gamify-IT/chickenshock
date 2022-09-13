@@ -4,6 +4,7 @@ public class EndScreen : MonoBehaviour
 {
 
     public static int points;
+    public static string errorText;
 
     private void Start()
     {
@@ -16,7 +17,11 @@ public class EndScreen : MonoBehaviour
     /// </summary>
     private void UpdateEndPoints()
     {
-        GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
+        if(errorText != null){
+            GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = errorText;
+        }else{
+            GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = "Your Score: " + points.ToString();
+        }
     }
 
     private void ShowCursor()
