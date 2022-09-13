@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using UnityEngine.UI;
 
 public class Global : MonoBehaviour
 {
@@ -153,7 +154,6 @@ public class Global : MonoBehaviour
         Debug.Log("correctAnsweredQuestions: " + correctAnsweredQuestions);
         Debug.Log("wrongAnsweredQuestions: " + wrongAnsweredQuestions);
         Debug.Log("------------------------");
-        SceneManager.LoadScene("EndScreen");
         SaveRound();
     }
 
@@ -373,6 +373,8 @@ public class Global : MonoBehaviour
         }
         string completeRequestString = originURL + restRequest;
         StartCoroutine(PostRequest(completeRequestString));
+        GameObject.Find("LoadingCircle").GetComponent<Image>().enabled = true;
+        GameObject.Find("SpinningCircle").GetComponent<Image>().enabled = true;
     }
 
     private IEnumerator PostRequest(String uri)
@@ -406,6 +408,7 @@ public class Global : MonoBehaviour
                     break;
             }
             postRequest.Dispose();
+            SceneManager.LoadScene("EndScreen");
         }
     }
 
