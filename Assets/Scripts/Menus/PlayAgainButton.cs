@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// This script handles playing the game again from the end screen.
+/// </summary>
 public class PlayAgainButton : MonoBehaviour
 {
     /// <summary>

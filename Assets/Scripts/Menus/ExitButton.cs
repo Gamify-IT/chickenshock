@@ -1,6 +1,9 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
 
+/// <summary>
+/// This script handles closing chickenshock.
+/// </summary>
 public class ExitButton : MonoBehaviour
 {
     [DllImport("__Internal")]

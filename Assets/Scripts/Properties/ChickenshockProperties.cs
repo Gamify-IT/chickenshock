@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This script sets various chickenshock properties.
+/// </summary>
 public static class ChickenshockProperties
 {
     //REST PATHS

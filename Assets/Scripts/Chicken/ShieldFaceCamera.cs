@@ -1,8 +1,12 @@
 using UnityEngine;
 
+/// <summary>
+/// This script rotates the signs the chickens are carrying so that they always face the camera. 
+/// This is necessary so that the player can always read the signs no matter where the chickens are walking to.
+/// </summary>
 public class ShieldFaceCamera : MonoBehaviour
 {
-    public new GameObject camera;
+    private new GameObject camera;
     public GameObject shield;
 
     private void Start()

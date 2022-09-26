@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// This script handles updating the end screen items.
+/// </summary>
 public class EndScreen : MonoBehaviour
 {
 

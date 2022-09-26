@@ -9,6 +9,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine.UI;
 
+/// <summary>
+/// <include file="file.xml"></include>
+/// This script handles updating all the game related data and general conditions for a game of chickenshock.
+/// </summary>
 public class Global : MonoBehaviour
 {
     #region initialInformations
@@ -217,9 +221,9 @@ public class Global : MonoBehaviour
         {
             Debug.Log(allUnusedQuestions.Count + " questions remaining");
             int randomNumber = UnityEngine.Random.Range(0, allUnusedQuestions.Count);
-            this.initialNumberOfWrongChickens = allUnusedQuestions[randomNumber].getWrongAnswers().Count;
-            LoadNewChickens(allUnusedQuestions[randomNumber].getQuestionText(), allUnusedQuestions[randomNumber].getRightAnswer(), allUnusedQuestions[randomNumber].getWrongAnswers());
-            currentActiveQuestion = allUnusedQuestions[randomNumber].getId();
+            this.initialNumberOfWrongChickens = allUnusedQuestions[randomNumber].wrongAnswers.Count;
+            LoadNewChickens(allUnusedQuestions[randomNumber].text, allUnusedQuestions[randomNumber].rightAnswer, allUnusedQuestions[randomNumber].wrongAnswers);
+            currentActiveQuestion = allUnusedQuestions[randomNumber].id;
             allUnusedQuestions.RemoveAt(randomNumber);
         }
     }
