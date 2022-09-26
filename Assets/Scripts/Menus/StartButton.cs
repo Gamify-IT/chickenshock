@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// This script handles starting the game from the main screen.
+/// </summary>
 public class StartButton : MonoBehaviour
 {
 

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// This script handles shooting and animating the weapon.
+/// </summary>
 public class ShootWeapon : MonoBehaviour
 {
     public float range = 100f;

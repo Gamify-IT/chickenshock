@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This is the equivalent to the Result.java class in the backend
+/// </summary>
 [System.Serializable]
 public class GameResult
 {

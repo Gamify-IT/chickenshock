@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// This is the equivalent to the Question.java class in the backend
+/// </summary>
 [System.Serializable]
 public class Question
 {
@@ -15,45 +18,5 @@ public class Question
         this.text = text;
         this.rightAnswer = rightAnswer;
         this.wrongAnswers = wrongAnswers;
-    }
-
-    public string getId()
-    {
-        return id;
-    }
-
-    public void setId(string id)
-    {
-        this.id = id;
-    }
-
-    public String getQuestionText()
-    {
-        return text;
-    }
-
-    public void setQuestion(String questionText)
-    {
-        this.text = questionText;
-    }
-
-    public String getRightAnswer()
-    {
-        return rightAnswer;
-    }
-
-    public void setRightAnswer(String rightAnswer)
-    {
-        this.rightAnswer = rightAnswer;
-    }
-
-    public void setWrongAnswers(List<String> wrongAnswers)
-    {
-        this.wrongAnswers = wrongAnswers;
-    }
-
-    public List<String> getWrongAnswers()
-    {
-        return this.wrongAnswers;
     }
 }

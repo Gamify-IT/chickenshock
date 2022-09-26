@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This script implements and animates a loading circle
+/// </summary>
 public class LoadingCircle : MonoBehaviour
 {
     private RectTransform rectComponent;
