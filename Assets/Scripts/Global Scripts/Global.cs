@@ -88,7 +88,6 @@ public class Global : MonoBehaviour
         this.points = 0;
         this.wrongAnsweredQuestions = new List<RoundResult>();
         this.correctAnsweredQuestions = new List<RoundResult>();
-        this.timeLimit = this.time;
         this.pointOverlay = GameObject.FindGameObjectWithTag("Point Overlay");
         this.pointOverlay.GetComponent<TMPro.TextMeshProUGUI>().text = this.points.ToString();
         EndScreen.errorText = null;
@@ -350,6 +349,7 @@ public class Global : MonoBehaviour
                     Question[] questions = gameConfiguration.questions;
                     allUnusedQuestions = questions.ToList();
                     this.time = gameConfiguration.time;
+                    this.timeLimit = gameConfiguration.time;
                     questionCount = allUnusedQuestions.Count;
                     PickRandomQuestion();
                     this.questionLoaded = true;
