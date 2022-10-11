@@ -157,7 +157,6 @@ public class GameManager : MonoBehaviour
         GivePlayerFeedback(feedback);
         pointOverlay.GetComponent<TMPro.TextMeshProUGUI>().text = points.ToString();
         Invoke("KillRestChickens", 1f);
-        this.PickRandomQuestion();
         this.roundComplete = true;
     }
 
@@ -172,6 +171,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(wrongChicken);
         }
+        this.PickRandomQuestion();
     }
 
     /// <summary>
