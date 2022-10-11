@@ -26,9 +26,9 @@ public class ShootWeapon : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
-        if (Input.GetButtonDown("Fire1") && !Global.instance.GetRoundStatus())
+        if (Input.GetButtonDown("Fire1") && !GameManager.instance.GetRoundStatus())
         {
-            Global.instance.AddShot();
+            GameManager.instance.AddShot();
             muzzleFlash.Play();
             recoilAnimator.SetTrigger("shoot");
             Ray ray = new Ray(this.transform.position, this.transform.forward);
@@ -49,17 +49,17 @@ public class ShootWeapon : MonoBehaviour
     {
         if (hit.transform.tag == "CorrectAnswer")
         {
-            Global.instance.UpdatePoints(1);
-            Global.instance.AddCorrectKill();
-            Global.instance.addCorrectAnswerToResult(this.getChickenText(hit));
-            Global.instance.FinishRound(ChickenshockProperties.correctFeedbackText);
+            GameManager.instance.UpdatePoints(1);
+            GameManager.instance.AddCorrectKill();
+            GameManager.instance.addCorrectAnswerToResult(this.getChickenText(hit));
+            GameManager.instance.FinishRound(ChickenshockProperties.correctFeedbackText);
         }
         else if (hit.transform.tag == "WrongAnswer")
         {
-            Global.instance.UpdatePoints(-1);
-            Global.instance.AddWrongKill();
-            Global.instance.addWrongAnswerToResult(this.getChickenText(hit));
-            Global.instance.FinishRound(ChickenshockProperties.wrongFeedbackText);
+            GameManager.instance.UpdatePoints(-1);
+            GameManager.instance.AddWrongKill();
+            GameManager.instance.addWrongAnswerToResult(this.getChickenText(hit));
+            GameManager.instance.FinishRound(ChickenshockProperties.wrongFeedbackText);
         }
     }
 
