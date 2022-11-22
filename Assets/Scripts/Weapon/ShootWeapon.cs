@@ -10,8 +10,8 @@ public class ShootWeapon : MonoBehaviour
     public ParticleSystem muzzleFlash;
     private Animator recoilAnimator;
     private GameManager gameManager;
-    private string correctAnswerTag = "CorrectAnswer";
-    private string wrongAnswerTag = "WrongAnswer";
+    private const string correctAnswerTag = "CorrectAnswer";
+    private const string wrongAnswerTag = "WrongAnswer";
 
     private void Start()
     {
