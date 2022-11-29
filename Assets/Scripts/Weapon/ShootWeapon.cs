@@ -9,6 +9,9 @@ public class ShootWeapon : MonoBehaviour
     public Camera mainCamera;
     public ParticleSystem muzzleFlash;
     private Animator recoilAnimator;
+    private GameManager gameManager;
+    private const string correctAnswerTag = "CorrectAnswer";
+    private const string wrongAnswerTag = "WrongAnswer";
 
     private void Start()
     {
@@ -26,9 +29,9 @@ public class ShootWeapon : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
-        if (Input.GetButtonDown("Fire1") && !Global.instance.GetRoundStatus())
+        if (Input.GetButtonDown("Fire1") && !gameManager.GetRoundStatus())
         {
-            Global.instance.AddShot();
+            gameManager.AddShot();
             muzzleFlash.Play();
             recoilAnimator.SetTrigger("shoot");
             Ray ray = new Ray(this.transform.position, this.transform.forward);
@@ -47,19 +50,19 @@ public class ShootWeapon : MonoBehaviour
 
     private void handleKill(RaycastHit hit)
     {
-        if (hit.transform.tag == "CorrectAnswer")
+        if (hit.transform.tag == correctAnswerTag)
         {
-            Global.instance.UpdatePoints(1);
-            Global.instance.AddCorrectKill();
-            Global.instance.addCorrectAnswerToResult(this.getChickenText(hit));
-            Global.instance.FinishRound(ChickenshockProperties.correctFeedbackText);
+            gameManager.UpdatePoints(1);
+            gameManager.AddCorrectKill();
+            gameManager.addCorrectAnswerToResult(this.getChickenText(hit));
+            gameManager.FinishRound(ChickenshockProperties.correctFeedbackText);
         }
-        else if (hit.transform.tag == "WrongAnswer")
+        else if (hit.transform.tag == wrongAnswerTag)
         {
-            Global.instance.UpdatePoints(-1);
-            Global.instance.AddWrongKill();
-            Global.instance.addWrongAnswerToResult(this.getChickenText(hit));
-            Global.instance.FinishRound(ChickenshockProperties.wrongFeedbackText);
+            gameManager.UpdatePoints(-1);
+            gameManager.AddWrongKill();
+            gameManager.addWrongAnswerToResult(this.getChickenText(hit));
+            gameManager.FinishRound(ChickenshockProperties.wrongFeedbackText);
         }
     }
 
@@ -73,6 +76,7 @@ public class ShootWeapon : MonoBehaviour
     /// </summary>
     private void InitVariables()
     {
+        this.gameManager = GameManager.instance;
         recoilAnimator = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Animator>();
     }
 
