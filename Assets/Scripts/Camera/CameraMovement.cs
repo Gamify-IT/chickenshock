@@ -29,10 +29,10 @@ public class CameraMovement : MonoBehaviour
     {
         float horizontal = horizontalSpeed * Input.GetAxis("Mouse X");
         float vertical = verticalSpeed * Input.GetAxis("Mouse Y");
-        horizontalRotation += horizontal;
-        verticalRotation -= vertical;
-        transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0f);
+        horizontalRotation += horizontal * Time.deltaTime * 100;
+        verticalRotation -= vertical * Time.deltaTime * 100;
         ResetCamera();
+        transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0f);
     }
 
     /// <summary>
@@ -41,10 +41,8 @@ public class CameraMovement : MonoBehaviour
     /// </summary>
     void ResetCamera()
     {
-        verticalRotation = Math.Min(verticalRotation, rightCameraBorder);
-        verticalRotation = Math.Max(verticalRotation, leftCameraBorder);
-        horizontalRotation = Math.Min(horizontalRotation, topCameraBorder);
-        horizontalRotation = Math.Max(horizontalRotation, bottomCameraBorder);
+        verticalRotation = Mathf.Clamp(verticalRotation, leftCameraBorder, rightCameraBorder);
+        horizontalRotation = Mathf.Clamp(horizontalRotation, bottomCameraBorder, topCameraBorder);
     }
 
 }
