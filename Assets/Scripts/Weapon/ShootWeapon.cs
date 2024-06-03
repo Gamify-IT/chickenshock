@@ -12,6 +12,10 @@ public class ShootWeapon : MonoBehaviour
     private GameManager gameManager;
     private const string correctAnswerTag = "CorrectAnswer";
     private const string wrongAnswerTag = "WrongAnswer";
+    public AudioClip shootSound;
+    public AudioClip successSound;
+    public AudioClip errorSound;
+    private AudioSource audioSource;
 
     private void Start()
     {
@@ -44,6 +48,7 @@ public class ShootWeapon : MonoBehaviour
                     handleKill(hit);
                     Destroy(hit.transform.gameObject);
                 }
+                PlayShootSound();
             }
         }
     }
@@ -52,6 +57,7 @@ public class ShootWeapon : MonoBehaviour
     {
         if (hit.transform.tag == correctAnswerTag)
         {
+            PlaySuccessSound();
             gameManager.UpdatePoints(1);
             gameManager.AddCorrectKill();
             gameManager.addCorrectAnswerToResult(this.getChickenText(hit));
@@ -59,6 +65,7 @@ public class ShootWeapon : MonoBehaviour
         }
         else if (hit.transform.tag == wrongAnswerTag)
         {
+            PlayErrorSound();
             gameManager.UpdatePoints(-1);
             gameManager.AddWrongKill();
             gameManager.addWrongAnswerToResult(this.getChickenText(hit));
@@ -80,4 +87,67 @@ public class ShootWeapon : MonoBehaviour
         recoilAnimator = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Animator>();
     }
 
+    /// <summary>
+    /// This function plays the shoot sound.
+    /// </summary>
+    private void PlayShootSound()
+    {
+        //get AudioSource component
+        audioSource=GetComponent<AudioSource>();
+        //add AudioSource component if necessary
+        if(audioSource == null)
+        {
+            audioSource=gameObject.AddComponent<AudioSource>();
+        }
+        //set audio clip
+        audioSource.clip=shootSound;
+
+        if (shootSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(shootSound);
+        }
+    }
+
+
+    /// <summary>
+    /// This function plays the success sound.
+    /// </summary>
+    private void PlaySuccessSound()
+    {
+        //get AudioSource component
+        audioSource=GetComponent<AudioSource>();
+        //add AudioSource component if necessary
+        if(audioSource == null)
+        {
+            audioSource=gameObject.AddComponent<AudioSource>();
+        }
+        //set audio clip
+        audioSource.clip=successSound;
+        
+        if (successSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(successSound);
+        }
+    }
+
+    /// <summary>
+    /// This function plays the error sound.
+    /// </summary>
+    private void PlayErrorSound()
+    {
+        //get AudioSource component
+        audioSource=GetComponent<AudioSource>();
+        //add AudioSource component if necessary
+        if(audioSource == null)
+        {
+            audioSource=gameObject.AddComponent<AudioSource>();
+        }
+        //set audio clip
+        audioSource.clip=errorSound;
+        
+        if (errorSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(errorSound);
+        }
+    }
 }

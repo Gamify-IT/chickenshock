@@ -6805,6 +6805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7929282102413c469d8b1c90159fbd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: 7c4dfe68cfef24746be9e5f898307cab, type: 3}
 --- !u!114 &743396760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12802,6 +12803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f6f84d70b3a754b8221e3707272b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: 7c4dfe68cfef24746be9e5f898307cab, type: 3}
 --- !u!1001 &1417861259
 PrefabInstance:
   m_ObjectHideFlags: 0
