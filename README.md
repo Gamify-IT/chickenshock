@@ -66,3 +66,21 @@ docker stop chickenshock-dev
 ```sh
 docker rm chickenshock-dev
 ```
+
+## Audio sources
+
+1.	Chicken sound
+https://pixabay.com/de/sound-effects/047876-chicken-clucking-68610/
+
+2.	Click
+https://pixabay.com/de/sound-effects/interface-button-154180/
+
+3.	Wrong answer
+https://pixabay.com/de/sound-effects/error-126627/
+
+4.	Shot sound
+https://pixabay.com/de/sound-effects/shotgun-firing-4-6746/
+
+5.	Correct answer
+https://pixabay.com/de/sound-effects/short-success-sound-glockenspiel-treasure-video-game-6346/
+
