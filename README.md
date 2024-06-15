@@ -50,7 +50,7 @@ To run the latest changes on any other branch than `main` use the `docker-compos
 
 ### Build
 
-Build the project like discribed in [this manual](https://gamifyit-docs.readthedocs.io/en/latest/dev-manuals/languages/unity/build-unity-project.html).
+Build the project like described in [this manual](https://gamifyit-docs.readthedocs.io/en/latest/dev-manuals/languages/unity/build-unity-project.html).
 
 Build the Docker-Container
 ```sh
