@@ -8,6 +8,7 @@ public class ExitButton : MonoBehaviour
 {
     public AudioClip clickSound;
     private AudioSource audioSource;
+    public float delayBeforeClose=0.5f;
 
     [DllImport("__Internal")]
     private static extern void CloseMinigame();
@@ -19,7 +20,7 @@ public class ExitButton : MonoBehaviour
     public void callCloseMinigame()
     {
         PlayClickSound();
-        CloseMinigame();
+        Invoke("CloseMinigame", delayBeforeClose);
     }
 
     /// <summary>

@@ -15769,8 +15769,8 @@ MonoBehaviour:
   mainCamera: {fileID: 2100726961}
   muzzleFlash: {fileID: 393531847}
   shootSound: {fileID: 8300000, guid: 6e98074debea5ee44a412d7371fdf19c, type: 3}
-  successSound: {fileID: 8300000, guid: cf260c45856193a4eab4b5d926c80d64, type: 3}
-  errorSound: {fileID: 8300000, guid: d7d97e132cb8e6f4bb7c4d3f611ca4cd, type: 3}
+  successSound: {fileID: 8300000, guid: 39ce06ea34ca8a14fb90474649acf316, type: 3}
+  errorSound: {fileID: 8300000, guid: 8f9f5b7960b199a4e9c90ecef20c4681, type: 3}
 --- !u!1001 &2101130743
 PrefabInstance:
   m_ObjectHideFlags: 0
