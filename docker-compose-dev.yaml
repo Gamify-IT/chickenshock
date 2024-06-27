@@ -109,6 +109,14 @@ services:
     pull_policy: always
     expose:
       - "80"
+      
+  chickenshock:
+    container_name: chickenshock
+    image: ghcr.io/gamify-it/chickenshock:main
+    restart: always
+    pull_policy: always
+    expose:
+      - "80"
 
   lecturer-interface:
     container_name: lecturer-interface
