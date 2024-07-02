@@ -22,15 +22,10 @@ public class EndScreen : MonoBehaviour
     /// </summary>
     private void UpdateEndPoints()
     {
-        TMPro.TextMeshProUGUI textComponent = GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>();
-
-        if (errorText != null){
-            textComponent.text = errorText;
-        }
-        else
-        {
-            string scoreText = $"Your Score: {points}\nYou've gained {rewards} coins!";
-            textComponent.text = scoreText;
+        if(errorText != null){
+            GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = errorText;
+        }else{
+            GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = "Your Score: " + points.ToString() + "You've gained" + rewards.ToString() + "coins!";
         }
     }
 

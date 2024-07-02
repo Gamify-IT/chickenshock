@@ -415,7 +415,6 @@ public class GameManager : MonoBehaviour
     {
         GameResult updatedResult = JsonUtility.FromJson<GameResult>(json);
         GameManager.instance.rewards = updatedResult.rewards;
-        GameManager.instance.points = updatedResult.points;
     }
 
 
