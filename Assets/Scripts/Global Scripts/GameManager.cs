@@ -367,6 +367,7 @@ public class GameManager : MonoBehaviour
             restRequest = "";
         }
         string completeRequestString = originURL + restRequest;
+        Debug.Log("Complete request string: " + completeRequestString);
         StartCoroutine(PostRequest(completeRequestString));
         GameObject.Find("LoadingCircle").GetComponent<Image>().enabled = true;
         GameObject.Find("SpinningCircle").GetComponent<Image>().enabled = true;
@@ -378,18 +379,25 @@ public class GameManager : MonoBehaviour
     /// <param name="uri"></param>
     private IEnumerator PostRequest(String uri)
     {
-        GameResult round = new GameResult(questionCount,timeLimit,finishedInSeconds,correctKillsCount,wrongKillsCount,correctKillsCount + wrongKillsCount, shotCount,points,correctAnsweredQuestions,wrongAnsweredQuestions, configurationAsUUID, score, rewards);
+        GameResult round = new GameResult(questionCount, timeLimit, finishedInSeconds, correctKillsCount, wrongKillsCount, correctKillsCount + wrongKillsCount, shotCount, points, correctAnsweredQuestions, wrongAnsweredQuestions, configurationAsUUID, 0, 0);
         string jsonRound = JsonUtility.ToJson(round);
+        Debug.Log("JSON to send: " + jsonRound); 
         byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonRound);
 
         using (UnityWebRequest postRequest = new UnityWebRequest(uri, "POST"))
         {
             Debug.Log("Save game result: " + uri);
             postRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            Debug.Log("Response Text: " + postRequest.uploadHandler.text);
+
             postRequest.downloadHandler = new DownloadHandlerBuffer();
             postRequest.SetRequestHeader("Content-Type", "application/json");
 
             yield return postRequest.SendWebRequest();
+
+            Debug.Log("Response Code: " + postRequest.responseCode);
+            Debug.Log("Response Text: " + postRequest.downloadHandler.text); 
+
 
             switch (postRequest.result)
             {
