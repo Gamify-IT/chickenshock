@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
     private bool roundComplete = false;
     private bool questionLoaded = false;
     private bool gameFinished = false;
+    public GameResult receivedGameResult;
     #endregion
 
     #region gameobjects
@@ -398,6 +399,11 @@ public class GameManager : MonoBehaviour
                     break;
                 case UnityWebRequest.Result.Success:
                     Debug.Log(uri + ":\nReceived: " + postRequest.downloadHandler.text);
+                    string jsonResponse = postRequest.downloadHandler.text;
+                    receivedGameResult = JsonUtility.FromJson<GameResult>(jsonResponse);
+                    Debug.Log(receivedGameResult);
+
+
                     break;
             }
             postRequest.Dispose();
