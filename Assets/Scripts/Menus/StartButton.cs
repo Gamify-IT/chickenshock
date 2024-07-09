@@ -6,17 +6,54 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class StartButton : MonoBehaviour
 {
+    public AudioClip clickSound;
+    private AudioSource audioSource;
+    public float delayBeforeScenesLoading=0.1f;
+
+    public void Start()
+    {
+        //get AudioSource component
+        audioSource=GetComponent<AudioSource>();
+        //add AudioSource component if necessary
+        if(audioSource == null)
+        {
+            audioSource=gameObject.AddComponent<AudioSource>();
+        }
+        //set audio clip
+        audioSource.clip=clickSound;
+    }
+
+    /// <summary>
+    /// This method calls the click sound and calls the function for scenes loading after delay
+    /// </summary>
+    public void LoadGame()
+    {
+        PlayClickSound();
+        Invoke("LoadScenes", delayBeforeScenesLoading);
+    }
 
     /// <summary>
     /// This method loads the Game scene and loads the HUD over it. 
     /// </summary>
-    public void LoadGame()
+    public void LoadScenes()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Game");   
         Debug.Log("loaded game scene");
         Cursor.lockState = CursorLockMode.Locked;
         SceneManager.LoadScene("PlayerHUD", LoadSceneMode.Additive);
         Debug.Log("loaded player HUD scene");
     }
 
+
+    /// <summary>
+    /// This function is called by the <c>Start Button</c>.
+    /// This function plays the click sound.
+    /// </summary>
+    private void PlayClickSound()
+    {
+        if (clickSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clickSound);
+        }
+    }
 }
