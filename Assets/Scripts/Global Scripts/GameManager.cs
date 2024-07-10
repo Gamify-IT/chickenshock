@@ -406,7 +406,10 @@ public class GameManager : MonoBehaviour
                     break;
                     string jsonResponse = postRequest.downloadHandler.text;
                     receivedGameResult = JsonUtility.FromJson<GameResult>(jsonResponse);
+                    Debug.Log(receivedGameResult.score);
                     Debug.Log(receivedGameResult.rewards);
+
+
             }
             postRequest.Dispose();
             SceneManager.LoadScene("EndScreen");
