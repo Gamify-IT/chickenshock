@@ -402,8 +402,7 @@ public class GameManager : MonoBehaviour
                     EndScreen.errorText = "Result Not Saved!: " + postRequest.error;
                     break;
                 case UnityWebRequest.Result.Success:
-                    Debug.Log(uri + ":\nReceived: " + postRequest.downloadHandler.text);
-                    break;
+                    Debug.Log(uri + ":\nReceived: " + postRequest.downloadHandler.text);          
                     string jsonResponse = postRequest.downloadHandler.text;
                     receivedGameResult = JsonUtility.FromJson<GameResult>(jsonResponse);
                     Debug.Log(receivedGameResult.score);
