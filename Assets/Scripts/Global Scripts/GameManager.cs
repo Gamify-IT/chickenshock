@@ -37,8 +37,8 @@ public class GameManager : MonoBehaviour
     private int wrongKillsCount;
     private int shotCount;
     private int points;
-    private int score;
-    private int rewards;
+    public int score;
+    public int rewards;
     private List<RoundResult> correctAnsweredQuestions;
     private List<RoundResult> wrongAnsweredQuestions;
     #endregion
@@ -405,10 +405,16 @@ public class GameManager : MonoBehaviour
                     Debug.Log(uri + ":\nReceived: " + postRequest.downloadHandler.text);          
                     string jsonResponse = postRequest.downloadHandler.text;
                     receivedGameResult = JsonUtility.FromJson<GameResult>(jsonResponse);
-                    Debug.Log(receivedGameResult.score);
-                    Debug.Log(receivedGameResult.rewards);
-                    break;
+                    score = receivedGameResult.score;
+                    rewards = receivedGameResult.rewards;
+                    Debug.Log(score);
+                    Debug.Log(rewards);        
+                    
+                    ResultButton.score = receivedGameResult.score;
+                    ResultButton.rewards = receivedGameResult.rewards;
 
+
+                    break;
 
             }
             postRequest.Dispose();
