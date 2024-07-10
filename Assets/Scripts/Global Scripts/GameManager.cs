@@ -407,6 +407,7 @@ public class GameManager : MonoBehaviour
                     receivedGameResult = JsonUtility.FromJson<GameResult>(jsonResponse);
                     Debug.Log(receivedGameResult.score);
                     Debug.Log(receivedGameResult.rewards);
+                    break;
 
 
             }
