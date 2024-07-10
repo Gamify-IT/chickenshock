@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour
     private bool roundComplete = false;
     private bool questionLoaded = false;
     private bool gameFinished = false;
-    public GameResult receivedGameResult;
     #endregion
 
     #region gameobjects
@@ -381,6 +380,7 @@ public class GameManager : MonoBehaviour
         GameResult round = new GameResult(questionCount,timeLimit,finishedInSeconds,correctKillsCount,wrongKillsCount,correctKillsCount + wrongKillsCount, shotCount,points,correctAnsweredQuestions,wrongAnsweredQuestions, configurationAsUUID, score, rewards);
         string jsonRound = JsonUtility.ToJson(round);
         byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonRound);
+        GameResult receivedGameResult;
 
         using (UnityWebRequest postRequest = new UnityWebRequest(uri, "POST"))
         {
