@@ -19,8 +19,10 @@ public class GameResult
     public List<RoundResult> correctAnsweredQuestions;
     public List<RoundResult> wrongAnsweredQuestions;
     public string configurationAsUUID;
+    public int score;
+    public int rewards;
 
-    public GameResult(int questionCount, float timeLimit, float finishedInSeconds, int correctKillsCount, int wrongKillsCount, int killsCount, int shotCount, int points, List<RoundResult> correctAnsweredQuestions, List<RoundResult> wrongAnsweredQuestions, string configurationAsUUID)
+    public GameResult(int questionCount, float timeLimit, float finishedInSeconds, int correctKillsCount, int wrongKillsCount, int killsCount, int shotCount, int points, List<RoundResult> correctAnsweredQuestions, List<RoundResult> wrongAnsweredQuestions, string configurationAsUUID, int score, int rewards)
     {
         this.questionCount = questionCount;
         this.timeLimit = timeLimit;
@@ -33,5 +35,7 @@ public class GameResult
         this.correctAnsweredQuestions = correctAnsweredQuestions;
         this.wrongAnsweredQuestions = wrongAnsweredQuestions;
         this.configurationAsUUID = configurationAsUUID;
+        this.score = score;
+        this.rewards = rewards;
     }
 }

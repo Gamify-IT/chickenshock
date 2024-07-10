@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     private int wrongKillsCount;
     private int shotCount;
     private int points;
+    private int score;
+    private int rewards;
     private List<RoundResult> correctAnsweredQuestions;
     private List<RoundResult> wrongAnsweredQuestions;
     #endregion
@@ -83,6 +85,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("init game variables");
         this.points = 0;
+        this.score = 0;
+        this.rewards = 0;
         this.wrongAnsweredQuestions = new List<RoundResult>();
         this.correctAnsweredQuestions = new List<RoundResult>();
         this.pointOverlay = GameObject.FindGameObjectWithTag("Point Overlay");
@@ -373,7 +377,7 @@ public class GameManager : MonoBehaviour
     /// <param name="uri"></param>
     private IEnumerator PostRequest(String uri)
     {
-        GameResult round = new GameResult(questionCount,timeLimit,finishedInSeconds,correctKillsCount,wrongKillsCount,correctKillsCount + wrongKillsCount, shotCount,points,correctAnsweredQuestions,wrongAnsweredQuestions, configurationAsUUID);
+        GameResult round = new GameResult(questionCount,timeLimit,finishedInSeconds,correctKillsCount,wrongKillsCount,correctKillsCount + wrongKillsCount, shotCount,points,correctAnsweredQuestions,wrongAnsweredQuestions, configurationAsUUID, score, rewards);
         string jsonRound = JsonUtility.ToJson(round);
         byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonRound);
 
