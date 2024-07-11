@@ -13,10 +13,10 @@ public class ResultButton : MonoBehaviour
 
     
 
-    public void OpenResultPanel()
+    public void Start()
     {
-        rewardsText.text = "Rewards: " + rewards.ToString();
-        scoreText.text = "Score: " + score.ToString();
+        rewardsText.text = rewards.ToString() + "  " + "rewards";
+        scoreText.text = score.ToString() + "  " + "scores";
         resultPanel.SetActive(true); 
 
       

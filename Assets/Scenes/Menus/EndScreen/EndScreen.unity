@@ -6351,7 +6351,6 @@ GameObject:
   - component: {fileID: 696608312}
   - component: {fileID: 696608311}
   - component: {fileID: 696608310}
-  - component: {fileID: 696608314}
   m_Layer: 5
   m_Name: ResultButton
   m_TagString: Untagged
@@ -6423,19 +6422,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 696608312}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 696608314}
-        m_TargetAssemblyTypeName: ResultButton, Assembly-CSharp
-        m_MethodName: OpenResultPanel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Game
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &696608311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6488,21 +6475,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 696608308}
   m_CullTransparentMesh: 1
---- !u!114 &696608314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696608308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0715a17e9854a7a4bab306ce8c063a8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resultPanel: {fileID: 833570956}
-  rewardsText: {fileID: 1941822855}
-  scoreText: {fileID: 771030706}
 --- !u!1001 &707841358
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7358,8 +7330,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.254, y: 62}
-  m_SizeDelta: {x: 522.4319, y: 42.6252}
+  m_AnchoredPosition: {x: 121.32, y: -15.119}
+  m_SizeDelta: {x: 242.6476, y: 39.363}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &771030706
 MonoBehaviour:
@@ -8031,7 +8003,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &833570957
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8052,8 +8024,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 8.428406, y: -5.2677917}
-  m_SizeDelta: {x: -495.168, y: -145.3898}
+  m_AnchoredPosition: {x: 28, y: 224.32}
+  m_SizeDelta: {x: -545.7413, y: -530.3993}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &833570958
 MonoBehaviour:
@@ -8068,7 +8040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87058824, g: 0.8627451, b: 0.75686276, a: 1}
+  m_Color: {r: 0.3605672, g: 0.45581082, b: 0.5566038, a: 0.12156863}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15846,6 +15818,7 @@ GameObject:
   - component: {fileID: 1745837505}
   - component: {fileID: 1745837504}
   - component: {fileID: 1745837503}
+  - component: {fileID: 1745837506}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -15940,6 +15913,21 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1745837506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745837501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0715a17e9854a7a4bab306ce8c063a8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resultPanel: {fileID: 833570956}
+  rewardsText: {fileID: 771030706}
+  scoreText: {fileID: 1941822855}
 --- !u!1001 &1765942987
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16541,8 +16529,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8, y: 181}
-  m_SizeDelta: {x: 138.94, y: 51.0536}
+  m_AnchoredPosition: {x: 3.5062, y: 17.4}
+  m_SizeDelta: {x: 498.6629, y: 34.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1834709421
 MonoBehaviour:
@@ -16564,7 +16552,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Results
+  m_text: Finished! You've gained
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -17091,8 +17079,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.254, y: 114.2142}
-  m_SizeDelta: {x: 522.4319, y: 42.6252}
+  m_AnchoredPosition: {x: -154.27, y: -15.119}
+  m_SizeDelta: {x: 183.1015, y: 39.3624}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1941822855
 MonoBehaviour:
