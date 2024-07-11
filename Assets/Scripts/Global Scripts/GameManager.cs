@@ -336,6 +336,7 @@ public class GameManager : MonoBehaviour
                     GameConfiguration gameConfiguration = JsonUtility.FromJson<GameConfiguration>(webRequest.downloadHandler.text);
                     Question[] questions = gameConfiguration.questions;
                     allUnusedQuestions = questions.ToList();
+                    ResultPanel.allQuestions = questions;
                     this.time = gameConfiguration.time;
                     this.timeLimit = gameConfiguration.time;
                     questionCount = allUnusedQuestions.Count;
@@ -378,6 +379,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator PostRequest(String uri)
     {
         GameResult round = new GameResult(questionCount,timeLimit,finishedInSeconds,correctKillsCount,wrongKillsCount,correctKillsCount + wrongKillsCount, shotCount,points,correctAnsweredQuestions,wrongAnsweredQuestions, configurationAsUUID, score, rewards);
+        ResultPanel.correctAnsweredQuestions = correctAnsweredQuestions;
+        ResultPanel.wrongAnsweredQuestions = wrongAnsweredQuestions;
         string jsonRound = JsonUtility.ToJson(round);
         byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonRound);
         GameResult receivedGameResult;

@@ -14,7 +14,7 @@ public class ResultButton : MonoBehaviour
 
     public void Start()
     {
-        scoreText.text = score.ToString() + "  " + "scores"  + "  " + "and"  + "  " + rewards.ToString() + "  " + "coins";
+        scoreText.text = score.ToString() + "  " + "scores"  + "  " + "and"  +"  " + rewards.ToString() + "  " + "coins";
         resultPanel.SetActive(true); 
 
       

@@ -23,7 +23,7 @@ public class EndScreen : MonoBehaviour
         if(errorText != null){
             GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = errorText;
         }else{
-            GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = "Your Score: " + points.ToString();
+            GameObject.FindGameObjectWithTag("Point Overlay").GetComponent<TMPro.TextMeshProUGUI>().text = "";
         }
     }
 
