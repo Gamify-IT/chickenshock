@@ -7,12 +7,15 @@ public class ResultPanel : MonoBehaviour
 {
     public static List<RoundResult> correctAnsweredQuestions;
     public static List<RoundResult> wrongAnsweredQuestions;
+    public static float finishedInSeconds;
+    public static int shotCount;
     public static Question[] allQuestions;
 
     public TMP_Text resultStatusText;
     public TMP_Text questionsText;
     public TMP_Text answersText;
     public GameObject resultPanel;
+    public TMP_Text extraInformation;
 
     void Start()
     {
@@ -27,6 +30,7 @@ public class ResultPanel : MonoBehaviour
         questionsText.text = "";
         answersText.text = "";
         resultStatusText.text = "";
+        extraInformation.text = "";
 
         if (allQuestions == null)
         {
@@ -51,27 +55,31 @@ public class ResultPanel : MonoBehaviour
             Debug.Log($"Processing question: {question.text}");
 
             questionsText.text += $"{question.text}\n";
-            answersText.text += $"{question.rightAnswer}\n";
 
-            bool isCorrect = correctAnsweredQuestions.Exists(r => r.questionUUId == question.id);
-            bool isWrong = wrongAnsweredQuestions.Exists(r => r.questionUUId == question.id);
+            var correctAnswer = correctAnsweredQuestions.Find(r => r.questionUUId == question.id);
+            var wrongAnswer = wrongAnsweredQuestions.Find(r => r.questionUUId == question.id);
 
-            if (isCorrect)
+            if (correctAnswer != null)
             {
+                answersText.text += $"{correctAnswer.answer}\n";
                 resultStatusText.text += ":)\n";
-                Debug.Log($"{question.text} answered correctly");
+                Debug.Log($"{question.text} answered correctly with {correctAnswer.answer}");
             }
-            else if (isWrong)
+            else if (wrongAnswer != null)
             {
+                answersText.text += $"{wrongAnswer.answer}\n";
                 resultStatusText.text += ":(\n";
-                Debug.Log($"{question.text} answered incorrectly");
+                Debug.Log($"{question.text} answered incorrectly with {wrongAnswer.answer}");
             }
             else
             {
+                answersText.text += "-\n";
                 resultStatusText.text += "-\n";
                 Debug.Log($"{question.text} not answered");
             }
         }
+
+        extraInformation.text = $"Your time: {finishedInSeconds} Your amount of shots: {shotCount}";
     }
 
     public void OpenResultPanel()

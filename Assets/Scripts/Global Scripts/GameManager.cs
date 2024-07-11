@@ -381,6 +381,8 @@ public class GameManager : MonoBehaviour
         GameResult round = new GameResult(questionCount,timeLimit,finishedInSeconds,correctKillsCount,wrongKillsCount,correctKillsCount + wrongKillsCount, shotCount,points,correctAnsweredQuestions,wrongAnsweredQuestions, configurationAsUUID, score, rewards);
         ResultPanel.correctAnsweredQuestions = correctAnsweredQuestions;
         ResultPanel.wrongAnsweredQuestions = wrongAnsweredQuestions;
+        ResultPanel.finishedInSeconds = finishedInSeconds;
+        ResultPanel.shotCount = shotCount;
         string jsonRound = JsonUtility.ToJson(round);
         byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonRound);
         GameResult receivedGameResult;
