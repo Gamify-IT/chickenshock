@@ -15,7 +15,9 @@ public class ResultPanel : MonoBehaviour
     public TMP_Text questionsText;
     public TMP_Text answersText;
     public GameObject resultPanel;
-    public TMP_Text extraInformation;
+    public TMP_Text timeInformation;
+    public TMP_Text shotInformation;
+
 
     void Start()
     {
@@ -30,7 +32,8 @@ public class ResultPanel : MonoBehaviour
         questionsText.text = "";
         answersText.text = "";
         resultStatusText.text = "";
-        extraInformation.text = "";
+        timeInformation.text = "";
+        shotInformation.text = "";
 
         if (allQuestions == null)
         {
@@ -79,7 +82,8 @@ public class ResultPanel : MonoBehaviour
             }
         }
 
-        extraInformation.text = $"Your time: {finishedInSeconds} Your amount of shots: {shotCount}";
+       timeInformation.text = $"Your time: {finishedInSeconds.ToString("F2")}";
+       shotInformation.text = $"Your amount of shots: {shotCount}";
     }
 
     public void OpenResultPanel()
