@@ -96,7 +96,7 @@ public class ResultPanel : MonoBehaviour
             }
         }
 
-      extraInformation.text = $"You finished the game in  {finishedInSeconds.ToString("F2")} seconds and shot {shotCount} times!";
+      extraInformation.text = $"time: {finishedInSeconds.ToString("F2")} seconds             amount of shots: {shotCount}";
     }
 
     public void OpenResultPanel()
