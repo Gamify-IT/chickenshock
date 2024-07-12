@@ -11,13 +11,11 @@ public class ResultPanel : MonoBehaviour
     public static int shotCount;
     public static Question[] allQuestions;
 
-    public TMP_Text resultStatusText;
-    public TMP_Text questionsText;
-    public TMP_Text answersText;
     public GameObject resultPanel;
-    public TMP_Text timeInformation;
-    public TMP_Text shotInformation;
-
+    public TMP_Text extraInformation;
+    public GameObject correctEntryPrefab; 
+    public GameObject wrongEntryPrefab; 
+    public Transform resultContent; 
 
     void Start()
     {
@@ -29,11 +27,10 @@ public class ResultPanel : MonoBehaviour
     {
         Debug.Log("UpdateResults called");
 
-        questionsText.text = "";
-        answersText.text = "";
-        resultStatusText.text = "";
-        timeInformation.text = "";
-        shotInformation.text = "";
+        foreach (Transform child in resultContent)
+        {
+            Destroy(child.gameObject);
+        }
 
         if (allQuestions == null)
         {
@@ -57,33 +54,49 @@ public class ResultPanel : MonoBehaviour
         {
             Debug.Log($"Processing question: {question.text}");
 
-            questionsText.text += $"{question.text}\n";
+            GameObject entryPrefab = null;
 
             var correctAnswer = correctAnsweredQuestions.Find(r => r.questionUUId == question.id);
             var wrongAnswer = wrongAnsweredQuestions.Find(r => r.questionUUId == question.id);
 
             if (correctAnswer != null)
             {
-                answersText.text += $"{correctAnswer.answer}\n";
-                resultStatusText.text += ":)\n";
+                entryPrefab = Instantiate(correctEntryPrefab, resultContent);
                 Debug.Log($"{question.text} answered correctly with {correctAnswer.answer}");
             }
             else if (wrongAnswer != null)
             {
-                answersText.text += $"{wrongAnswer.answer}\n";
-                resultStatusText.text += ":(\n";
+                entryPrefab = Instantiate(wrongEntryPrefab, resultContent);
                 Debug.Log($"{question.text} answered incorrectly with {wrongAnswer.answer}");
             }
             else
             {
-                answersText.text += "-\n";
-                resultStatusText.text += "-\n";
-                Debug.Log($"{question.text} not answered");
+                continue;
+            }
+
+            if (entryPrefab != null)
+            {
+                TMP_Text questionText = entryPrefab.transform.Find("QuestionText").GetComponent<TMP_Text>();
+                TMP_Text answerText = entryPrefab.transform.Find("AnswerText").GetComponent<TMP_Text>();
+
+                questionText.text = question.text;
+
+                if (correctAnswer != null)
+                {
+                    answerText.text = correctAnswer.answer;
+                }
+                else if (wrongAnswer != null)
+                {
+                    answerText.text = wrongAnswer.answer;
+                }
+                else
+                {
+                    answerText.text = "-";
+                }
             }
         }
 
-       timeInformation.text = $"Your time: {finishedInSeconds.ToString("F2")}";
-       shotInformation.text = $"Your amount of shots: {shotCount}";
+      extraInformation.text = $"You finished the game in  {finishedInSeconds.ToString("F2")} seconds and shot {shotCount} times!";
     }
 
     public void OpenResultPanel()
