@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     private int wrongKillsCount;
     private int shotCount;
     private int points;
+    public int score;
+    public int rewards;
     private List<RoundResult> correctAnsweredQuestions;
     private List<RoundResult> wrongAnsweredQuestions;
     #endregion
@@ -83,6 +85,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("init game variables");
         this.points = 0;
+        this.score = 0;
+        this.rewards = 0;
         this.wrongAnsweredQuestions = new List<RoundResult>();
         this.correctAnsweredQuestions = new List<RoundResult>();
         this.pointOverlay = GameObject.FindGameObjectWithTag("Point Overlay");
@@ -332,6 +336,7 @@ public class GameManager : MonoBehaviour
                     GameConfiguration gameConfiguration = JsonUtility.FromJson<GameConfiguration>(webRequest.downloadHandler.text);
                     Question[] questions = gameConfiguration.questions;
                     allUnusedQuestions = questions.ToList();
+                    ResultPanel.allQuestions = questions;
                     this.time = gameConfiguration.time;
                     this.timeLimit = gameConfiguration.time;
                     questionCount = allUnusedQuestions.Count;
@@ -373,9 +378,14 @@ public class GameManager : MonoBehaviour
     /// <param name="uri"></param>
     private IEnumerator PostRequest(String uri)
     {
-        GameResult round = new GameResult(questionCount,timeLimit,finishedInSeconds,correctKillsCount,wrongKillsCount,correctKillsCount + wrongKillsCount, shotCount,points,correctAnsweredQuestions,wrongAnsweredQuestions, configurationAsUUID);
+        GameResult round = new GameResult(questionCount,timeLimit,finishedInSeconds,correctKillsCount,wrongKillsCount,correctKillsCount + wrongKillsCount, shotCount,points,correctAnsweredQuestions,wrongAnsweredQuestions, configurationAsUUID, score, rewards);
+        ResultPanel.correctAnsweredQuestions = correctAnsweredQuestions;
+        ResultPanel.wrongAnsweredQuestions = wrongAnsweredQuestions;
+        ResultPanel.finishedInSeconds = finishedInSeconds;
+        ResultPanel.shotCount = shotCount;
         string jsonRound = JsonUtility.ToJson(round);
         byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonRound);
+        GameResult receivedGameResult;
 
         using (UnityWebRequest postRequest = new UnityWebRequest(uri, "POST"))
         {
@@ -397,8 +407,20 @@ public class GameManager : MonoBehaviour
                     EndScreen.errorText = "Result Not Saved!: " + postRequest.error;
                     break;
                 case UnityWebRequest.Result.Success:
-                    Debug.Log(uri + ":\nReceived: " + postRequest.downloadHandler.text);
+                    Debug.Log(uri + ":\nReceived: " + postRequest.downloadHandler.text);          
+                    string jsonResponse = postRequest.downloadHandler.text;
+                    receivedGameResult = JsonUtility.FromJson<GameResult>(jsonResponse);
+                    score = receivedGameResult.score;
+                    rewards = receivedGameResult.rewards;
+                    Debug.Log(score);
+                    Debug.Log(rewards);        
+                    
+                    ResultButton.score = receivedGameResult.score;
+                    ResultButton.rewards = receivedGameResult.rewards;
+
+
                     break;
+
             }
             postRequest.Dispose();
             SceneManager.LoadScene("EndScreen");
