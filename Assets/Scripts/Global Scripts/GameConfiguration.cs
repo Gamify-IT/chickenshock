@@ -6,4 +6,5 @@ public class GameConfiguration
 {
     public int time;
     public Question[] questions;
+    public int volumeLevel;
 }

@@ -15,6 +15,8 @@ using UnityEngine.UI;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
     #region initialInformations
     private int initialNumberOfWrongChickens;
     private float time; //in seconds
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
     private int points;
     public int score;
     public int rewards;
+    private int volumeLevel;
     private List<RoundResult> correctAnsweredQuestions;
     private List<RoundResult> wrongAnsweredQuestions;
     #endregion
@@ -72,12 +75,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Start()
+    public void Start()
     {
         this.InitVariables();
         this.FetchAllQuestions();
     }
-
+    
     /// <summary>
     /// This method initializes the variables needed. If the question catalogue is empty it skips to the end screen.
     /// </summary>
@@ -339,12 +342,78 @@ public class GameManager : MonoBehaviour
                     ResultPanel.allQuestions = questions;
                     this.time = gameConfiguration.time;
                     this.timeLimit = gameConfiguration.time;
+                    this.volumeLevel = gameConfiguration.volumeLevel;
+                    UpdateVolumeLevel(volumeLevel);
+                    Debug.Log("Volume level in CK"+volumeLevel);
                     questionCount = allUnusedQuestions.Count;
                     PickRandomQuestion();
                     this.questionLoaded = true;
                     break;
             }
         }
+    }
+
+    /// <summary>
+    /// This method sends a Get request for the volume level to the chickenshock api and handles the response accordingly.
+    /// </summary>
+    public IEnumerator GetVolumeLevel()
+    {
+        String originURL;
+        String restRequest;
+        try
+        {
+            configurationAsUUID = GetConfiguration();
+            originURL = GetOriginUrl();
+            restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID);
+        }
+        catch (EntryPointNotFoundException entryPointNotFoundException)
+        {
+            Debug.Log("EntryPointNotFoundException, probably becouse you started the game with the editor: " + entryPointNotFoundException);
+            configurationAsUUID = ChickenshockProperties.editorConfiguration;
+            originURL = "";
+            restRequest = ChickenshockProperties.editorGetQuestions.Replace("{id}", configurationAsUUID);
+        }
+        string completeRequestString = originURL + restRequest;
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(completeRequestString))
+        {
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                GameConfiguration gameConfiguration = JsonUtility.FromJson<GameConfiguration>(webRequest.downloadHandler.text);
+                this.volumeLevel = gameConfiguration.volumeLevel;
+                UpdateVolumeLevel(volumeLevel);
+            }
+            else
+            {
+                Debug.LogError(completeRequestString + ": Error: " + webRequest.error);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// This function updates the level volume and applies the changes to all audio in the game
+    /// </summary>
+    private void UpdateVolumeLevel(int volumeLevel)
+    {
+        float volume = 0f;
+        switch (volumeLevel)
+        {
+            case 0:
+                volume = 0f;
+                break;
+            case 1:
+                volume = 0.5f;
+                break;
+            case 2:
+                volume = 1f;
+                break;
+            case 3:
+                volume = 2f;
+                break;
+        }
+        AudioListener.volume = volume;
     }
 
     /// <summary>

@@ -12,15 +12,14 @@ public class StartButton : MonoBehaviour
 
     public void Start()
     {
-        //get AudioSource component
         audioSource=GetComponent<AudioSource>();
-        //add AudioSource component if necessary
         if(audioSource == null)
         {
             audioSource=gameObject.AddComponent<AudioSource>();
         }
-        //set audio clip
         audioSource.clip=clickSound;
+        AudioListener.volume = 0f;
+        StartCoroutine(GameManager.Instance.GetVolumeLevel());
     }
 
     /// <summary>
