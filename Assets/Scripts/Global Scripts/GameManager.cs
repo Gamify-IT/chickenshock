@@ -344,7 +344,6 @@ public class GameManager : MonoBehaviour
                     this.timeLimit = gameConfiguration.time;
                     this.volumeLevel = gameConfiguration.volumeLevel;
                     UpdateVolumeLevel(volumeLevel);
-                    Debug.Log("Volume level in CK"+volumeLevel);
                     questionCount = allUnusedQuestions.Count;
                     PickRandomQuestion();
                     this.questionLoaded = true;
