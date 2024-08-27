@@ -29,14 +29,11 @@ public class ExitButton : MonoBehaviour
     /// </summary>
     private void PlayClickSound()
     {
-        //get AudioSource component
         audioSource=GetComponent<AudioSource>();
-        //add AudioSource component if necessary
         if(audioSource == null)
         {
             audioSource=gameObject.AddComponent<AudioSource>();
         }
-        //set audio clip
         audioSource.clip=clickSound;
 
         if (clickSound != null && audioSource != null)
