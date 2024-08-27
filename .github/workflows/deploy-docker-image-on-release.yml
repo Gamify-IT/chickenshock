@@ -61,6 +61,6 @@ jobs:
       # Temporary cleanup solution to prevent failing of next job.
       - name: Clean up GitHub workspace
         if: always()
-        uses: docker://ubuntu:latest # ?? Clean-up done in a Docker container ??
+        uses: docker://ubuntu:latest # 👈 Clean-up done in a Docker container 🐳
         with:
-            args: find /github/workspace/. -name . -o -prune -exec rm -rf -- {} + 
+          args: find /github/workspace/. -name . -o -prune -exec rm -rf -- {} +
