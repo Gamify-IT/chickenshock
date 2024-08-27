@@ -60,7 +60,7 @@ public class ShootWeapon : MonoBehaviour
             PlaySuccessSound();
             gameManager.UpdatePoints(1);
             gameManager.AddCorrectKill();
-            gameManager.addCorrectAnswerToResult(this.getChickenText(hit));
+            gameManager.AddCorrectAnswerToResult(this.getChickenText(hit));
             gameManager.FinishRound(ChickenshockProperties.correctFeedbackText);
         }
         else if (hit.transform.tag == wrongAnswerTag)
@@ -68,7 +68,7 @@ public class ShootWeapon : MonoBehaviour
             PlayErrorSound();
             gameManager.UpdatePoints(-1);
             gameManager.AddWrongKill();
-            gameManager.addWrongAnswerToResult(this.getChickenText(hit));
+            gameManager.AddWrongAnswerToResult(this.getChickenText(hit));
             gameManager.FinishRound(ChickenshockProperties.wrongFeedbackText);
         }
     }

@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
     /// This method adds the answered question to the correctly answered questions
     /// <param name="answer">The answer on the chicken that got shot</param>
     /// </summary>
-    public void addCorrectAnswerToResult(String answer)
+    public void AddCorrectAnswerToResult(string answer)
     {
         Debug.Log("Add correct answer to game result: " + answer);
         RoundResult correctResult = new RoundResult(currentActiveQuestion, answer);
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
     /// This method adds the answered question to the incorrectly answered questions
     /// <param name="answer">The answer on the chicken that got shot</param>
     /// </summary>
-    public void addWrongAnswerToResult(String answer)
+    public void AddWrongAnswerToResult(string answer)
     {
         Debug.Log("Add wrong answer to game result: " + answer);
         RoundResult wrongResult = new RoundResult(currentActiveQuestion, answer);
