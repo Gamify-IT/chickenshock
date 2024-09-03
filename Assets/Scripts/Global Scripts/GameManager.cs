@@ -363,14 +363,14 @@ public class GameManager : MonoBehaviour
         {
             configurationAsUUID = GetConfiguration();
             originURL = GetOriginUrl();
-            restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID);
+            restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID) + "/volume";
         }
         catch (EntryPointNotFoundException entryPointNotFoundException)
         {
             Debug.Log("EntryPointNotFoundException, probably becouse you started the game with the editor: " + entryPointNotFoundException);
             configurationAsUUID = ChickenshockProperties.editorConfiguration;
             originURL = "";
-            restRequest = ChickenshockProperties.editorGetQuestions.Replace("{id}", configurationAsUUID);
+            restRequest = ChickenshockProperties.editorGetQuestions.Replace("{id}", configurationAsUUID) + "/volume";
         }
         string completeRequestString = originURL + restRequest;
 
