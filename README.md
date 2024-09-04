@@ -89,3 +89,5 @@ https://pixabay.com/de/sound-effects/shotgun-firing-4-6746/
 5.	Correct answer
 https://pixabay.com/de/sound-effects/short-success-sound-glockenspiel-treasure-video-game-6346/
 
+6.	Trumpets end sound
+https://pixabay.com/sound-effects/success-fanfare-trumpets-6185/
