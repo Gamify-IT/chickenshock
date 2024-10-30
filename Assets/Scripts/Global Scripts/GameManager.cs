@@ -300,18 +300,22 @@ public class GameManager : MonoBehaviour
     public void FetchAllQuestions()
     {
         Debug.Log("Try to fetch questions");
-        String originURL;
-        String restRequest;
+        string originURL;
+        string restRequest;
+#if UNITY_EDITOR
+        configurationAsUUID = "tutorial";
+#else
+        configurationAsUUID = GetConfiguration();
+#endif
+        if (configurationAsUUID == "tutorial")
+        {
+            Debug.Log("using tutorial questions in tutorial mode");
+            InitTutorialMinigame();
+            return;
+        }
+
         try
         {   
-            configurationAsUUID = GetConfiguration();
-
-            if (configurationAsUUID == "tutorial")
-            {
-                InitTutorialMinigame();
-                return;
-            }
-
             originURL = GetOriginUrl();
             restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID) + "/volume";
         } catch(EntryPointNotFoundException entryPointNotFoundException) {
@@ -329,13 +333,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void InitTutorialMinigame()
     {
-        string json = Resources.Load<TextAsset>("tutorialConfiguration.json").text;
+        string json = Resources.Load<TextAsset>("tutorialConfiguration").text;
         GameConfiguration gameConfiguration = JsonUtility.FromJson<GameConfiguration>(json);
 
         allUnusedQuestions = gameConfiguration.questions.ToList();
+        ResultPanel.allQuestions = gameConfiguration.questions;
         time = gameConfiguration.time;
         timeLimit = gameConfiguration.time;
-        UpdateVolumeLevel(1);
+        volumeLevel = 1;
+        UpdateVolumeLevel(volumeLevel);
         questionCount = allUnusedQuestions.Count;
         PickRandomQuestion();
         questionLoaded = true;
@@ -385,11 +391,21 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public IEnumerator GetVolumeLevel()
     {
-        String originURL;
-        String restRequest;
+        string originURL;
+        string restRequest;
+
+        configurationAsUUID = GetConfiguration();
+
+        if (configurationAsUUID == "tutorial")
+        {
+            Debug.Log("using default volume level in tutorial mode");
+            volumeLevel = 1;
+            UpdateVolumeLevel(volumeLevel);
+            yield break;
+        }
+
         try
         {
-            configurationAsUUID = GetConfiguration();
             originURL = GetOriginUrl();
             restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID) + "/volume";
         }
@@ -561,6 +577,11 @@ public class GameManager : MonoBehaviour
     public bool GetRoundStatus()
     {
         return roundComplete;
+    }
+
+    public string GetConfigurationUuid()
+    {
+        return configurationAsUUID;
     }
 
 }
