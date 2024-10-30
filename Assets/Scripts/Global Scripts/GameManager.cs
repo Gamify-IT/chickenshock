@@ -153,7 +153,11 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         this.finishedInSeconds = timeLimit - time;
         EndScreen.points = points;
-        SaveRound();
+
+        if (configurationAsUUID != "tutorial")
+        {
+            SaveRound();
+        }
     }
 
     /// <summary>
@@ -301,6 +305,13 @@ public class GameManager : MonoBehaviour
         try
         {   
             configurationAsUUID = GetConfiguration();
+
+            if (configurationAsUUID == "tutorial")
+            {
+                InitTutorialMinigame();
+                return;
+            }
+
             originURL = GetOriginUrl();
             restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID) + "/volume";
         } catch(EntryPointNotFoundException entryPointNotFoundException) {
@@ -311,6 +322,23 @@ public class GameManager : MonoBehaviour
         }
         string completeRequestString = originURL + restRequest;
         StartCoroutine(GetRequest(completeRequestString));
+    }
+
+    /// <summary>
+    /// Loads the game configuration for the tutorial minigame
+    /// </summary>
+    private void InitTutorialMinigame()
+    {
+        string json = Resources.Load<TextAsset>("tutorialConfiguration.json").text;
+        GameConfiguration gameConfiguration = JsonUtility.FromJson<GameConfiguration>(json);
+
+        allUnusedQuestions = gameConfiguration.questions.ToList();
+        time = gameConfiguration.time;
+        timeLimit = gameConfiguration.time;
+        UpdateVolumeLevel(1);
+        questionCount = allUnusedQuestions.Count;
+        PickRandomQuestion();
+        questionLoaded = true;
     }
 
     /// <summary>
@@ -421,8 +449,9 @@ public class GameManager : MonoBehaviour
     private void SaveRound()
     {
         Debug.Log("Save round details");
-        String originURL;
-        String restRequest;
+        string originURL;
+        string restRequest;
+
         try
         {
             originURL = GetOriginUrl();
