@@ -303,26 +303,22 @@ public class GameManager : MonoBehaviour
         string originURL;
         string restRequest;
 #if UNITY_EDITOR
-        configurationAsUUID = "tutorial";
+        configurationAsUUID = ChickenshockProperties.editorConfiguration;
+        LoadDefaultQuestions();
+        return;
 #else
         configurationAsUUID = GetConfiguration();
 #endif
-        if (configurationAsUUID == "tutorial")
-        {
-            Debug.Log("using tutorial questions in tutorial mode");
-            InitTutorialMinigame();
-            return;
-        }
 
         try
         {   
             originURL = GetOriginUrl();
-            restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID) + "/volume";
+            restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID);
         } catch(EntryPointNotFoundException entryPointNotFoundException) {
             Debug.Log("EntryPointNotFoundException, probably becouse you started the game with the editor: " + entryPointNotFoundException);
             configurationAsUUID = ChickenshockProperties.editorConfiguration;
             originURL = "";
-            restRequest = ChickenshockProperties.editorGetQuestions.Replace("{id}", configurationAsUUID) + "/volume";
+            restRequest = ChickenshockProperties.editorGetQuestions.Replace("{id}", configurationAsUUID);
         }
         string completeRequestString = originURL + restRequest;
         StartCoroutine(GetRequest(completeRequestString));
@@ -331,7 +327,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Loads the game configuration for the tutorial minigame
     /// </summary>
-    private void InitTutorialMinigame()
+    private void LoadDefaultQuestions()
     {
         string json = Resources.Load<TextAsset>("tutorialConfiguration").text;
         GameConfiguration gameConfiguration = JsonUtility.FromJson<GameConfiguration>(json);
@@ -394,18 +390,9 @@ public class GameManager : MonoBehaviour
         string originURL;
         string restRequest;
 
-        configurationAsUUID = GetConfiguration();
-
-        if (configurationAsUUID == "tutorial")
-        {
-            Debug.Log("using default volume level in tutorial mode");
-            volumeLevel = 1;
-            UpdateVolumeLevel(volumeLevel);
-            yield break;
-        }
-
         try
         {
+            configurationAsUUID = GetConfiguration();
             originURL = GetOriginUrl();
             restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID) + "/volume";
         }
@@ -466,8 +453,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Save round details");
         string originURL;
-        string restRequest;
-
+        string restRequest;     
         try
         {
             originURL = GetOriginUrl();
@@ -480,9 +466,13 @@ public class GameManager : MonoBehaviour
             restRequest = "";
         }
         string completeRequestString = originURL + restRequest;
-        StartCoroutine(PostRequest(completeRequestString));
+        if (configurationAsUUID != ChickenshockProperties.editorConfiguration)
+        {
+            StartCoroutine(PostRequest(completeRequestString));
+        }
         GameObject.Find("LoadingCircle").GetComponent<Image>().enabled = true;
         GameObject.Find("SpinningCircle").GetComponent<Image>().enabled = true;
+        SceneManager.LoadScene("EndScreen");
     }
 
     /// <summary>
@@ -536,7 +526,6 @@ public class GameManager : MonoBehaviour
 
             }
             postRequest.Dispose();
-            SceneManager.LoadScene("EndScreen");
         }
     }
 
@@ -577,11 +566,6 @@ public class GameManager : MonoBehaviour
     public bool GetRoundStatus()
     {
         return roundComplete;
-    }
-
-    public string GetConfigurationUuid()
-    {
-        return configurationAsUUID;
     }
 
 }
