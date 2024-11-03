@@ -19,7 +19,7 @@ public class StartButton : MonoBehaviour
         }
         audioSource.clip=clickSound;
         AudioListener.volume = 0f;
-        StartCoroutine(GameManager.Instance.GetVolumeLevel());
+        //StartCoroutine(GameManager.Instance.GetVolumeLevel());
     }
 
     /// <summary>

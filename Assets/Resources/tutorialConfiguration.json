@@ -1,0 +1,52 @@
+{
+  "id":  "tutorial",
+  "questions": [
+    {
+      "text": "How many bits are in one byte?",
+      "rightAnswer": "8",
+      "wrongAnswers": [
+        "2",
+        "4",
+        "6"
+      ]
+    },
+    {
+      "text": "What is the binary representation of the number 18?",
+      "rightAnswer": "10010",
+      "wrongAnswers": [
+        "10001",
+        "10100",
+        "1001"
+      ]
+    },
+    {
+      "text": "Which number is not a prime number?",
+      "rightAnswer": "27",
+      "wrongAnswers": [
+        "7",
+        "17",
+        "37"
+      ]
+    },
+    {
+      "text": "What is the greatest common divisor of 27 and 42?",
+      "rightAnswer": "3",
+      "wrongAnswers": [
+        "",
+        "1",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "text": "What variable type should be used for a person's name?",
+      "rightAnswer": "string",
+      "wrongAnswers": [
+        "int",
+        "boolean",
+        "char"
+      ]
+    }
+  ],
+  "time": 50
+}
