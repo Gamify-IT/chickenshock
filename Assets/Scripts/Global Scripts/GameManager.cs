@@ -309,6 +309,11 @@ public class GameManager : MonoBehaviour
 #else
         configurationAsUUID = GetConfiguration();
 #endif
+        if (configurationAsUUID == ChickenshockProperties.editorConfiguration)
+        {
+            LoadDefaultQuestions();
+            return;
+        }
 
         try
         {   
