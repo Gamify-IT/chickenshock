@@ -300,23 +300,26 @@ public class GameManager : MonoBehaviour
     public void FetchAllQuestions()
     {
         Debug.Log("Try to fetch questions");
-        string originURL;
-        string restRequest;
-#if UNITY_EDITOR
-        configurationAsUUID = ChickenshockProperties.editorConfiguration;
-        LoadDefaultQuestions();
-        return;
-#else
-        configurationAsUUID = GetConfiguration();
-#endif
-        if (configurationAsUUID == ChickenshockProperties.editorConfiguration)
+        String originURL;
+        String restRequest;
+
+        try
+        {
+            configurationAsUUID = GetConfiguration();
+        }
+        catch (EntryPointNotFoundException)
+        {
+            configurationAsUUID = "tutorial";
+        }
+
+        if (configurationAsUUID == "tutorial")
         {
             LoadDefaultQuestions();
             return;
         }
 
         try
-        {   
+        {              
             originURL = GetOriginUrl();
             restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID);
         } catch(EntryPointNotFoundException entryPointNotFoundException) {
@@ -336,8 +339,8 @@ public class GameManager : MonoBehaviour
     {
         string json = Resources.Load<TextAsset>("tutorialConfiguration").text;
         GameConfiguration gameConfiguration = JsonUtility.FromJson<GameConfiguration>(json);
-
-        allUnusedQuestions = gameConfiguration.questions.ToList();
+        Question[] questions = gameConfiguration.questions;
+        allUnusedQuestions = questions.ToList();
         ResultPanel.allQuestions = gameConfiguration.questions;
         time = gameConfiguration.time;
         timeLimit = gameConfiguration.time;

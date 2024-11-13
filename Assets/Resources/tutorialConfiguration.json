@@ -15,7 +15,6 @@
       "rightAnswer": "10010",
       "wrongAnswers": [
         "10001",
-        "10100",
         "1001"
       ]
     },
@@ -24,18 +23,15 @@
       "rightAnswer": "27",
       "wrongAnswers": [
         "7",
-        "17",
-        "37"
+        "17"
       ]
     },
     {
       "text": "What is the greatest common divisor of 27 and 42?",
       "rightAnswer": "3",
       "wrongAnswers": [
-        "",
         "1",
-        "6",
-        "7"
+        "6"
       ]
     },
     {
