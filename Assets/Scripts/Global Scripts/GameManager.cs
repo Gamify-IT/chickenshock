@@ -298,9 +298,24 @@ public class GameManager : MonoBehaviour
         Debug.Log("Try to fetch questions");
         String originURL;
         String restRequest;
+
         try
-        {   
+        {
             configurationAsUUID = GetConfiguration();
+        }
+        catch (EntryPointNotFoundException)
+        {
+            configurationAsUUID = "tutorial";
+        }
+
+        if (configurationAsUUID == "tutorial")
+        {
+            LoadDefaultQuestions();
+            return;
+        }
+
+        try
+        {              
             originURL = GetOriginUrl();
             restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID) + "/volume";
         } catch(EntryPointNotFoundException entryPointNotFoundException) {
@@ -311,6 +326,25 @@ public class GameManager : MonoBehaviour
         }
         string completeRequestString = originURL + restRequest;
         StartCoroutine(GetRequest(completeRequestString));
+    }
+
+    /// <summary>
+    /// Loads the game configuration for the tutorial minigame
+    /// </summary>
+    private void LoadDefaultQuestions()
+    {
+        string json = Resources.Load<TextAsset>("tutorialConfiguration").text;
+        GameConfiguration gameConfiguration = JsonUtility.FromJson<GameConfiguration>(json);
+        Question[] questions = gameConfiguration.questions;
+        allUnusedQuestions = questions.ToList();
+        ResultPanel.allQuestions = gameConfiguration.questions;
+        time = gameConfiguration.time;
+        timeLimit = gameConfiguration.time;
+        volumeLevel = 1;
+        UpdateVolumeLevel(volumeLevel);
+        questionCount = allUnusedQuestions.Count;
+        PickRandomQuestion();
+        questionLoaded = true;
     }
 
     /// <summary>
@@ -452,6 +486,7 @@ public class GameManager : MonoBehaviour
         ResultPanel.finishedInSeconds = finishedInSeconds;
         ResultPanel.shotCount = shotCount;
         string jsonRound = JsonUtility.ToJson(round);
+        Debug.Log(jsonRound);
         byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonRound);
         GameResult receivedGameResult;
 
