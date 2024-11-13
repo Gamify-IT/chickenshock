@@ -153,7 +153,11 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         this.finishedInSeconds = timeLimit - time;
         EndScreen.points = points;
-        SaveRound();
+
+        if (configurationAsUUID != "tutorial")
+        {
+            SaveRound();
+        }
     }
 
     /// <summary>
@@ -317,12 +321,12 @@ public class GameManager : MonoBehaviour
         try
         {              
             originURL = GetOriginUrl();
-            restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID) + "/volume";
+            restRequest = ChickenshockProperties.getQuestions.Replace("{id}", configurationAsUUID);
         } catch(EntryPointNotFoundException entryPointNotFoundException) {
             Debug.Log("EntryPointNotFoundException, probably becouse you started the game with the editor: " + entryPointNotFoundException);
             configurationAsUUID = ChickenshockProperties.editorConfiguration;
             originURL = "";
-            restRequest = ChickenshockProperties.editorGetQuestions.Replace("{id}", configurationAsUUID) + "/volume";
+            restRequest = ChickenshockProperties.editorGetQuestions.Replace("{id}", configurationAsUUID);
         }
         string completeRequestString = originURL + restRequest;
         StartCoroutine(GetRequest(completeRequestString));
@@ -391,8 +395,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public IEnumerator GetVolumeLevel()
     {
-        String originURL;
-        String restRequest;
+        string originURL;
+        string restRequest;
+
         try
         {
             configurationAsUUID = GetConfiguration();
@@ -455,8 +460,8 @@ public class GameManager : MonoBehaviour
     private void SaveRound()
     {
         Debug.Log("Save round details");
-        String originURL;
-        String restRequest;
+        string originURL;
+        string restRequest;     
         try
         {
             originURL = GetOriginUrl();
@@ -469,9 +474,13 @@ public class GameManager : MonoBehaviour
             restRequest = "";
         }
         string completeRequestString = originURL + restRequest;
-        StartCoroutine(PostRequest(completeRequestString));
+        if (configurationAsUUID != ChickenshockProperties.editorConfiguration)
+        {
+            StartCoroutine(PostRequest(completeRequestString));
+        }
         GameObject.Find("LoadingCircle").GetComponent<Image>().enabled = true;
         GameObject.Find("SpinningCircle").GetComponent<Image>().enabled = true;
+        SceneManager.LoadScene("EndScreen");
     }
 
     /// <summary>
@@ -486,7 +495,6 @@ public class GameManager : MonoBehaviour
         ResultPanel.finishedInSeconds = finishedInSeconds;
         ResultPanel.shotCount = shotCount;
         string jsonRound = JsonUtility.ToJson(round);
-        Debug.Log(jsonRound);
         byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonRound);
         GameResult receivedGameResult;
 
@@ -526,7 +534,6 @@ public class GameManager : MonoBehaviour
 
             }
             postRequest.Dispose();
-            SceneManager.LoadScene("EndScreen");
         }
     }
 
